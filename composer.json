@@ -1,0 +1,42 @@
+{
+  "name": "bardoqi/sight",
+  "description": "Sight is a simple Laravel presenter layer in the backend of controller for making your coding faster.",
+  "keywords": ["laravel", "presenter", "view presenter", "api presenter", "mvp pattern", "array join", "field transform"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Bardo Qi",
+      "email": "bardooqi@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "illuminate/support": "^5.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "BardoQi\\Sight\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BardoQi\\sight\\tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.11-dev"
+    }
+  },
+  "require-dev": {
+    "laravel/framework": "^5.8",
+    "phpunit/phpunit": "^4.8|^5.2|^7.0"
+  },
+  "scripts": {
+    "test": "phpunit",
+    "check-style": "phpcs -p --standard=PSR2 src/",
+    "fix-style": "phpcbf -p --standard=PSR2 src/"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
