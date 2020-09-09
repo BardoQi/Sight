@@ -20,8 +20,6 @@ namespace Bardoqi\Sight\Enums;
  */
 final class JoinTypeEnum
 {
-    const HAS_ONE_INNER = 0;
-    const HAS_MANY_INNER = 1;
-    const HAS_ONE_OUTER = 2;
-    const HAS_MANY_OUTER = 3;
+    const INNER_JOIN = 1;
+    const OUTER_JOIN = 2;
 }

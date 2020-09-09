@@ -8,7 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Bardoqi\Sight\Map;
+
 use Bardoqi\Sight\Abstracts\AbstractList;
+use Bardoqi\Sight\Enums\JoinTypeEnum;
 
 /**
  * Class MultiMap
@@ -24,6 +26,46 @@ class MultiMap extends AbstractList
      * @access public
      */
     public $keyed_by = '';
+
+    /**
+     * $join_type : Keep the join type.
+     *
+     * @var int
+     * @access public
+     */
+    public $join_type = 0;
+
+    /**
+     * Create a instance
+     *
+     * @param null|array $data
+     * @param null|string $keyed_by
+     * @return static
+     * @static
+     */
+    public static function of($data = null,$keyed_by = null,$join_type=JoinTypeEnum::INNER_JOIN){
+        $instance = new static();
+        $instance->init($data,$keyed_by,$join_type);
+        return $instance;
+    }
+
+    /**
+     * @param null $data
+     * @param null $keyed_by
+     *
+     * @return void
+     */
+    protected function init($data = null,$keyed_by = null, $join_type=JoinTypeEnum::INNER_JOIN){
+        if((null !== $data) && (null !== $keyed_by)){
+            foreach($src_array as $item){
+                $this->addItem($item, [$item[$key]]);
+            }
+            ksort($this->data);
+            return true;
+        }
+        $this->data = $data;
+        $this->join_type = $join_type;
+    }
 
     /**
      * @param $offset
@@ -44,37 +86,6 @@ class MultiMap extends AbstractList
         }
         $this->data[$offset] = MultiMap::of()->addItem(MultiMapItem::of($item));
         return true;
-    }
-
-    /**
-     * @param null $data
-     * @param null $keyed_by
-     *
-     * @return void
-     */
-    protected function init($data = null,$keyed_by = null){
-        if((null !== $data) && (null !== $keyed_by)){
-            foreach($src_array as $item){
-                $this->addItem($item, [$item[$key]]);
-            }
-            ksort($this->data);
-            return true;
-        }
-        $this->data = $data;
-    }
-
-    /**
-     * Create a instance
-     *
-     * @param null|array $data
-     * @param null|string $keyed_by
-     * @return static
-     * @static
-     */
-    public static function of($data = null,$keyed_by = null){
-        $instance = new static($data,$keyed_by);
-        $instance->init($data,$keyed_by);
-        return $instance;
     }
 
     /**

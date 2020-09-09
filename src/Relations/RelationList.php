@@ -45,7 +45,7 @@ final class RelationList extends AbstractList
      * @param $local_field
      * @param $foreign_alias
      * @param $foreign_field
-     * @param $join_type
+     * @param $relation_type
      *
      * @return $this
      */
@@ -53,7 +53,7 @@ final class RelationList extends AbstractList
                                 $local_field,
                                 $foreign_alias,
                                 $foreign_field,
-                                $join_type
+                                $relation_type
     ){
 
         $this->data[] = Relation::of(
@@ -61,7 +61,7 @@ final class RelationList extends AbstractList
             $local_field,
             $foreign_alias,
             $foreign_field,
-            $join_type);
+            $relation_type);
         return $this;
     }
 

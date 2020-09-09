@@ -11,6 +11,7 @@ namespace Bardoqi\Sight;
 
 use Bardoqi\Sight\Abstracts\MultiMap;
 use Bardoqi\Sight\DataFormaters\DataFormatter;
+use Bardoqi\Sight\Enums\JoinTypeEnum;
 use Bardoqi\Sight\Enums\PaginateTypeEnum;
 use Bardoqi\Sight\Mapping\FieldMapping;
 use Bardoqi\Sight\Abstracts\AbstractPresenter;
@@ -106,8 +107,22 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function joinForeign($data_list,$alias,$keyed_by){
-        $this->addJoinList($data_list,$alias,$keyed_by);
+    public function innerJoinForeign($data_list,$alias,$keyed_by){
+        $this->addJoinList($data_list,$alias,$keyed_by,JoinTypeEnum::INNER_JOIN);
+        return $this;
+    }
+
+    /**
+     * Array join fonction for setting the relations.
+     *
+     * @param array|Collection $data_list
+     * @param string $alias
+     * @param string $keyed_by
+     *
+     * @return $this
+     */
+    public function outerJoinForeign($data_list,$alias,$keyed_by){
+        $this->addJoinList($data_list,$alias,$keyed_by,JoinTypeEnum::OUTER_JOIN);
         return $this;
     }
 

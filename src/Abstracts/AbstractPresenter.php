@@ -11,6 +11,7 @@ namespace Bardoqi\Sight\Abstracts;
 
 use Bardoqi\Sight\DataFormaters\DataFormatter;
 use Bardoqi\Sight\Enums\JoinTypeEnum;
+use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Iterators\ListIterator;
 use Bardoqi\Sight\Mapping\FieldMapping;
 use Bardoqi\Sight\Relations\RelationList;
@@ -210,10 +211,11 @@ abstract class AbstractPresenter
      * @param $data_list
      * @param $alias
      * @param $keyed_by
+     * @param $join_type
      *
      * @return $this
      */
-    protected function addJoinList($data_list,$alias,$keyed_by){
+    protected function addJoinList($data_list,$alias,$keyed_by,$join_type=JoinTypeEnum::INNER_JOIN){
         if(empty($keyed_by)){
             throw InvalidArgumentException::KeyedByCannotBeEmpty();
         }
@@ -222,7 +224,7 @@ abstract class AbstractPresenter
         if(!isset($data_list[0][$keyed_by])){
             throw InvalidArgumentException::KeyedByIsNotCorrect($keyed_by);
         }
-        $this->join_lists[$alias] = MultiMap::of($data_list,$keyed_by);
+        $this->join_lists[$alias] = MultiMap::of($data_list,$keyed_by,$join_type);
         return $this;
     }
 
@@ -233,7 +235,7 @@ abstract class AbstractPresenter
      * @param        $local_field
      * @param        $foreign_alias
      * @param        $foreign_field
-     * @param        $join_type
+     * @param        $reltion_type
      *
      * @return $this
      */
@@ -242,7 +244,7 @@ abstract class AbstractPresenter
         $local_field,
         $foreign_alias,
         $foreign_field,
-        $join_type = JoinTypeEnum::HAS_ONE_INNER
+        $reltion_type = RelationEnum::HAS_ONE
         ){
 
         if($this->local_alias !== $local_alias){
@@ -258,7 +260,7 @@ abstract class AbstractPresenter
             $local_field,
             $foreign_alias,
             $foreign_field,
-            $join_type
+            $reltion_type
         ));
 
         return $this;

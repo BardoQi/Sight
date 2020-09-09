@@ -43,19 +43,14 @@ final class Relation
     /**
      * @var int
      */
-    public $join_type;
-
-    /**
-     * @var int
-     */
-    public $is_outer;
+    public $relation_type;
 
     /**
      * @param        $local_alias
      * @param        $local_field
      * @param        $foreign_alias
      * @param        $foreign_field
-     * @param        $join_type
+     * @param        $relation_type
      *
      * @return \Sight\Relations\Reation
      */
@@ -63,7 +58,7 @@ final class Relation
                                           $local_field,
                                           $foreign_alias,
                                           $foreign_field,
-                                          $join_type
+                                          $relation_type
     ){
         $instance = new static();
         $instance->init(
@@ -71,7 +66,7 @@ final class Relation
             $local_field,
             $foreign_alias,
             $foreign_field,
-            $join_type
+            $relation_type
         );
         return $instance;
 
@@ -82,7 +77,7 @@ final class Relation
      * @param        $local_field
      * @param        $foreign_alias
      * @param        $foreign_field
-     * @param        $join_type
+     * @param        $relation_type
      *
      * @param string $operator
      *
@@ -92,14 +87,14 @@ final class Relation
                                       $local_field,
                                       $foreign_alias,
                                       $foreign_field,
-                                      $join_type
+                                      $relation_type
     ){
 
         $this->local_alias = $local_alias;
         $this->local_field = $local_field;
         $this->foreign_alias = $foreign_alias;
         $this->foreign_field = $foreign_field;
-        $this->joinType($join_type);
+        $this->relation_type = $relation_type;
     }
 
     /**
@@ -164,12 +159,14 @@ final class Relation
     }
 
     /**
-     * @param $join_type
+     * @param $relation_type
      *
      * @return void
      */
-    public function joinType($join_type){
-        $this->join_type = $join_type & 1;
-        $this->is_outer = $join_type & 2;
+    public function joinType($relation_type= null){
+        if(null == $relation_type){
+            return $this->relation_type;
+        }
+        $this->relation_type = $relation_type;
     }
 }
