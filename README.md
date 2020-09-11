@@ -36,7 +36,13 @@ With Sight Many unnessary join query weill be avoid.
 Enjoy Sight now, please!
 
 ### What Sight do?
-
+   
+From data layer to view or api layer you need to write many foreach code for the data transform.
+   
+Now you need not write foreach code any more. Just use "ToArray()"!
+   
+Maybe the troubleshorting is that you will unable to using "foreach" in future! :)
+   
 
 ### Why Sight?
 
@@ -51,7 +57,8 @@ Enjoy Sight now, please!
 * Field transform could using the data convert, array path and method name.
 * Support data quried from both the database such as mysql and elasticsearch with array path converting.
 * Support call with static manaer. 
-* Support flatten json type data from mysql. 
+* Support flatten json type data from mysql and elasticsearch.  
+* About the array join it support inner join and outer join.
 
 ### Getting Start
 
@@ -69,7 +76,7 @@ The function chain is just like:
     
     $this->selectFields()
         ->fromLocal()
-        ->joinForeign()
+        ->innerJoinForeign()
         ->onRelation()
         ->setMapping()
         ->toArray();
@@ -168,11 +175,11 @@ And if you need the $offset of the array, you could get from  $this->offset();
   
 Just all!
 
-#### Document
+### Document
 
-##### Function List
+#### Class Presenter
 
-###### selectFields($field_lists)
+##### Presenter::selectFields($field_lists)
    
 The $field_lists could be array or comma seperated string. 
    
@@ -180,9 +187,17 @@ With the function you could decide that which fields will be show.
    
 And you could change the key name with the field mapping.
 
-#### Troubleshortings
+### Troubleshortings
 
-#### License
+* You can not use "where" to filter the array.
+* You need to learn the format of the array paramaters.
+* There is no any features for transform from view or api layer to data layer.
+* Not support nested join.
+* Others will be found by you. 
+
+### License
   
 MIT
+
+Copyright [2020] Bardo Qi [bardoqi@gmail.com](bardoqi@gmail.com)
 

@@ -15,12 +15,12 @@
   },
   "autoload": {
     "psr-4": {
-      "BardoQi\\Sight\\": "src/"
+      "Bardoqi\\Sight\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "BardoQi\\sight\\tests\\": "tests/"
+      "Bardoqi\\Sight\\Tests\\": "tests/"
     }
   },
   "extra": {

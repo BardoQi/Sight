@@ -30,6 +30,21 @@ class Presenter extends AbstractPresenter
     use PresenterTrait;
 
     /**
+     * @var string
+     */
+    public $error = '';
+
+    /**
+     * @var string
+     */
+    protected $message = '';
+
+    /**
+     * @var int
+     */
+    protected $status_code = 200;
+
+    /**
      * Presenter Constructor
      */
     public function __construct()
@@ -70,6 +85,9 @@ class Presenter extends AbstractPresenter
             throw InvalidArgumentException::LocalArrayCantBeEmpty();
         }
         $data_list = $this->peelPaginator($data_list);
+        if(0 == count($data_list)){
+            throw InvalidArgumentException::LocalArrayCantBeEmpty();
+        }
         $this->local_alias = $alias;
         $this->local_list = MultiMap::of($data_list);
         return $this;
@@ -264,7 +282,7 @@ class Presenter extends AbstractPresenter
      * @return array
      */
     public function getError(){
-        return implode(',',$this->errors) ;
+        return $this->errors ;
     }
 
     /**
@@ -275,6 +293,34 @@ class Presenter extends AbstractPresenter
     public function getValue($key){
         $item = $this->current_item;
         return $this->buildItem($key,$item);
+    }
+
+    /**
+     *
+     * @param $error
+     * @param int $code
+     */
+    public function setError($error,$code = 100){
+        $this->error = $error;
+        $this->status_code = $code;
+    }
+
+    /**
+     *
+     * @param $message
+     * @param int $code
+     */
+    public function setMessage($message,$code = 200){
+        $this->message = $message;
+        $this->code = $code;
+    }
+
+    /**
+     *
+     * @param $code
+     */
+    public function setStatusCode($code){
+        $this->status_code = $code;
     }
 
 }

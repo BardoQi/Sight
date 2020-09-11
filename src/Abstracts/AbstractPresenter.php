@@ -111,11 +111,6 @@ abstract class AbstractPresenter
     public $out_list = [];
 
     /**
-     * @var array
-     */
-    protected $errors = [];
-
-    /**
      * AbstractPresenter Constructor
      */
     public function __construct()
@@ -383,12 +378,14 @@ abstract class AbstractPresenter
      *
      * @return void
      */
-    protected function forwardCall($method,$item){
+    protected function forwardCall($mapping,$item){
+        $method = $mapping->key();
+        $value = $item->getItemValue($mapping->src(),0,$mapping->alias());
         if(isset($this->macros[$method])){
-            return call_user_func_array($this->macros[$method],$item);
+            return call_user_func_array($this->macros[$method],$value);
         }
         if(method_exists($this,$method)){
-            return $this->$method($item);
+            return $this->$method($value);
         }
     }
 
@@ -408,7 +405,7 @@ abstract class AbstractPresenter
                 $value = $item->getItemValue($mapping->key(),0,$mapping->alias());
                 return call_user_func_array([$Formatter,'format'],[$mapping->src,$value]);
             case MappingTypeEnum::METHOD_NAME:
-                return $this->forwardCall($mapping->src,$item);
+                return $this->forwardCall($mapping,$item);
             case MappingTypeEnum::ARRAY_PATH:
                 return $item->findByPath($mapping->src);
             case MappingTypeEnum::JOIN_FIELD:
