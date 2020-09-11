@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Relations;
 
 use Bardoqi\Sight\Abstracts\AbstractList;
+use Bardoqi\Sight\Enums\RelationEnum;
 
 /**
  * Class RelationList
@@ -72,9 +73,57 @@ final class RelationList extends AbstractList
      */
     public function addRelationByObject(Relation $relation){
         if($relation->isValid()){
-            $this->data[] = $relation;
+            $this->data[$relation->foreignAlias()] = $relation;
         }
         return $this;
+    }
+
+    /**
+     * @param mixed ...$param
+     *
+     * @return $this
+     */
+    public function addItem(...$param){
+        if($param[0] instanceof Relation){
+            return $this->addRelationByObject($param[0]);
+        }
+        return $this->addRelation(...$param);
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function hasOneRelations(){
+        /** @var \Bardoqi\Sight\Relations\Relation $relation */
+        foreach($this->data as $alias => $relation){
+            if(RelationEnum::HAS_ONE == $relation->relation_type){
+                yield $alias => $relation;
+            }
+        }
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function hasManyMergeRelations(){
+        /** @var \Bardoqi\Sight\Relations\Relation $relation */
+        foreach($this->data as $alias => $relation){
+            if(RelationEnum::HAS_MANY_MERGE == $relation->relation_type){
+                yield $alias => $relation;
+            }
+        }
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function hasManyRelations(){
+        /** @var \Bardoqi\Sight\Relations\Relation $relation */
+        foreach($this->data as $alias => $relation){
+            if(RelationEnum::HAS_MANY== $relation->relation_type){
+                yield $alias => $relation;
+            }
+        }
     }
 
 }

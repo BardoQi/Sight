@@ -87,7 +87,7 @@ final class CombineItem
      * @return void
      */
     public function addJoinItem($alias,$item){
-        $this->join_items[$alias][] = $item;
+        $this->join_items[$alias] = $item;
     }
 
     /**
@@ -97,8 +97,7 @@ final class CombineItem
      * @return void
      */
     public function setJoinItem($alias,$item){
-        $this->join_items[$alias] = [];
-        $this->join_items[$alias][] = $item;
+        $this->join_items[$alias] = $item;
     }
 
 
@@ -109,7 +108,7 @@ final class CombineItem
      * @return void
      */
     public function addJoinItemList($alias,$list){
-        $this->join_items[$alias][] = $list;
+        $this->join_items[$alias] = $list;
     }
 
 
@@ -129,20 +128,19 @@ final class CombineItem
      * @return mixed|string
      */
     public function getItemValue($item_key,$offset = 0, $alias = null){
-        if(null === $alias){
-            if(isset($this->local_item[$item_key])){
-                return $this->local_item[$item_key];
+        if(empty($alias)){
+            /** @var \Bardoqi\Sight\Map\SingleMapItem $item */
+            $item = $this->local_item;
+            if($item->hasKey($item_key)){
+                return $item->getItemValue($item_key);
             }
             return '';
         }
-        if(isset($this->join_items[$alias])){
-            $item = $this->join_items[$alias];
-            if(isset($item[$offset])){
-                $sub_item = $item[$offset];
-                if(isset($sub_item[$item_key])){
-                    return $sub_item[$item_key];
-                }
-            }
+        /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $item */
+
+        $item = $this->join_items[$alias];
+        if($item->hasKey($item_key)){
+            return $item->getItemValue($item_key);
         }
         return '';
     }
@@ -155,23 +153,58 @@ final class CombineItem
     public function getAliasMapping($item_key)
     {
         if(!isset($this->alias_mapping[$item_key])){
-
+            if(isset($this->local_item[$item_key])){
+                $this->alias_mapping[$item_key] = 'local';
+            }
+            foreach ($this->join_items as $alias => $list){
+                if(isset($list[$item_key])){
+                    $this->alias_mapping[$item_key] = $alias;
+                    break;
+                }
+            }
         }
         return $this->alias_mapping[$item_key];
     }
 
     /**
-     * @param      $item_key
-     * @param int  $offset
+     * @param     $alias
+     * @param int $offfset
+     *
+     * @return array|mixed
+     */
+    private function getMapItem($alias,$offfset = 0){
+        if ('local' == $alias){
+            return $this->local_item;
+        }else{
+            return $this->join_items[$alias][$offfset];
+        }
+    }
+
+    /**
      * @param int  $path
      * @param null $alias
      *
      * @return void
      */
-    public function findByPath($item_key,$path,$offset = 0, $alias = null){
+    public function findByPath($path, $alias = null){
+        $path_arr = explode(',',$path);
+        $item_key = $path_arr[0];
         if(null ===  $alias){
-            $this->getAliasMapping($item_key);
+            $alias = $this->getAliasMapping($item_key);
         }
+        /** @var \Bardoqi\Sight\Map\MultiMapItem $map_item */
+        $map_item = $this->getMapItem($alias);
+        return $map_item->findByPath($path_arr);
+
+    }
+
+    /**
+     * @param $alias
+     *
+     * @return mixed
+     */
+    public function getData($alias){
+        return $this->join_items[$alias];
     }
 
 }

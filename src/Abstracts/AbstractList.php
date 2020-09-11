@@ -28,7 +28,7 @@ abstract class AbstractList implements ArrayAccess,Iterator,Countable
     /**
      * @var array
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * FieldMapping Constructor
@@ -38,14 +38,6 @@ abstract class AbstractList implements ArrayAccess,Iterator,Countable
     public function __construct()
     {
 
-    }
-
-    /**
-     *
-     * @return \Bardoqi\Sight\Mapping\FieldMapping
-     */
-    public static function of(){
-        return new static();
     }
 
     /**
@@ -131,6 +123,13 @@ abstract class AbstractList implements ArrayAccess,Iterator,Countable
      */
     public function valid() {
         return key($this->data) !== null;
+    }
+
+    /**
+     * @return int
+     */
+    public function count(){
+        return count($this->data);
     }
 
 }

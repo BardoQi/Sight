@@ -1,10 +1,13 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: bardo
- * Date: 2020-09-06
- * Time: 23:28
+
+/*
+ * This file is part of the bardoqi/sight package.
+ *
+ * (c) BardoQi <67158925@qq.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Bardoqi\Sight\Enums;

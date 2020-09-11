@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Bardoqi\Sight\DataFormaters;
+namespace Bardoqi\Sight\Formatters;
 
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Closure;
@@ -105,7 +105,8 @@ class DataFormatter
      * @return false|string
      */
     public function toDate($value){
-        return date("Y-m-d",$value);
+
+        return date("Y-m-d",intval($value));
     }
 
     /**
@@ -114,7 +115,7 @@ class DataFormatter
      * @return false|string
      */
     public function toTime($value){
-        return date("H:i:s",$value);
+        return date("H:i:s",intval($value));
     }
 
     /**
@@ -123,7 +124,7 @@ class DataFormatter
      * @return false|string
      */
     public function toDatetime($value){
-        return date("Y-m-d H:i:s",$value);
+        return date("Y-m-d H:i:s",intval($value));
     }
 
     /**
@@ -132,7 +133,7 @@ class DataFormatter
      * @return string
      */
     public function toCurrency($value){
-        return number_format($value,4);
+        return number_format(intval($value),4);
     }
 
     /**
@@ -141,7 +142,7 @@ class DataFormatter
      * @return string
      */
     public function toCNY($value){
-        return "￥" . number_format($value,2);
+        return "￥" . number_format(intval($value),2);
     }
 
     /**
@@ -150,7 +151,7 @@ class DataFormatter
      * @return string
      */
     public function toUSD($value){
-        return "$" . number_format($value,2);
+        return "$" . number_format(intval($value),2);
     }
 
     /**

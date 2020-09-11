@@ -9,11 +9,12 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Abstracts;
 
-use Bardoqi\Sight\DataFormaters\DataFormatter;
+use Bardoqi\Sight\Formatters\DataFormatter;
 use Bardoqi\Sight\Enums\JoinTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Iterators\ListIterator;
 use Bardoqi\Sight\Mapping\FieldMapping;
+use Bardoqi\Sight\Mapping\FieldMappingList;
 use Bardoqi\Sight\Relations\RelationList;
 use Closure;
 use Illuminate\Support\Arr;
@@ -22,6 +23,8 @@ use Bardoqi\Sight\Enums\PaginateTypeEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Relations\Relation;
 use Bardoqi\Sight\Map\MultiMap;
+use Psr\Log\NullLogger;
+
 
 /**
  * Class AbstractPresenter
@@ -61,17 +64,19 @@ abstract class AbstractPresenter
     protected $join_lists = [];
 
     /**
+     * Keep the current item
+     *
+     * @var null
+     */
+    protected $current_item = null;
+
+    /**
      * Keep the fields trans form nappings
      *
      * @var \Bardoqi\Sight\Mapping\FieldMappingList
      */
     protected $field_mapping = null;
 
-    /**
-     * The fields which type is json and we must decode the field.
-     * @var array
-     */
-    protected $json_list = [];
 
     /**
      * Keeping the paginata data.
@@ -104,11 +109,6 @@ abstract class AbstractPresenter
      * @var array
      */
     public $out_list = [];
-
-    /**
-     * @var int
-     */
-    protected $offset = 0;
 
     /**
      * @var array
@@ -152,7 +152,7 @@ abstract class AbstractPresenter
      * @param  array  $parameters
      * @return mixed
      */
-    public function __call($method, ...$parameters)
+    public function __call($method, $parameters)
     {
         if(isset($this->macros[$method])){
             return call_user_func_array($this->macros[$method], ...$parameters);
@@ -215,7 +215,7 @@ abstract class AbstractPresenter
      *
      * @return $this
      */
-    protected function addJoinList($data_list,$alias,$keyed_by,$join_type=JoinTypeEnum::INNER_JOIN){
+    protected function addJoinList($data_list,$alias,$keyed_by = null,$join_type=JoinTypeEnum::INNER_JOIN){
         if(empty($keyed_by)){
             throw InvalidArgumentException::KeyedByCannotBeEmpty();
         }
@@ -231,7 +231,6 @@ abstract class AbstractPresenter
     /**
      * Add the join relations
      *
-     * @param        $local_alias
      * @param        $local_field
      * @param        $foreign_alias
      * @param        $foreign_field
@@ -240,23 +239,18 @@ abstract class AbstractPresenter
      * @return $this
      */
     protected function addRelation(
-        $local_alias,
         $local_field,
         $foreign_alias,
-        $foreign_field,
+        $foreign_field ='id',
         $reltion_type = RelationEnum::HAS_ONE
         ){
 
-        if($this->local_alias !== $local_alias){
-            throw InvalidArgumentException::LocalAliasIsNotCorrect();
-        }
-
-        if(!isset($this->json_list[$foreign_alias])){
+        if(!isset($this->join_lists[$foreign_alias])){
             throw InvalidArgumentException::ForeignAliasNotExists();
         }
 
-        $this->relations->addRelation(Relation::of(
-            $local_alias,
+        $this->relations->addRelationByObject(Relation::of(
+            $local_alias = $this->local_alias,
             $local_field,
             $foreign_alias,
             $foreign_field,
@@ -287,21 +281,15 @@ abstract class AbstractPresenter
             Throw InvalidArgumentException::FieldMappingListNotFound();
         }
         $mapping = $this->mapping_list;
-        foreach($mapping as $mapping_key => $mapping_item){
+        foreach($mapping as $key => $mapping_item){
             try{
-                /** item format is  ['mapping_key' => ['mapping_source'=>a, 'source_type'=>b  ]] */
-                if(isset($mapping_item['mapping_source'])){
-                    ['mapping_source'=>$mapping_source, 'source_type'=>$source_type] = $mapping_item;
-                }else {
-                    /** item format is  ['mapping_key' => [a, b]] */
-                    list($mapping_source, $source_type) = $mapping_item;
-                }
+                $mapping_object = FieldMapping::fromArray($key,$mapping_item);
             }catch(\Exception $e){
                 throw InvalidArgumentException::MappingArrayIsNotValid($e->getMessage());
             }
-            $this->field_mapping->addMapping($mapping_key,$mapping_source,$source_type);
+            $this->field_mapping->addItem($mapping_object);
         }
-        return true;
+        return $this->field_mapping;
     }
 
     /**
@@ -309,27 +297,34 @@ abstract class AbstractPresenter
      */
     public function prepareMapping(){
         $mapping = $this->initMapping();
+
         foreach($this->field_list as $field_name){
             if(isset($mapping[$field_name])){
                 continue;
             }
             if(isset($this->local_list[0][$field_name])){
+
                 $mapping_item = FieldMapping::of()
-                    ->mappingKey($field_name)
-                    ->mappingSource($field_name)
-                    ->sourceType(MappingTypeEnum::FIELD_NAME);
+                    ->key($field_name)
+                    ->src($field_name)
+                    ->type(MappingTypeEnum::FIELD_NAME);
                 $mapping[$field_name] = $mapping_item;
                 continue;
             }
+            $hasMaping = false;
             foreach($this->join_lists as $alias => $list){
                 if(isset($list[0][$field_name])){
                     $mapping_item = FieldMapping::of()
-                        ->mappingKey($field_name)
-                        ->mappingSource($field_name)
-                        ->sourceType(MappingTypeEnum::FIELD_NAME)
+                        ->key($field_name)
+                        ->src($field_name)
+                        ->type(MappingTypeEnum::FIELD_NAME)
                         ->alias($alias);
                     $mapping[$field_name] = $mapping_item;
+                    $hasMaping = true;
                 }
+            }
+            if($hasMaping){
+                continue;
             }
             throw InvalidArgumentException::FieldOrMappingNotFound($field_name);
         }
@@ -377,19 +372,18 @@ abstract class AbstractPresenter
          * @var \Bardoqi\Sight\Iterators\CombineItem $item
          */
         foreach($list_iterator->listItems() as $offset => $item){
+            $this->current_item = $item;
             yield $offset => $item;
         }
     }
 
     /**
      * @param $method
-     * @param $offset
      * @param \Bardoqi\Sight\Iterators\CombineItem $item
      *
      * @return void
      */
-    protected function forwardCall($method,$offset,$item){
-        $this->offset($offset);
+    protected function forwardCall($method,$item){
         if(isset($this->macros[$method])){
             return call_user_func_array($this->macros[$method],$item);
         }
@@ -400,59 +394,59 @@ abstract class AbstractPresenter
 
     /**
      * @param \Bardoqi\Sight\Mapping\FieldMapping $mapping
-     * @param array $offset
      * @param \Bardoqi\Sight\Iterators\CombineItem $item
      *
      * @return mixed
      */
-    public function getItemValueWithMapping($mapping,$offset,$item){
-        switch($mapping->source_type){
+    public function getItemValueWithMapping($mapping,$item){
+        switch($mapping->type){
             case MappingTypeEnum::FIELD_NAME:
-                return $item->getItemValue($mapping->mappingKey(),0,$mapping->alias());
+//                dd($mapping->key(),$item->getItemValue($mapping->key(),0,$mapping->alias()));
+                return $item->getItemValue($mapping->key(),0,$mapping->alias());
             case MappingTypeEnum::DATA_FORMATER:
                 $Formatter = $this->getFormatter();
-                $value = $item->getItemValue($mapping->mappingKey(),0,$mapping->alias());
-                return call_user_func_array([$Formatter,'format'],[$mapping->mapping_source,$value]);
+                $value = $item->getItemValue($mapping->key(),0,$mapping->alias());
+                return call_user_func_array([$Formatter,'format'],[$mapping->src,$value]);
             case MappingTypeEnum::METHOD_NAME:
-                return $this->forwardCall($mapping->mapping_source,$offset,$item);
+                return $this->forwardCall($mapping->src,$item);
             case MappingTypeEnum::ARRAY_PATH:
-                return $item->findByPath($mapping->mapping_source);
+                return $item->findByPath($mapping->src);
+            case MappingTypeEnum::JOIN_FIELD:
+                return $item->getItemValue($mapping->src,0,$mapping->alias()) ;
             default:
-                return $item->getItemValue($mapping->mappingKey(),0,$mapping->alias());
+                return $item->getItemValue($mapping->key(),0,$mapping->alias());
         }
-        return $item->getItemValue($mapping->mappingKey(),0,$mapping->alias());
+        return $item->getItemValue($mapping->key(),0,$mapping->alias());
     }
 
     /**
      * Transform the field value
      *
-     * @param $offset
      * @param $key
      * @param \Bardoqi\Sight\Iterators\CombineItem $item
      *
      * @return mixed
      */
-    protected function buildItem($offset,$key,$item){
+    protected function buildItem($key,$item){
         if(isset($this->field_mapping[$key])){
             /** @var \Bardoqi\Sight\Mapping\FieldMapping $mapping */
             $mapping = $this->field_mapping[$key];
-            $newValue = $this->getItemValueWithMapping($mapping,$offset,$item);
+            $newValue = $this->getItemValueWithMapping($mapping,$item);
             return $newValue;
         }
-        return $value;
+        return $item->getItemValue($key);
     }
 
     /**
      * build the item with evary fields
      * @param \Bardoqi\Sight\Iterators\CombineItem $item
-     * @param $offset
      *
      * @return array
      */
-    protected function transform($item,$offset){
+    protected function transform($item){
         $new_item = [];
         foreach($this->field_list as $key){
-            $new_item[$key] = $this->buildItem($offset, $key, $item);
+            $new_item[$key] = $this->buildItem($key, $item);
         }
         return $new_item;
     }
@@ -472,19 +466,6 @@ abstract class AbstractPresenter
             return $paginate_data;
         }
         return $this->paginate_data;
-    }
-
-    /**
-     * @param null $offset
-     *
-     * @return int|bool
-     */
-    protected function offset($offset = null){
-        if(null !==  $offset){
-            $this->offset = $offset;
-            return true;
-        }
-        return $this->offset;
     }
 
 }

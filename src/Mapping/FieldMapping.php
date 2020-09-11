@@ -24,21 +24,21 @@ final class FieldMapping
      *
      * @var string
      */
-    public $mapping_key;
+    public $key;
 
     /**
      * Where we could get the value
      *
      * @var string
      */
-    public $mapping_source;
+    public $src;
 
     /**
      * Define the manaer of getting value
      *
      * @var int
      */
-    public $source_type;
+    public $type;
 
     /**
      * @var string
@@ -48,81 +48,85 @@ final class FieldMapping
     /**
      * FieldMapping Constructor
      *
-     * @param $mapping_key
-     * @param $mapping_source
-     * @param $source_type
+     * @param $key
+     * @param $src
+     * @param $type
+     * @param $alias
      *
      */
-    public function __construct($mapping_key = '',$mapping_source = '',$source_type = MappingTypeEnum::TYPE_FIELD_NAME)
+    public function __construct($key = '',$src = '',$type = MappingTypeEnum::FIELD_NAME, $alias='')
     {
-        $this->mapping_key = $mapping_key;
-        $this->mapping_source = $mapping_source;
-        $this->source_type = $source_type;
+        $this->key = $key;
+        $this->src = $src;
+        $this->type = $type;
+        $this->alias = $alias;
     }
 
     /**
-     * @param $mapping_key
-     * @param $mapping_source
-     * @param $source_type
+     * @param $key
+     * @param $src
+     * @param $type
+     * @param $alias
      *
      * @return \Bardoqi\Sight\Mapping\FieldMapping
      */
-    public static function of($mapping_key = '',$mapping_source = '',$source_type = MappingTypeEnum::TYPE_FIELD_NAME){
+    public static function of($key = '',$src = '',$type = MappingTypeEnum::FIELD_NAME,$alias=''){
 
-        return new static($mapping_key,$mapping_source,$source_type);
+        return new static($key,$src,$type,$alias);
     }
 
     /**
      * @return void
      */
     public function isValid(){
-        if(empty($this->mapping_key)){
+        if(empty($this->key)){
             throw InvalidArgumentException::MappingKeyCanNotBeEmpty();
         }
-        if(empty($this->mapping_source)){
+        if(empty($this->src)){
             throw InvalidArgumentException::MappingSourceCanNotBeEmpty();
         }
-        if(MappingTypeEnum::valid($this->source_type)){
+        if(!MappingTypeEnum::valid($this->type)){
             throw InvalidArgumentException::MappingTypeIsNotValid();
         }
+        return true;
     }
 
     /**
-     * @param $mapping_key
+     * @param $key
      *
      * @return mixed
      */
-    public function mappingKey($mapping_key = null){
-        if(null == $mapping_key){
-            return $this->mapping_key;
+    public function key($key = null){
+        if(null == $key){
+            return $this->key;
         }
-        $this->mapping_key = $mapping_key;
+        $this->key = $key;
         return $this;
     }
 
     /**
-     * @param $mapping_source
+     * @param $src
      *
      * @return mixed
      */
-    public function mappingSource($mapping_source = null){
-        if(null == $mapping_source){
-            return $this->mapping_source;
+    public function src($src = null){
+        if(null == $src){
+            return $this->src;
         }
-        $this->mapping_source = $mapping_source;
+        $this->src = $src;
         return $this;
     }
 
     /**
-     * @param $source_type
+     * @param $type
      *
      * @return mixed
      */
-    public function sourceType($source_type = null){
-        if(null == $source_type){
-            return $this->source_type;
+    public function type($type = null){
+        if(null == $type){
+            return $this->type;
         }
-        $this->source_type = $source_type;
+        $this->type = $type;
         return $this;
     }
 
@@ -131,7 +135,7 @@ final class FieldMapping
      *
      * @return $this|string
      */
-    public function alias($alias){
+    public function alias($alias = null){
         if(null == $alias){
             return $this->alias;
         }
@@ -139,5 +143,36 @@ final class FieldMapping
         return $this;
     }
 
+    /**
+     * @param $key
+     * @param $array_item
+     *
+     * @return \Bardoqi\Sight\Mapping\FieldMapping
+     */
+    public static function fromArray($key,$array_item){
+        try{
+            $alias = '';
+            /** item format is  ['key' => ['src'=>a, 'type'=>b  ]] */
+            if(isset($array_item['src'])){
+                if(isset($array_item['alias'])){
+                    ['src'=>$src, 'type'=>$type, 'alias'=>$alias] = $array_item;
+                }else{
+                    ['src'=>$src, 'type'=>$type] = $array_item;
+                }
+            }else {
+                /** item format is  ['key' => [a, b]] */
+                if(isset($array_item['alias'])){
+                    list($src, $type, $alias) = $array_item;
+                }else{
+
+                    list($src, $type) = $array_item;
+                }
+            }
+        }catch(\Exception $e){
+            throw new \InvalidArgumentException($e->getMessage());
+        }
+
+        return self::of($key, $src, $type, $alias);
+    }
 
 }

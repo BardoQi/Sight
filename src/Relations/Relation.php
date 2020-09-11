@@ -107,6 +107,7 @@ final class Relation
             ||(empty($this->foreign_field))){
             throw InvalidArgumentException::ParamsOfRelationIsMissing();
         }
+        return true;
     }
 
     /**
@@ -163,10 +164,30 @@ final class Relation
      *
      * @return void
      */
-    public function joinType($relation_type= null){
+    public function relationType($relation_type= null){
         if(null == $relation_type){
             return $this->relation_type;
         }
         $this->relation_type = $relation_type;
+    }
+
+    public function __set($name,$value){
+        $this->$name = $value;
+    }
+
+    /**
+     * @param $array_item
+     *
+     * @return void
+     */
+    public static function fromArray($array_item){
+        $instance = new static();
+        if(isset($array_item['local_alias'])){
+            foreach($array_item as $key => $value){
+                $instance->$key = $value;
+            }
+            return $instance;
+        }
+        throw InvalidArgumentException::RelationParamaterMustBeKeyValue();
     }
 }

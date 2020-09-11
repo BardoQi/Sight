@@ -34,16 +34,25 @@ class FieldMappingList extends AbstractList
     }
 
     /**
-     * @param     $mapping_key
-     * @param     $mapping_source
-     * @param int $source_type
+     *
+     * @return \Bardoqi\Sight\Mapping\FieldMapping
+     */
+    public static function of(){
+        return new static();
+    }
+
+    /**
+     * @param     $key
+     * @param     $src
+     * @param int $type
+     * @param     $alias
      *
      * @return $this
      */
-    public function addMapping($mapping_key,$mapping_source,$source_type = MappingTypeEnum::TYPE_FIELD_NAME){
-        $mapping = FieldMapping::of($mapping_key,$mapping_source,$source_type);
+    public function addMapping($key,$src,$type = MappingTypeEnum::FIELD_NAME,$alias='' ){
+        $mapping = FieldMapping::of($key,$src,$type,$alias);
         if($mapping->isValid()){
-            $this->data[$mapping_key] = $mapping;
+            $this->data[$key] = $mapping;
         }
         return $this;
     }
@@ -55,9 +64,21 @@ class FieldMappingList extends AbstractList
      */
     public function addMappingByObject(FieldMapping $mapping){
         if($mapping->isValid()){
-            $this->data[$mapping->mapping_key] = $mapping;
+            $this->data[$mapping->key] = $mapping;
         }
         return $this;
+    }
+
+    /**
+     * @param mixed ...$param
+     *
+     * @return $this
+     */
+    public function addItem(...$param){
+        if($param[0] instanceof FieldMapping){
+            return $this->addMappingByObject($param[0]);
+        }
+        return $this->addMapping(...$param);
     }
 
 }

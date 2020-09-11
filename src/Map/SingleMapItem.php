@@ -3,22 +3,22 @@ declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: bardo
- * Date: 2020-09-06
- * Time: 11:00
+ * Date: 2020-09-11
+ * Time: 15:08
  */
 
 namespace Bardoqi\Sight\Map;
 
-use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Abstracts\AbstractList;
+use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Map\Interfaces\IMapItem;
 
 /**
- * Class MultiMapItem
+ * Class SingleMapItem
  *
- * @package Bardoqi\Sight\Abstracts
+ * @package Bardoqi\Sight\Map
  */
-class MultiMapItem extends AbstractList  implements IMapItem
+class SingleMapItem extends AbstractList  implements IMapItem
 {
     /**
      * Create a instance
@@ -55,14 +55,14 @@ class MultiMapItem extends AbstractList  implements IMapItem
      */
     public function findByPath($path,$offset = 0){
         $key = array_shift($path);
-        $item = $this->data[$offset];
+        $item = $this->data;
         if(!is_array($item)){
             $decode_item = json_decode($item,true);
         }
         if(null === $decode_item){
             throw InvalidArgumentException::ItemIsNotJsonString();
         }else{
-            $this->data[$offset][$key] = $decode_item;
+            $this->data[$key] = $decode_item;
         }
         $item = $decode_item;
         foreach($path as $key){
@@ -84,8 +84,7 @@ class MultiMapItem extends AbstractList  implements IMapItem
      * @return bool
      */
     public function hasKey($key){
-        $tem = reset($this->data);
-        return isset($tem[$key]);
+        return isset($this->data[$key]);
     }
 
     /**
@@ -95,9 +94,8 @@ class MultiMapItem extends AbstractList  implements IMapItem
      * @return mixed|null
      */
     public function getItemValue($key,$offset = null){
-        $tem = reset($this->data);
-        if(isset($tem[$key])){
-            return $tem[$key];
+        if(isset($this->data[$key])){
+            return $this->data[$key];
         }
         return false;
     }

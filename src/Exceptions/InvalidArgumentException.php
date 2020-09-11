@@ -125,7 +125,7 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
     public static function ForeignAliasNotExists(){
-        return new self("Foreign Alias Not Exists! Please call JoinForeign() function first");
+        return new self("Foreign Alias Not Exists! Please call innerJoinForeign() or outerJoinForeign()function first");
     }
 
     /**
@@ -151,5 +151,19 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract
      */
     public static function FieldOrMappingNotFound($name){
         return new self("Field Or Mapping " .$name. " Not Found!");
+    }
+
+    /**
+     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
+     */
+    public static function LocalArrayCantBeEmpty(){
+        return new self("Local Array Can't Be Empty!");
+    }
+
+    /**
+     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
+     */
+    public static function RelationParamaterMustBeKeyValue(){
+        return new self("Relation Paramater Must Be Structure Of Key-Value!");
     }
 }

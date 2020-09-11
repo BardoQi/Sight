@@ -26,7 +26,7 @@ trait PresenterTrait
      * @return false|string
      */
     public function created_at($value){
-        return date("Y-m-d H:i:s",$value);
+        return date("Y-m-d H:i:s",intval($value));
     }
 
     /**
@@ -35,7 +35,7 @@ trait PresenterTrait
      * @return false|string
      */
     public function updated_at($value){
-        return date("Y-m-d H:i:s",$value);
+        return date("Y-m-d H:i:s",intval($value));
     }
 
     /**
@@ -44,7 +44,7 @@ trait PresenterTrait
      * @return false|string
      */
     public function deleted_at($value){
-        return date("Y-m-d H:i:s",$value);
+        return date("Y-m-d H:i:s",intval($value));
     }
 
 

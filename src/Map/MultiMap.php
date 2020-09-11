@@ -36,6 +36,11 @@ class MultiMap extends AbstractList
     public $join_type = 0;
 
     /**
+     * @var array
+     */
+    private $empty_item = null;
+
+    /**
      * Create a instance
      *
      * @param null|array $data
@@ -45,62 +50,26 @@ class MultiMap extends AbstractList
      */
     public static function of($data = null,$keyed_by = null,$join_type=JoinTypeEnum::INNER_JOIN){
         $instance = new static();
-        $instance->init($data,$keyed_by,$join_type);
+        $instance->join_type = $join_type;
+        if(null !== $keyed_by){
+            foreach($data as $item){
+                $instance->data[$item[$keyed_by]][] = $item;
+            }
+            return $instance;
+        }
+        $instance->data = $data;
         return $instance;
     }
 
     /**
-     * @param null $data
-     * @param null $keyed_by
-     *
-     * @return void
+     * @return array
      */
-    protected function init($data = null,$keyed_by = null, $join_type=JoinTypeEnum::INNER_JOIN){
-        if((null !== $data) && (null !== $keyed_by)){
-            foreach($src_array as $item){
-                $this->addItem($item, [$item[$key]]);
-            }
-            ksort($this->data);
-            return true;
-        }
-        $this->data = $data;
-        $this->join_type = $join_type;
+    public function getAnyOne(){
+        $item = reset($this->data);
+        if(isset($item[0]))
+            return $item[0];
+        return $item;
     }
-
-    /**
-     * @param $offset
-     * @param $item
-     *
-     * @return void
-     */
-    public function addItem($item, $offset = null){
-        if(null === $offset){
-            $this->$this->data[] = $item;
-            return true;
-        }
-        if(isset($this->data[$offset])){
-            if($this->data[$offset]){
-                $this->data[$offset]->addItem(MultiMapItem::of($item), $offset);
-                return true;
-            }
-        }
-        $this->data[$offset] = MultiMap::of()->addItem(MultiMapItem::of($item));
-        return true;
-    }
-
-    /**
-     *
-     * @param $offset
-     *
-     * @return mixed
-     */
-    public function getItem($offset = null){
-        if(null !== $offset){
-            return $this->data[$offset];
-        }
-        return reset($this->data);
-    }
-
 
     /**
      * Create a empty row with given offset
@@ -108,25 +77,85 @@ class MultiMap extends AbstractList
      *
      * @return array
      */
-    public function createEmpty($offset = null){
-        $item = $this->getItem($offset);
-        if($item instanceof MultiMap){
-            return $item->createEmpty();
+    public function getEmptyOne(){
+        if(null === $this->empty_item){
+            $item = $this->getAnyOne();
+            $keys = array_keys($item);
+            $values = array_fill(0, count($keys), '');
+            $this->empty_item = array_combine($keys, $values);
         }
-        $keys = $item->getKeys();
-        $values = array_fill(0, count($keys), $default);
-        return array_combine($keys, $values);
+        return $this->empty_item;
     }
 
     /**
-     * Find the row with specified path which is dot-separated string.
-     * @param string $offset
-     * @param array $path
-     * @return mixed
+     * @return \Generator
      */
-    public function findByPath($offset,$path){
-        $item = $this->getItem($offset);
-        return $item->findByPath($path);
+    public function getLocalOne(){
+        foreach($this->data as $key => $item){
+            yield $key => SingleMapItem::of($item);
+        }
     }
 
+    /**
+     * @param $offset
+     *
+     * @return \Bardoqi\Sight\Map\MultiMapItem|null
+     */
+    public function getHasOne($offset){
+        if(!isset($this->data[$offset])){
+            if(JoinTypeEnum::INNER_JOIN === $this->join_type){
+                return null;
+            }
+            return SingleMapItem::of($this->getEmptyOne());
+        }
+        return SingleMapItem::of($this->data[$offset][0]);
+    }
+
+    /**
+     * @param $offset
+     *
+     * @return \Bardoqi\Sight\Map\SingleMapItem|null
+     */
+    public function getHasManyMerge($offset){
+        if(!isset($this->data[$offset])){
+            if(JoinTypeEnum::INNER_JOIN === $this->join_type){
+                return null;
+            }
+            $item[0] = $this->getEmptyOne();
+            return MultiMapItem::of($item);
+        }
+        return MultiMapItem::of($this->data[$offset]);
+    }
+
+    /**
+     * @param $offset
+     *
+     * @return bool|\Generator
+     */
+    public function getItems($offset){
+        if(!isset($this->data[$offset])){
+            return false;
+        }
+        foreach($this->data[$offset] as $key => $item){
+            yield $key => MultiMapItem::of($item);
+        }
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function listItems(){
+        foreach($this->data as $key => $item){
+            yield $key => MultiMapItem::of($item);
+        }
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function singleListItems(){
+        foreach($this->data as $key => $item){
+            yield $key => SingleMapItem::of($item);
+        }
+    }
 }

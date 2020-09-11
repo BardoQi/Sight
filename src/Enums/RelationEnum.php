@@ -18,6 +18,20 @@ namespace Bardoqi\Sight\Enums;
  */
 final class RelationEnum
 {
-    const HAS_ONE = 1;
-    const HAS_MANY =2;
+
+    /**
+     * There is 1 items in join array.
+     */
+    const HAS_ONE           = 1;
+
+    /**
+     * There are many items in join array.
+     */
+    const HAS_MANY          = 2;
+
+    /**
+     * There are many items in join array and must to merge to a fields
+     */
+    const HAS_MANY_MERGE    = 3;
+
 }

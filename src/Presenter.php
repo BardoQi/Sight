@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight;
 
-use Bardoqi\Sight\Abstracts\MultiMap;
+use Bardoqi\Sight\Enums\RelationEnum;
+use Bardoqi\Sight\Map\MultiMap;
 use Bardoqi\Sight\DataFormaters\DataFormatter;
 use Bardoqi\Sight\Enums\JoinTypeEnum;
 use Bardoqi\Sight\Enums\PaginateTypeEnum;
@@ -58,15 +59,15 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function fromLocal($data_list,$alias,$data_path = null){
-        if(empty($alias)){
-            Throw InvalidArgumentException::AliasCanNotBeEmpty();
-        }
+    public function fromLocal($data_list,$alias = 'main',$data_path = null){
         if(null !== $data_path){ // maybe id is elasticsearch result
             $data_list = Arr::get($data_list,$data_path);
         }
         if(!is_array($data_list)){
             throw InvalidArgumentException::ParamaterIsNotArray();
+        }
+        if(0 == count($data_list)){
+            throw InvalidArgumentException::LocalArrayCantBeEmpty();
         }
         $data_list = $this->peelPaginator($data_list);
         $this->local_alias = $alias;
@@ -107,7 +108,7 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function innerJoinForeign($data_list,$alias,$keyed_by){
+    public function innerJoinForeign($data_list,$alias,$keyed_by = 'id'){
         $this->addJoinList($data_list,$alias,$keyed_by,JoinTypeEnum::INNER_JOIN);
         return $this;
     }
@@ -121,32 +122,29 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function outerJoinForeign($data_list,$alias,$keyed_by){
+    public function outerJoinForeign($data_list,$alias,$keyed_by = 'id'){
         $this->addJoinList($data_list,$alias,$keyed_by,JoinTypeEnum::OUTER_JOIN);
         return $this;
     }
 
     /**
-     * @param        $local_alias
      * @param        $local_field
      * @param        $foreign_alias
      * @param        $foreign_field
-     * @param        $join_type
+     * @param        $relation_type
      * @return $this
      */
     public function onRelation(
-                    $local_alias,
                     $local_field,
                     $foreign_alias,
                     $foreign_field,
-                    $join_type
+                    $relation_type = RelationEnum::HAS_ONE
     ){
         $this->addRelation(
-            $local_alias,
             $local_field,
             $foreign_alias,
             $foreign_field,
-            $join_type
+            $relation_type
             );
         return $this;
     }
@@ -162,14 +160,14 @@ class Presenter extends AbstractPresenter
     }
 
     /**
-     * @param     $mapping_key
-     * @param     $mapping_source
-     * @param int $source_type
+     * @param     $key
+     * @param     $src
+     * @param int $type
      *
      * @return $this
      */
-    public function addFieldMapping($mapping_key,$mapping_source,$source_type = MappingTypeEnum::TYPE_FIELD_NAME){
-        $this->field_mapping->addMapping($mapping_key,$mapping_source,$source_type);
+    public function addFieldMapping($key,$src,$type = MappingTypeEnum::FIELD_NAME){
+        $this->field_mapping->addMapping($key,$src,$type);
         return $this;
     }
 
@@ -189,8 +187,8 @@ class Presenter extends AbstractPresenter
      * @param $mapping
      * format of $mapping:
      *  [
-     *       ['mapping_key' => ['mapping_source'=>a, 'source_type'=>b  ]],
-     *       ['mapping_key' => ['mapping_source'=>a, 'source_type'=>b  ]],
+     *       ['key' => ['src'=>a, 'type'=>b  ]],
+     *       ['key' => ['src'=>a, 'type'=>b  ]],
      *  ]
      *
      * @return $this
@@ -217,8 +215,8 @@ class Presenter extends AbstractPresenter
      */
     public function toArray(){
         $out_array = [];
-        foreach($this->listItems() as $offset => $items){
-            $out_array[] = $this->transform($items,$offset);
+        foreach($this->listItems() as  $item){
+            $out_array[] = $this->transform($item);
         }
         return $out_array;
     }
@@ -260,6 +258,23 @@ class Presenter extends AbstractPresenter
             $ref_array[$parent_id]['is_leaf'] = 0;
         }
         return $out_array;
+    }
+
+    /**
+     * @return array
+     */
+    public function getError(){
+        return implode(',',$this->errors) ;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getValue($key){
+        $item = $this->current_item;
+        return $this->buildItem($key,$item);
     }
 
 }
