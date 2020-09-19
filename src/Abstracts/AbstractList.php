@@ -18,6 +18,8 @@ use Countable;
 use Iterator;
 
 /**
+ * Abstract class for iterator pattern.
+ *
  * Class AbstractList
  *
  * @package Bardoqi\Sight\Abstracts

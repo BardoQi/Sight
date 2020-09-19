@@ -20,7 +20,7 @@ use Throwable;
  *
  * @package Bardoqi\Sight\Exceptions
  */
-class InvalidArgumentException extends InvalidArgumentExceptionAbstract
+class InvalidArgumentException extends InvalidArgumentExceptionAbstract implements Throwable
 {
     /**
      * @return InvalidArgumentException
@@ -165,5 +165,30 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract
      */
     public static function RelationParamaterMustBeKeyValue(){
         return new self("Relation Paramater Must Be Structure Of Key-Value!");
+    }
+
+    /**
+     * @param $name
+     *
+     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
+     */
+    public static function FieldMappingIsInvalid($name){
+        return new self("Field Mapping ".$name." Is Invalid!");
+    }
+
+    /**
+     * @param $name
+     *
+     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
+     */
+    public static function FunctionExistsAlready($name){
+        return new self("Function ". $name ." Exists Already!");
+    }
+
+    /**
+     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
+     */
+    public static function ItemIsNotJsonString(){
+        return new self("Item Is Not Json String!");
     }
 }

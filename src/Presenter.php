@@ -11,7 +11,6 @@ namespace Bardoqi\Sight;
 
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Map\MultiMap;
-use Bardoqi\Sight\DataFormaters\DataFormatter;
 use Bardoqi\Sight\Enums\JoinTypeEnum;
 use Bardoqi\Sight\Enums\PaginateTypeEnum;
 use Bardoqi\Sight\Mapping\FieldMapping;
@@ -30,6 +29,7 @@ class Presenter extends AbstractPresenter
     use PresenterTrait;
 
     /**
+     *
      * @var string
      */
     public $error = '';
@@ -51,7 +51,6 @@ class Presenter extends AbstractPresenter
     {
         parent::__construct();
     }
-
 
     /**
      * @param array|string $field_list
@@ -84,7 +83,7 @@ class Presenter extends AbstractPresenter
         if(0 == count($data_list)){
             throw InvalidArgumentException::LocalArrayCantBeEmpty();
         }
-        $data_list = $this->peelPaginator($data_list);
+        $data_list = $this->huskPaginator($data_list);
         if(0 == count($data_list)){
             throw InvalidArgumentException::LocalArrayCantBeEmpty();
         }
@@ -92,6 +91,18 @@ class Presenter extends AbstractPresenter
         $this->local_list = MultiMap::of($data_list);
         return $this;
     }
+
+    /**
+     * @param        $data_item
+     * @param string $alias
+     * @param null   $data_path
+     *
+     * @return \Bardoqi\Sight\Presenter
+     */
+    public function fromLocalItem($data_item,$alias = 'main',$data_path = null){
+        return $this->fromLocal([$data_item],$alias,$data_path );
+    }
+
 
     /**
      * pluck the values from given field
@@ -111,10 +122,18 @@ class Presenter extends AbstractPresenter
                 $out_array[] = $item[$key];
             }
         }
-        /** maybe the value is comma sepereted values */
-        $out_str = implode(',',$out_array);
-        $out_array = explode(',',$out_str);
-        return array_unique($out_array);
+
+        if(!empty($out_array)){
+            /** maybe the value is comma separated values */
+            try{
+                $out_str = implode(',',$out_array);
+                $out_array = explode(',',$out_str);
+            }catch(\Exception $e){
+                dd($e->getMessage(),$out_array,$fields,$this->local_list);
+            }
+            return array_unique($out_array);
+        }
+        return [];
     }
 
     /**
@@ -181,11 +200,12 @@ class Presenter extends AbstractPresenter
      * @param     $key
      * @param     $src
      * @param int $type
+     * @param string $alias
      *
      * @return $this
      */
-    public function addFieldMapping($key,$src,$type = MappingTypeEnum::FIELD_NAME){
-        $this->field_mapping->addMapping($key,$src,$type);
+    public function addFieldMapping($key,$src,$type = MappingTypeEnum::FIELD_NAME, $alias = ''){
+        $this->field_mapping->addMapping($key,$src,$type,$alias);
         return $this;
     }
 
@@ -194,25 +214,25 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function addFieldMappingbyObject(FieldMapping $mapping)
+    public function addFieldMappingByObject(FieldMapping $mapping)
     {
         /** @var \Bardoqi\Sight\Mapping\FieldMappingList */
-        $this->field_mapping->addMappingWithObject($mapping);
+        $this->field_mapping->addMappingByObject($mapping);
         return $this;
     }
 
     /**
-     * @param $mapping
+     * @param $mapping_list
      * format of $mapping:
      *  [
-     *       ['key' => ['src'=>a, 'type'=>b  ]],
-     *       ['key' => ['src'=>a, 'type'=>b  ]],
+     *       ['key1' => ['src'=>a, 'type'=>b， 'alias'=c  ]],
+     *       ['key1' => ['src'=>a, 'type'=>b   'alias'=c  ]],
      *  ]
      *
      * @return $this
      */
-    public function setMappingList($mapping){
-        $this->mapping_list = $mapping;
+    public function addFieldMappingList($mapping_list){
+        $this->mapping_list = $mapping_list;
         return $this;
     }
 
@@ -240,6 +260,14 @@ class Presenter extends AbstractPresenter
     }
 
     /**
+     * @return mixed
+     */
+    public function toItemArray(){
+        $out_array = $this->toArray();
+        return $out_array[0];
+    }
+
+    /**
      * @param int $paginate_type
      *
      * @return array
@@ -252,12 +280,12 @@ class Presenter extends AbstractPresenter
     }
 
     /**
-     * @param $src_array
      * @param $parent_id_key
      *
      * @return array
      */
-    protected function toTreeArray($src_array,$parent_id_key = 'parent_d'){
+    protected function toTreeArray($parent_id_key = 'parent_d'){
+        $src_array = $this->toArray();
         $out_array = [];
         $ref_array = [];
         foreach($src_array as $key => $item){
@@ -279,21 +307,29 @@ class Presenter extends AbstractPresenter
     }
 
     /**
-     * @return array
-     */
-    public function getError(){
-        return $this->errors ;
-    }
-
-    /**
-     * @param $key
+     * @param $field_name
      *
      * @return mixed
      */
-    public function getValue($key){
+    public function getValue($field_name){
         $item = $this->current_item;
-        return $this->buildItem($key,$item);
+        return $this->buildItem($field_name,$item);
     }
+
+    /**
+     * @return \Bardoqi\Sight\Iterators\CombineItem;
+     */
+    public function getCurrentItem(){
+        return $this->current_item;
+    }
+
+    /**
+     * @return string
+     */
+    public function getError(){
+        return $this->error ;
+    }
+
 
     /**
      *
@@ -310,9 +346,15 @@ class Presenter extends AbstractPresenter
      * @param $message
      * @param int $code
      */
-    public function setMessage($message,$code = 200){
+    public function setMessage($message){
         $this->message = $message;
-        $this->code = $code;
+    }
+
+    /**
+     * @param string
+     */
+    public function getMessage(){
+        return $this->message;
     }
 
     /**
@@ -321,6 +363,14 @@ class Presenter extends AbstractPresenter
      */
     public function setStatusCode($code){
         $this->status_code = $code;
+    }
+
+    /**
+     *
+     * @param $code
+     */
+    public function getStatusCode($code){
+        return $this->status_code;
     }
 
 }

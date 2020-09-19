@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Iterators;
 
-use Bardoqi\Sight\Enums\RelationEnum;
+
+
+use Tolawho\Loggy\Facades\Loggy;
 
 /**
  * Class ListIterator
@@ -44,7 +46,7 @@ final class ListIterator
 
     /**
      *
-     * @return \Bardoqi\Sight\Abstracts\AbstractIterator
+     * @return \Bardoqi\Sight\Abstracts\static
      */
     public static function of(){
         return new static();
@@ -70,6 +72,10 @@ final class ListIterator
     public function LocalItems(){
         /** @var \Bardoqi\Sight\Map\MultiMap $local_list */
         $local_list = $this->local_list;
+        if(0 === $local_list->count()){
+            yield [];
+            return false;
+        }
         foreach ($local_list->singleListItems() as $key => $item) {
             $new_item = CombineItem::getInstance();
             $new_item->addLocalItem($item);
@@ -104,6 +110,13 @@ final class ListIterator
                 $list = $join_list->getHasManyMerge($local_key);
                 $item->addJoinItem($alias,$list);
             }
+            foreach ($relation_list->hasManySplitRelations()as $alias => $relation){
+                $local_key = $item->getItemValue($relation->local_field);
+                /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
+                $join_list = $this->join_lists[$alias];
+                $list = $join_list->getHasManySplit($local_key);
+                $item->addJoinItem($alias,$list);
+            }
             yield $key => $item;
         }
 
@@ -112,7 +125,7 @@ final class ListIterator
     /**
      * @param \Bardoqi\Sight\Iterators\CombineItem $item
      *
-     * @return \Bardoqi\Sight\Abstracts\AbstractIterator|\Bardoqi\Sight\Iterators\TreeIterator
+     * @return \Bardoqi\Sight\Iterators\ListIterator|\Bardoqi\Sight\Iterators\TreeIterator
      */
     protected function buildTreeIterator(CombineItem $item){
         /**
@@ -126,7 +139,7 @@ final class ListIterator
          */
         $relation_list = $this->relation_list;
         foreach ($relation_list->hasManyRelations() as $alias => $relation){
-            $local_key = $item->getItemValue($relation->local_field,0);
+            $local_key = $item->getItemValue($relation->local_field);
 
             /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
             $join_list = $this->join_lists[$alias];
@@ -150,7 +163,7 @@ final class ListIterator
             $tree_iterator = $this->buildTreeIterator($item);
             if(null === $tree_iterator){
                 yield $item;
-            }else{ //TODO HASMANY
+            }else{
                 foreach($tree_iterator->listItems($item) as $key=> $new_item){
                     yield $new_item;
                 }

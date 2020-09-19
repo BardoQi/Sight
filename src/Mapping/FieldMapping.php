@@ -76,7 +76,7 @@ final class FieldMapping
     }
 
     /**
-     * @return void
+     * @return bool
      */
     public function isValid(){
         if(empty($this->key)){

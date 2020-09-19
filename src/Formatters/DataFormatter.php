@@ -30,7 +30,7 @@ class DataFormatter
      */
     protected $macros = [];
     /**
-     * @var null|Bardoqi\Sight\DataFormaters\DataFormatter
+     * @var null| \Bardoqi\Sight\Formatters\DataFormatter
      */
     public static $instance = null;
 
@@ -49,7 +49,7 @@ class DataFormatter
     }
 
     /**
-     * @return \Bardoqi\Sight\DataFormaters\DataFormatter
+     * @return \Bardoqi\Sight\Formatters\DataFormatter
      */
     public static function getInstance(){
         if(null === self::$instance){
@@ -61,25 +61,41 @@ class DataFormatter
     /**
      * Add the method on fly.
      * @param $function_name
-     * @param $function
+     * @param $methodCallable
      *
-     * @return void
+     * @return bool
      */
-    public function addFunction($function_name,$function){
-        if (!is_callable($function)) {
+    public function addFunction($function_name,$methodCallable){
+        if (!is_callable($methodCallable)) {
             throw InvalidArgumentException::FunctionMustBeCallable($function_name);
         }
-        $this->marcro[$function_name] = Closure::bind($methodCallable, $this, get_class());
+        $this->macros[$function_name] = Closure::bind($methodCallable, $this, get_class());
+        return true;
     }
 
     /**
      * @param $method_name
      * @param $callable
      *
-     * @return void
+     * @return bool
      */
     public function addMethod($method_name,$callable){
         return $this->addFunction($method_name,$callable);
+    }
+
+    /**
+     * @param $method
+     *
+     * @return bool
+     */
+    public function hasMothod($method){
+        if(method_exists($this,$method)){
+            return true;
+        }
+        if(isset($this->macros[$method])){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -96,7 +112,7 @@ class DataFormatter
         if(method_exists($class,$formatter)){
             return call_user_func([$class,$formatter],$value);
         }
-        throw InvalidArgumentException::MethodNotFound($method);
+        throw InvalidArgumentException::MethodNotFound($formatter);
     }
 
     /**
@@ -112,7 +128,7 @@ class DataFormatter
     /**
      * @param $value
      *
-     * @return false|string
+     * @return string
      */
     public function toTime($value){
         return date("H:i:s",intval($value));
@@ -121,7 +137,7 @@ class DataFormatter
     /**
      * @param $value
      *
-     * @return false|string
+     * @return string
      */
     public function toDatetime($value){
         return date("Y-m-d H:i:s",intval($value));

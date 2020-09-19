@@ -43,7 +43,7 @@ final class TreeIterator
     /**
      * @param $is_inner
      *
-     * @return \Bardoqi\Sight\Abstracts\AbstractIterator
+     * @return \Bardoqi\Sight\Abstracts\static
      */
     public static function of($list,$alias){
         return new static($list,$alias);

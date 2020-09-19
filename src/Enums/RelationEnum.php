@@ -34,4 +34,9 @@ final class RelationEnum
      */
     const HAS_MANY_MERGE    = 3;
 
+    /**
+     * There are many items in join array and must explode the keys in local array.
+     */
+    const HAS_MANY_SPLIT    = 4;
+
 }

@@ -13,10 +13,12 @@ interface IMapItem
 {
     /**
      * @param $data
+     * @param $keyed_by
+     * @param $relation_type
      *
      * @return mixed
      */
-    public static function of($data);
+    public static function of($data,$keyed_by,$relation_type);
 
     /**
      * @param $path
@@ -26,23 +28,18 @@ interface IMapItem
      */
     public function findByPath($path,$offset = null);
 
-    /**
-     * @return mixed
-     */
-    public function getKeys();
-
-    /**
-     * @param $key
+   /**
+     * @param $name
      *
      * @return mixed
      */
-    public function hasKey($key);
+    public function hasColumn($name);
 
     /**
-     * @param     $key
+     * @param     $column_name
      * @param int $offset
      *
      * @return mixed
      */
-    public function getItemValue($key,$offset = null);
+    public function getItemValue($column_name,$offset = null);
 }

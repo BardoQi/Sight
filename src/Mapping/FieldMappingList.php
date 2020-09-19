@@ -9,11 +9,7 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Mapping;
 
-use ArrayAccess;
-use Iterator;
-use Countable;
 use Bardoqi\Sight\Enums\MappingTypeEnum;
-use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Abstracts\AbstractList;
 
 /**
@@ -30,12 +26,12 @@ class FieldMappingList extends AbstractList
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
     /**
      *
-     * @return \Bardoqi\Sight\Mapping\FieldMapping
+     * @return \Bardoqi\Sight\Mapping\static
      */
     public static function of(){
         return new static();
@@ -49,7 +45,7 @@ class FieldMappingList extends AbstractList
      *
      * @return $this
      */
-    public function addMapping($key,$src,$type = MappingTypeEnum::FIELD_NAME,$alias='' ){
+    public function addMapping($key,$src,$type = MappingTypeEnum::FIELD_NAME, $alias='' ){
         $mapping = FieldMapping::of($key,$src,$type,$alias);
         if($mapping->isValid()){
             $this->data[$key] = $mapping;

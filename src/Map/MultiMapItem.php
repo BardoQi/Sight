@@ -21,18 +21,32 @@ use Bardoqi\Sight\Map\Interfaces\IMapItem;
 class MultiMapItem extends AbstractList  implements IMapItem
 {
     /**
+     * @var string
+     */
+    public $keyed_by ='';
+
+    /**
+     * @var int
+     */
+    public $relation_type = 0;
+
+    /**
      * Create a instance
      *
      * @param null|array $data
      * @param null|string $keyed_by
+     * @param int $relation_type
      * @return static
      * @static
      */
-    public static function of($data){
+    public static function of($data,$keyed_by = '',$relation_type = 0){
         $instance = new static();
         $instance->data = $data;
+        $instance->keyed_by = $keyed_by;
+        $instance->relation_type = $relation_type;
         return $instance;
     }
+
 
     /**
      * @param $list
@@ -41,8 +55,8 @@ class MultiMapItem extends AbstractList  implements IMapItem
      * @return array
      */
     protected function getItemBykey($list,$key){
-        if(isset($this->data[$key])){
-            return $this->data[$key];
+        if(isset($list[$key])){
+            return $list[$key];
         }
         throw InvalidArgumentException::UndefinedOffset($key);
     }
@@ -56,6 +70,7 @@ class MultiMapItem extends AbstractList  implements IMapItem
     public function findByPath($path,$offset = 0){
         $key = array_shift($path);
         $item = $this->data[$offset];
+        $decode_item = null;
         if(!is_array($item)){
             $decode_item = json_decode($item,true);
         }
@@ -72,32 +87,30 @@ class MultiMapItem extends AbstractList  implements IMapItem
     }
 
     /**
-     * @return array
-     */
-    public function getKeys(){
-        return array_keys($this->data);
-    }
-
-    /**
-     * @param $key
+     * @param $name
      *
      * @return bool
      */
-    public function hasKey($key){
+    public function hasColumn($name){
         $tem = reset($this->data);
-        return isset($tem[$key]);
+        return isset($tem[$name]);
     }
 
     /**
-     * @param      $key
+     * @param      $column_name
      * @param null $offset
      *
      * @return mixed|null
      */
-    public function getItemValue($key,$offset = null){
-        $tem = reset($this->data);
-        if(isset($tem[$key])){
-            return $tem[$key];
+    public function getItemValue($column_name,$offset = null){
+    	$tem = reset($this->data);
+    	 if(null !== $offset){
+    	 	 if(isset($this->data[$offset])){
+    	 	 	 $tem = $this->data[$offset];
+    	 	 }
+    	 }
+        if(isset($tem[$column_name])){
+            return $tem[$column_name];
         }
         return false;
     }

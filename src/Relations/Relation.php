@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Relations;
 
 
-use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 
 /**
@@ -52,7 +51,7 @@ final class Relation
      * @param        $foreign_field
      * @param        $relation_type
      *
-     * @return \Sight\Relations\Reation
+     * @return \Bardoqi\Sight\Relations\Relation
      */
     public static function of(            $local_alias,
                                           $local_field,
@@ -98,7 +97,7 @@ final class Relation
     }
 
     /**
-     * @return void
+     * @return bool
      */
     public function isValid(){
         if((empty($this->local_alias))
@@ -133,6 +132,7 @@ final class Relation
             return $this->local_field;
         }
         $this->local_field = $local_field;
+        return true;
     }
 
     /**
@@ -145,6 +145,7 @@ final class Relation
             return $this->foreign_alias;
         }
         $this->foreign_alias = $foreign_alias;
+        return true;
     }
 
     /**
@@ -157,18 +158,20 @@ final class Relation
             return $this->foreign_field;
         }
         $this->foreign_field = $foreign_field;
+        return true;
     }
 
     /**
      * @param $relation_type
      *
-     * @return void
+     * @return mixed
      */
     public function relationType($relation_type= null){
         if(null == $relation_type){
             return $this->relation_type;
         }
         $this->relation_type = $relation_type;
+        return true;
     }
 
     public function __set($name,$value){
@@ -178,7 +181,7 @@ final class Relation
     /**
      * @param $array_item
      *
-     * @return void
+     * @return mixed
      */
     public static function fromArray($array_item){
         $instance = new static();

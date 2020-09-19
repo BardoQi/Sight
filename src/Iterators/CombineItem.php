@@ -49,7 +49,7 @@ final class CombineItem
      */
     private function __clone()
     {
-        // TODO: Implement __clone() method.
+
     }
 
     /**
@@ -121,26 +121,27 @@ final class CombineItem
     }
 
     /**
-     * @param      $item_key
+     * @param      $column_name
      * @param int  $offset
      * @param null $alias
      *
      * @return mixed|string
      */
-    public function getItemValue($item_key,$offset = 0, $alias = null){
+    public function getItemValue($column_name,$offset = 0, $alias = null){
         if(empty($alias)){
-            /** @var \Bardoqi\Sight\Map\SingleMapItem $item */
+            /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $item */
             $item = $this->local_item;
-            if($item->hasKey($item_key)){
-                return $item->getItemValue($item_key);
+            if($item->hasColumn($column_name)){
+                return $item->getItemValue($column_name,$offset);
             }
             return '';
         }
         /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $item */
-
         $item = $this->join_items[$alias];
-        if($item->hasKey($item_key)){
-            return $item->getItemValue($item_key);
+        if(null != $item){
+            if($item->hasColumn($column_name)){
+                return $item->getItemValue($column_name,$offset);
+            }
         }
         return '';
     }
@@ -184,7 +185,7 @@ final class CombineItem
      * @param int  $path
      * @param null $alias
      *
-     * @return void
+     * @return mixed
      */
     public function findByPath($path, $alias = null){
         $path_arr = explode(',',$path);
@@ -203,7 +204,13 @@ final class CombineItem
      *
      * @return mixed
      */
-    public function getData($alias){
+    public function getData($alias = null){
+        if(null === $alias){
+            return $this->local_item;
+        }
+        if(!isset($this->join_items[$alias])){
+            return $this->local_item;
+        }
         return $this->join_items[$alias];
     }
 

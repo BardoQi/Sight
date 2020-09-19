@@ -30,12 +30,12 @@ final class RelationList extends AbstractList
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
     /**
      *
-     * @return \Bardoqi\Sight\Mapping\FieldMapping
+     * @return \Bardoqi\Sight\Mapping\static
      */
     public static function of(){
         return new static();
@@ -117,10 +117,22 @@ final class RelationList extends AbstractList
     /**
      * @return \Generator
      */
+    public function hasManySplitRelations(){
+        /** @var \Bardoqi\Sight\Relations\Relation $relation */
+        foreach($this->data as $alias => $relation){
+            if(RelationEnum::HAS_MANY_SPLIT == $relation->relation_type){
+                yield $alias => $relation;
+            }
+        }
+    }
+
+    /**
+     * @return \Generator
+     */
     public function hasManyRelations(){
         /** @var \Bardoqi\Sight\Relations\Relation $relation */
         foreach($this->data as $alias => $relation){
-            if(RelationEnum::HAS_MANY== $relation->relation_type){
+            if(RelationEnum::HAS_MANY == $relation->relation_type){
                 yield $alias => $relation;
             }
         }
