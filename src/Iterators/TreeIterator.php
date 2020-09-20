@@ -1,18 +1,19 @@
 <?php
+
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: bardo
- * Date: 2020-09-06
- * Time: 18:13
+/*
+ * This file is part of the bardoqi/sight package.
+ *
+ * (c) BardoQi <bardoqi@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Bardoqi\Sight\Iterators;
 
 /**
- * Class TreeIterator
- *
- * @package Bardoqi\Sight\Iterators
+ * Class TreeIterator.
  */
 final class TreeIterator
 {
@@ -31,10 +32,7 @@ final class TreeIterator
      */
     public $children = null;
 
-    /**
-     *
-     */
-    public function __construct($list,$alias)
+    public function __construct($list, $alias)
     {
         $this->list = $list;
         $this->alias = $alias;
@@ -45,7 +43,8 @@ final class TreeIterator
      *
      * @return \Bardoqi\Sight\Abstracts\static
      */
-    public static function of($list,$alias){
+    public static function of($list, $alias)
+    {
         return new static($list,$alias);
     }
 
@@ -54,8 +53,10 @@ final class TreeIterator
      *
      * @return TreeIterator
      */
-    public function addChildren($list,$alias){
-        $this->children = TreeIterator::of($list,$alias);
+    public function addChildren($list, $alias)
+    {
+        $this->children = TreeIterator::of($list, $alias);
+
         return $this->children;
     }
 
@@ -64,12 +65,13 @@ final class TreeIterator
      *
      * @return \Generator
      */
-    private function items(CombineItem $combine_item){
-        if(0 === count($this->list)){
+    private function items(CombineItem $combine_item)
+    {
+        if (0 === count($this->list)) {
             yield $combine_item;
         }
-        foreach($this->list as $key => $item){
-            $combine_item->addJoinItem($this->alias,$item);
+        foreach ($this->list as $key => $item) {
+            $combine_item->addJoinItem($this->alias, $item);
             yield $combine_item;
         }
     }
@@ -79,12 +81,13 @@ final class TreeIterator
      *
      * @return \Generator
      */
-    private function childItems(CombineItem $combine_item){
-        if(null === $this->children){
+    private function childItems(CombineItem $combine_item)
+    {
+        if (null === $this->children) {
             yield $combine_item;
         }
         $node = $this->children;
-        foreach($node->listItems($combine_item) as $key => $items){
+        foreach ($node->listItems($combine_item) as $key => $items) {
             yield $items;
         }
     }
@@ -94,12 +97,12 @@ final class TreeIterator
      *
      * @return \Generator
      */
-    public function listItems(CombineItem $combine_item){  // TODO FIX YIELD
-        foreach($this->items($combine_item) as  $item){
-            foreach ($this->childItems($item) as  $node_item){
+    public function listItems(CombineItem $combine_item)
+    {  // TODO FIX YIELD
+        foreach ($this->items($combine_item) as  $item) {
+            foreach ($this->childItems($item) as  $node_item) {
                 yield $node_item;
             }
         }
     }
-
 }

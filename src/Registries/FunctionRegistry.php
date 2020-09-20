@@ -1,20 +1,20 @@
 <?php
-declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: bardo
- * Date: 2020-09-12
- * Time: 8:52
- */
 
+declare(strict_types=1);
+/*
+ * This file is part of the bardoqi/sight package.
+ *
+ * (c) BardoQi <bardoqi@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Bardoqi\Sight\Registries;
 
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 
 /**
- * Class FunctionRegister
- *
- * @package Bardoqi\Registers
+ * Class FunctionRegister.
  */
 final class FunctionRegistry
 {
@@ -29,7 +29,7 @@ final class FunctionRegistry
     private $callables = [];
 
     /**
-     * FunctionRegister construct
+     * FunctionRegister construct.
      */
     private function __construct()
     {
@@ -40,16 +40,17 @@ final class FunctionRegistry
      */
     private function __clone()
     {
-
     }
 
     /**
      * @return \Bardoqi\Sight\Registries\FunctionRegistry|null
      */
-    public static function getInstance(){
-        if(null === self::$instance){
+    public static function getInstance()
+    {
+        if (null === self::$instance) {
             self::$instance = new static();
         }
+
         return self::$instance;
     }
 
@@ -59,15 +60,17 @@ final class FunctionRegistry
      *
      * @return mixed
      */
-    public function forwardCall($name,$parameters){
-        if(!isset($this->callables[$name])){
+    public function forwardCall($name, $parameters)
+    {
+        if (!isset($this->callables[$name])) {
             throw InvalidArgumentException::MethodNotFound($name);
         }
-        list($object,$method) = $this->callables[$name];
-        if(!is_array($parameters)){
+        list($object, $method) = $this->callables[$name];
+        if (!is_array($parameters)) {
             $parameters = [$parameters];
         }
-        return call_user_func_array([$object,$method],$parameters);
+
+        return call_user_func_array([$object, $method], $parameters);
     }
 
     /**
@@ -77,18 +80,21 @@ final class FunctionRegistry
      *
      * @return void
      */
-    public function setItem($function_alias,$object,$method_name){
-        if(isset($this->callables[$function_alias])){
+    public function setItem($function_alias, $object, $method_name)
+    {
+        if (isset($this->callables[$function_alias])) {
             throw InvalidArgumentException::FunctionExistsAlready($function_alias);
         }
-        $this->callables[$function_alias] = [$object,$method_name];
+        $this->callables[$function_alias] = [$object, $method_name];
     }
 
     /**
      * @return bool
      */
-    public function clear(){
+    public function clear()
+    {
         $this->callables = [];
+
         return true;
     }
 }

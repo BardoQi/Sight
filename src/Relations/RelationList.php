@@ -3,7 +3,7 @@
 /*
  * This file is part of the bardoqi/sight package.
  *
- * (c) BardoQi <67158925@qq.com>
+ * (c) BardoQi <bardoqi@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,16 +17,12 @@ use Bardoqi\Sight\Abstracts\AbstractList;
 use Bardoqi\Sight\Enums\RelationEnum;
 
 /**
- * Class RelationList
- *
- * @package Bardoqi\Sight\Relations
+ * Class RelationList.
  */
 final class RelationList extends AbstractList
 {
     /**
-     * FieldMapping Constructor
-     *
-     *
+     * FieldMapping Constructor.
      */
     public function __construct()
     {
@@ -34,10 +30,10 @@ final class RelationList extends AbstractList
     }
 
     /**
-     *
      * @return \Bardoqi\Sight\Mapping\static
      */
-    public static function of(){
+    public static function of()
+    {
         return new static();
     }
 
@@ -50,19 +46,21 @@ final class RelationList extends AbstractList
      *
      * @return $this
      */
-    public function addRelation($local_alias,
-                                $local_field,
-                                $foreign_alias,
-                                $foreign_field,
-                                $relation_type
-    ){
-
+    public function addRelation(
+        $local_alias,
+        $local_field,
+        $foreign_alias,
+        $foreign_field,
+        $relation_type
+    ) {
         $this->data[] = Relation::of(
             $local_alias,
             $local_field,
             $foreign_alias,
             $foreign_field,
-            $relation_type);
+            $relation_type
+        );
+
         return $this;
     }
 
@@ -71,10 +69,12 @@ final class RelationList extends AbstractList
      *
      * @return $this
      */
-    public function addRelationByObject(Relation $relation){
-        if($relation->isValid()){
+    public function addRelationByObject(Relation $relation)
+    {
+        if ($relation->isValid()) {
             $this->data[$relation->foreignAlias()] = $relation;
         }
+
         return $this;
     }
 
@@ -83,20 +83,23 @@ final class RelationList extends AbstractList
      *
      * @return $this
      */
-    public function addItem(...$param){
-        if($param[0] instanceof Relation){
+    public function addItem(...$param)
+    {
+        if ($param[0] instanceof Relation) {
             return $this->addRelationByObject($param[0]);
         }
+
         return $this->addRelation(...$param);
     }
 
     /**
      * @return \Generator
      */
-    public function hasOneRelations(){
+    public function hasOneRelations()
+    {
         /** @var \Bardoqi\Sight\Relations\Relation $relation */
-        foreach($this->data as $alias => $relation){
-            if(RelationEnum::HAS_ONE == $relation->relation_type){
+        foreach ($this->data as $alias => $relation) {
+            if (RelationEnum::HAS_ONE == $relation->relation_type) {
                 yield $alias => $relation;
             }
         }
@@ -105,10 +108,11 @@ final class RelationList extends AbstractList
     /**
      * @return \Generator
      */
-    public function hasManyMergeRelations(){
+    public function hasManyMergeRelations()
+    {
         /** @var \Bardoqi\Sight\Relations\Relation $relation */
-        foreach($this->data as $alias => $relation){
-            if(RelationEnum::HAS_MANY_MERGE == $relation->relation_type){
+        foreach ($this->data as $alias => $relation) {
+            if (RelationEnum::HAS_MANY_MERGE == $relation->relation_type) {
                 yield $alias => $relation;
             }
         }
@@ -117,10 +121,11 @@ final class RelationList extends AbstractList
     /**
      * @return \Generator
      */
-    public function hasManySplitRelations(){
+    public function hasManySplitRelations()
+    {
         /** @var \Bardoqi\Sight\Relations\Relation $relation */
-        foreach($this->data as $alias => $relation){
-            if(RelationEnum::HAS_MANY_SPLIT == $relation->relation_type){
+        foreach ($this->data as $alias => $relation) {
+            if (RelationEnum::HAS_MANY_SPLIT == $relation->relation_type) {
                 yield $alias => $relation;
             }
         }
@@ -129,13 +134,13 @@ final class RelationList extends AbstractList
     /**
      * @return \Generator
      */
-    public function hasManyRelations(){
+    public function hasManyRelations()
+    {
         /** @var \Bardoqi\Sight\Relations\Relation $relation */
-        foreach($this->data as $alias => $relation){
-            if(RelationEnum::HAS_MANY == $relation->relation_type){
+        foreach ($this->data as $alias => $relation) {
+            if (RelationEnum::HAS_MANY == $relation->relation_type) {
                 yield $alias => $relation;
             }
         }
     }
-
 }

@@ -2,6 +2,7 @@
 ## Your Missing Presenter for Laravel
  
 [![Build Status](https://travis-ci.org/BardoQi/Sight.png?branch=master)](https://travis-ci.org/BardoQi/Sight)
+[![StyleCI](https://github.styleci.io/repos/293536215/shield?branch=master)](https://github.styleci.io/repos/293536215?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/bardoqi/sight/v)](//packagist.org/packages/bardoqi/sight) [![Total Downloads](https://poser.pugx.org/bardoqi/sight/downloads)](//packagist.org/packages/bardoqi/sight) [![Latest Unstable Version](https://poser.pugx.org/bardoqi/sight/v/unstable)](//packagist.org/packages/bardoqi/sight) [![License](https://poser.pugx.org/bardoqi/sight/license)](//packagist.org/packages/bardoqi/sight)
 
 
