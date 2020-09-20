@@ -23,17 +23,28 @@ use Bardoqi\Sight\Tests\TestCase;
  */
 final class SingleArrayTest extends TestCase
 {
-     public $userPresenter;
 
-     public function testPresenterCreate(){
-         $user_array_string = include(dirname(dirname(__DIR__))."\\tests\\Fixture\\Users.php");
-         $user_array = json_decode($user_array_string,true);
-         $user = new UserPresenter();
-         $users = $user->selectFields(["id","username","mobile","name","avatar_id","created_at","updated_at"])
-             ->fromLocal($user_array,'user')
-             ->toArray();
-         $this->assertTrue(is_array($users));
-     }
+    public $userPresenter;
 
-    
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    public function tearDown() {
+        parent::tearDown();
+    }
+
+    /** @test */
+    public function testPresenterCreate(){
+     $user_array_string = include(dirname(dirname(__DIR__))."\\tests\\Fixture\\Users.php");
+     $user_array = json_decode($user_array_string,true);
+     $user = new UserPresenter();
+     $users = $user->selectFields(["id","username","mobile","name","avatar_id","created_at","updated_at"])
+         ->fromLocal($user_array,'user')
+         ->toArray();
+     $this->assertTrue(is_array($users));
+    }
+
+
 }

@@ -27,6 +27,17 @@ use Bardoqi\Sight\Tests\TestCase;
  */
 final class HasManyTest  extends TestCase
 {
+
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    public function tearDown() {
+        parent::tearDown();
+    }
+
+    /** @test */
     public function testPresenterJoin(){
         $blog_array_string = include(dirname(dirname(__DIR__))."\\tests\\Fixture\\Blogs.php");
         $blog_array = json_decode($blog_array_string,true);

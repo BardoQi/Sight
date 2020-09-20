@@ -23,6 +23,17 @@ use Bardoqi\Sight\Tests\TestCase;
  */
 final class HasOneTest extends TestCase
 {
+
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    public function tearDown() {
+        parent::tearDown();
+    }
+
+    /** @test */
     public function testPresenterJoin(){
         $user_array_string = include(dirname(dirname(__DIR__))."\\tests\\Fixture\\Users.php");
         $user_array = json_decode($user_array_string,true);
@@ -44,6 +55,7 @@ final class HasOneTest extends TestCase
         $this->assertTrue(isset($users[0]['img_url']));
     }
 
+    /** @test */
     public function testItemPresenter(){
         $user_array_string = include(dirname(dirname(__DIR__))."\\tests\\Fixture\\Users.php");
         $user_array = json_decode($user_array_string,true);
