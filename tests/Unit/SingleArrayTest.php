@@ -24,7 +24,6 @@ final class SingleArrayTest extends TestCase
 {
     public $userPresenter;
 
-
     /** @test */
     public function testPresenterCreate()
     {

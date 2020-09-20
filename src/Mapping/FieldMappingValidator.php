@@ -68,8 +68,7 @@ final class FieldMappingValidator
     public function __construct(
         MultiMap $local_list,
         array $join_lists
-    )
-    {
+    ) {
         $this->local_list = $local_list;
         $this->join_lists = $join_lists;
         $this->data_formatter = DataFormatter::getInstance();
@@ -85,8 +84,7 @@ final class FieldMappingValidator
     public static function of(
         MultiMap $local_list,
         array $join_lists
-    )
-    {
+    ) {
         return new static($local_list,$join_lists);
     }
 
