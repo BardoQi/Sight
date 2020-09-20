@@ -65,7 +65,7 @@ class DataFormatter
      */
     public function addFunction($function_name, $methodCallable)
     {
-        if (!is_callable($methodCallable)) {
+        if (! is_callable($methodCallable)) {
             throw InvalidArgumentException::FunctionMustBeCallable($function_name);
         }
         $this->macros[$function_name] = Closure::bind($methodCallable, $this, get_class());

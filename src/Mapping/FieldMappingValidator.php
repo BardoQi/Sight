@@ -31,11 +31,11 @@ final class FieldMappingValidator
      * @var array
      */
     protected $validators = [
-        MappingTypeEnum::FIELD_NAME    => 'validateFieldName',
+        MappingTypeEnum::FIELD_NAME => 'validateFieldName',
         MappingTypeEnum::DATA_FORMATER => 'validateDataFormatter',
-        MappingTypeEnum::METHOD_NAME   => 'validMethodName',
-        MappingTypeEnum::ARRAY_PATH    => 'validateArrayPath',
-        MappingTypeEnum::JOIN_FIELD    => 'validateJoinField',
+        MappingTypeEnum::METHOD_NAME => 'validMethodName',
+        MappingTypeEnum::ARRAY_PATH => 'validateArrayPath',
+        MappingTypeEnum::JOIN_FIELD => 'validateJoinField',
     ];
 
     /**
@@ -122,7 +122,7 @@ final class FieldMappingValidator
      */
     private function validateItem($mapping)
     {
-        if (!isset($this->validators[$mapping->type()])) {
+        if (! isset($this->validators[$mapping->type()])) {
             return true;
         }
         $method = $this->validators[$mapping->type()];
@@ -178,7 +178,7 @@ final class FieldMappingValidator
      */
     protected function validateFieldName($mapping)
     {
-        if (!$this->hasField($mapping->src(), $mapping->alias())) {
+        if (! $this->hasField($mapping->src(), $mapping->alias())) {
             throw InvalidArgumentException::FieldMappingIsInvalid($mapping->key());
         }
 
@@ -192,7 +192,7 @@ final class FieldMappingValidator
      */
     protected function validateDataFormatter($mapping)
     {
-        if (!$this->data_formatter->hasMothod($mapping->src())) {
+        if (! $this->data_formatter->hasMothod($mapping->src())) {
             throw InvalidArgumentException::FieldMappingIsInvalid($mapping->key());
         }
 
@@ -206,7 +206,7 @@ final class FieldMappingValidator
      */
     protected function validMethodName($mapping)
     {
-        if (!$this->hasMethod($mapping->key())) {
+        if (! $this->hasMethod($mapping->key())) {
             throw InvalidArgumentException::FieldMappingIsInvalid($mapping->key());
         }
 
@@ -220,7 +220,7 @@ final class FieldMappingValidator
      */
     protected function validateArrayPath($mapping)
     {
-        if (!$this->hasPath($mapping->src(), $mapping->alias())) {
+        if (! $this->hasPath($mapping->src(), $mapping->alias())) {
             throw InvalidArgumentException::FieldMappingIsInvalid($mapping->key());
         }
 
@@ -234,7 +234,7 @@ final class FieldMappingValidator
      */
     protected function validateJoinField($mapping)
     {
-        if (!$this->hasField($mapping->src(), $mapping->alias())) {
+        if (! $this->hasField($mapping->src(), $mapping->alias())) {
             throw InvalidArgumentException::FieldMappingIsInvalid($mapping->key());
         }
 

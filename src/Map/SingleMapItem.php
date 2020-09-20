@@ -78,14 +78,14 @@ class SingleMapItem extends AbstractList implements IMapItem
         $key = array_shift($path);
         $item = $this->data;
         $decode_item = null;
-        if (!is_array($item)) {
+        if (! is_array($item)) {
             $decode_item = json_decode($item, true);
         }
         if (null === $decode_item) {
             throw InvalidArgumentException::ItemIsNotJsonString();
-        } else {
-            $this->data[$key] = $decode_item;
         }
+        $this->data[$key] = $decode_item;
+
         $item = $decode_item;
         foreach ($path as $key) {
             $item = $this->getItemBykey($item, $key);

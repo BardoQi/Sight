@@ -55,8 +55,8 @@ final class HasManyTest extends TestCase
 
         $blog->addFieldMappingList(
             [
-                'created_by' => ['src'=>'name', 'type'=>MappingTypeEnum::JOIN_FIELD, 'alias'=>'user'],
-                'images'     => ['src'=>'images', 'type'=>MappingTypeEnum::METHOD_NAME],
+                'created_by' => ['src' => 'name', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'user'],
+                'images' => ['src' => 'images', 'type' => MappingTypeEnum::METHOD_NAME],
           ]
         );
 

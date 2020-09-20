@@ -162,7 +162,7 @@ final class ListIterator
             if (null === $tree_iterator) {
                 yield $item;
             } else {
-                foreach ($tree_iterator->listItems($item) as $key=> $new_item) {
+                foreach ($tree_iterator->listItems($item) as $key => $new_item) {
                     yield $new_item;
                 }
             }

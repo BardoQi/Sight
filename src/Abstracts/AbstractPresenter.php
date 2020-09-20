@@ -177,7 +177,7 @@ abstract class AbstractPresenter
      */
     public function addFunction($function_name, $methodCallable)
     {
-        if (!is_callable($methodCallable)) {
+        if (! is_callable($methodCallable)) {
             throw InvalidArgumentException::FunctionMustBeCallable($function_name);
         }
         $this->macros[$function_name] = Closure::bind($methodCallable, $this, get_class());
@@ -255,7 +255,7 @@ abstract class AbstractPresenter
         /** Husk the data of paginator */
         $data_list = $this->huskPaginator($data_list, false);
         if (0 < count($data_list)) {
-            if (!isset($data_list[0][$keyed_by])) {
+            if (! isset($data_list[0][$keyed_by])) {
                 throw InvalidArgumentException::KeyedByIsNotCorrect($keyed_by);
             }
         }
@@ -280,7 +280,7 @@ abstract class AbstractPresenter
         $foreign_field = 'id',
         $reltion_type = RelationEnum::HAS_ONE
     ) {
-        if (!isset($this->join_lists[$foreign_alias])) {
+        if (! isset($this->join_lists[$foreign_alias])) {
             throw InvalidArgumentException::ForeignAliasNotExists();
         }
 

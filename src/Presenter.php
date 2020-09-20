@@ -81,7 +81,7 @@ class Presenter extends AbstractPresenter
         if (null !== $data_path) { // maybe id is elasticsearch result
             $data_list = Arr::get($data_list, $data_path);
         }
-        if (!is_array($data_list)) {
+        if (! is_array($data_list)) {
             throw InvalidArgumentException::ParamaterIsNotArray();
         }
         if (0 == count($data_list)) {
@@ -119,7 +119,7 @@ class Presenter extends AbstractPresenter
      */
     public function pluck(...$fields)
     {
-        if (!is_array($fields)) {
+        if (! is_array($fields)) {
             $fields = [$fields];
         }
         $out_array = [];
@@ -129,7 +129,7 @@ class Presenter extends AbstractPresenter
             }
         }
 
-        if (!empty($out_array)) {
+        if (! empty($out_array)) {
             /** maybe the value is comma separated values */
             try {
                 $out_str = implode(',', $out_array);

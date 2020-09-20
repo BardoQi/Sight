@@ -63,11 +63,11 @@ final class FunctionRegistry
      */
     public function forwardCall($name, $parameters)
     {
-        if (!isset($this->callables[$name])) {
+        if (! isset($this->callables[$name])) {
             throw InvalidArgumentException::MethodNotFound($name);
         }
-        list($object, $method) = $this->callables[$name];
-        if (!is_array($parameters)) {
+        [$object, $method] = $this->callables[$name];
+        if (! is_array($parameters)) {
             $parameters = [$parameters];
         }
 
