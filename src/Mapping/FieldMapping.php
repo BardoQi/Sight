@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: bardo
  * Date: 2020-08-29
- * Time: 0:30
+ * Time: 0:30.
  */
 
 namespace Bardoqi\Sight\Mapping;
@@ -13,9 +14,7 @@ use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 
 /**
- * Class FieldMapping
- *
- * @package Bardoqi\Sight\Mapping
+ * Class FieldMapping.
  */
 final class FieldMapping
 {
@@ -27,14 +26,14 @@ final class FieldMapping
     public $key;
 
     /**
-     * Where we could get the value
+     * Where we could get the value.
      *
      * @var string
      */
     public $src;
 
     /**
-     * Define the manaer of getting value
+     * Define the manaer of getting value.
      *
      * @var int
      */
@@ -46,15 +45,14 @@ final class FieldMapping
     public $alias;
 
     /**
-     * FieldMapping Constructor
+     * FieldMapping Constructor.
      *
      * @param $key
      * @param $src
      * @param $type
      * @param $alias
-     *
      */
-    public function __construct($key = '',$src = '',$type = MappingTypeEnum::FIELD_NAME, $alias='')
+    public function __construct($key = '', $src = '', $type = MappingTypeEnum::FIELD_NAME, $alias = '')
     {
         $this->key = $key;
         $this->src = $src;
@@ -70,24 +68,26 @@ final class FieldMapping
      *
      * @return \Bardoqi\Sight\Mapping\FieldMapping
      */
-    public static function of($key = '',$src = '',$type = MappingTypeEnum::FIELD_NAME,$alias=''){
-
+    public static function of($key = '', $src = '', $type = MappingTypeEnum::FIELD_NAME, $alias = '')
+    {
         return new static($key,$src,$type,$alias);
     }
 
     /**
      * @return bool
      */
-    public function isValid(){
-        if(empty($this->key)){
+    public function isValid()
+    {
+        if (empty($this->key)) {
             throw InvalidArgumentException::MappingKeyCanNotBeEmpty();
         }
-        if(empty($this->src)){
+        if (empty($this->src)) {
             throw InvalidArgumentException::MappingSourceCanNotBeEmpty();
         }
-        if(!MappingTypeEnum::valid($this->type)){
+        if (!MappingTypeEnum::valid($this->type)) {
             throw InvalidArgumentException::MappingTypeIsNotValid();
         }
+
         return true;
     }
 
@@ -96,11 +96,13 @@ final class FieldMapping
      *
      * @return mixed
      */
-    public function key($key = null){
-        if(null == $key){
+    public function key($key = null)
+    {
+        if (null == $key) {
             return $this->key;
         }
         $this->key = $key;
+
         return $this;
     }
 
@@ -109,11 +111,13 @@ final class FieldMapping
      *
      * @return mixed
      */
-    public function src($src = null){
-        if(null == $src){
+    public function src($src = null)
+    {
+        if (null == $src) {
             return $this->src;
         }
         $this->src = $src;
+
         return $this;
     }
 
@@ -122,11 +126,13 @@ final class FieldMapping
      *
      * @return mixed
      */
-    public function type($type = null){
-        if(null == $type){
+    public function type($type = null)
+    {
+        if (null == $type) {
             return $this->type;
         }
         $this->type = $type;
+
         return $this;
     }
 
@@ -135,11 +141,13 @@ final class FieldMapping
      *
      * @return $this|string
      */
-    public function alias($alias = null){
-        if(null == $alias){
+    public function alias($alias = null)
+    {
+        if (null == $alias) {
             return $this->alias;
         }
         $this->alias = $alias;
+
         return $this;
     }
 
@@ -149,30 +157,29 @@ final class FieldMapping
      *
      * @return \Bardoqi\Sight\Mapping\FieldMapping
      */
-    public static function fromArray($key,$array_item){
-        try{
+    public static function fromArray($key, $array_item)
+    {
+        try {
             $alias = '';
             /** item format is  ['key' => ['src'=>a, 'type'=>b  ]] */
-            if(isset($array_item['src'])){
-                if(isset($array_item['alias'])){
-                    ['src'=>$src, 'type'=>$type, 'alias'=>$alias] = $array_item;
-                }else{
-                    ['src'=>$src, 'type'=>$type] = $array_item;
+            if (isset($array_item['src'])) {
+                if (isset($array_item['alias'])) {
+                    ['src'=> $src, 'type'=>$type, 'alias'=>$alias] = $array_item;
+                } else {
+                    ['src'=> $src, 'type'=>$type] = $array_item;
                 }
-            }else {
+            } else {
                 /** item format is  ['key' => [a, b]] */
-                if(isset($array_item['alias'])){
+                if (isset($array_item['alias'])) {
                     list($src, $type, $alias) = $array_item;
-                }else{
-
+                } else {
                     list($src, $type) = $array_item;
                 }
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             throw new \InvalidArgumentException($e->getMessage());
         }
 
         return self::of($key, $src, $type, $alias);
     }
-
 }

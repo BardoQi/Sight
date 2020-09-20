@@ -14,14 +14,12 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Enums;
 
 /**
- * Class MappingType
- *
- * @package Bardoqi\Sight\Enums
+ * Class MappingType.
  */
 final class MappingTypeEnum
 {
     /**
-     * Access the value via field name
+     * Access the value via field name.
      */
     const FIELD_NAME = 1;
 
@@ -31,17 +29,17 @@ final class MappingTypeEnum
     const DATA_FORMATER = 2;
 
     /**
-     * Access the value via method name
+     * Access the value via method name.
      */
     const METHOD_NAME = 3;
 
     /**
-     * Access the value via path of array. for instance： “a.b.c”
+     * Access the value via path of array. for instance： “a.b.c”.
      */
     const ARRAY_PATH = 4;
 
     /**
-     *  Access the value from the join array
+     *  Access the value from the join array.
      */
     const JOIN_FIELD = 5;
 
@@ -50,7 +48,8 @@ final class MappingTypeEnum
      *
      * @return bool
      */
-    public static function valid($value){
-        return (isset(([1,2,3,4,5])[$value-1]));
+    public static function valid($value)
+    {
+        return isset(([1, 2, 3, 4, 5])[$value - 1]);
     }
 }

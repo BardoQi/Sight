@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: bardo
  * Date: 2020-09-13
- * Time: 13:52
+ * Time: 13:52.
  */
 
 namespace Bardoqi\Sight\Tests;
@@ -13,9 +14,7 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 /**
- * Class BaseTestCase
- *
- * @package Bardoqi\Sight\Tests
+ * Class BaseTestCase.
  */
 class TestCase extends BaseTestCase
 {
@@ -26,14 +25,14 @@ class TestCase extends BaseTestCase
      */
     protected $baseUrl = 'http://localhost';
 
-    public function setUp() : void
+    public function setUp(): void
     {
 //        touch('./tests.sqlite');
 
         parent::setUp();
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
 //        unlink('./tests.sqlite');
     }
@@ -45,7 +44,7 @@ class TestCase extends BaseTestCase
      */
     public function createApplication()
     {
-        $path =dirname(dirname(dirname(dirname(__DIR__))));
+        $path = dirname(dirname(dirname(dirname(__DIR__))));
         $app = require $path.'/bootstrap/app.php';
 
         $app->make(Kernel::class)->bootstrap();

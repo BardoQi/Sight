@@ -14,9 +14,7 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Enums;
 
 /**
- * Class JoinTypeEnum
- *
- * @package Bardoqi\Sight\Enums
+ * Class JoinTypeEnum.
  */
 final class JoinTypeEnum
 {

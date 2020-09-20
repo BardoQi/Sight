@@ -16,16 +16,15 @@ namespace Bardoqi\Sight\Exceptions;
 use Throwable;
 
 /**
- * Class PresenterException
- *
- * @package Bardoqi\Sight\Exceptions
+ * Class PresenterException.
  */
 class InvalidArgumentException extends InvalidArgumentExceptionAbstract implements Throwable
 {
     /**
      * @return InvalidArgumentException
      */
-    public static function KeyedByCannotBeEmpty(){
+    public static function KeyedByCannotBeEmpty()
+    {
         return new self('KeyedBy can not be empty!');
     }
 
@@ -34,42 +33,48 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function KeyedByIsNotCorrect($name){
+    public static function KeyedByIsNotCorrect($name)
+    {
         return new self('The KeyedBy '.$name.' is not correct!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function AliasCanNotBeEmpty(){
+    public static function AliasCanNotBeEmpty()
+    {
         return new self('Alias Can Not Be Empty!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function MappingKeyCanNotBeEmpty(){
+    public static function MappingKeyCanNotBeEmpty()
+    {
         return new self('Mapping Key Can Not Be Empty!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function MappingSourceCanNotBeEmpty(){
+    public static function MappingSourceCanNotBeEmpty()
+    {
         return new self('Mapping Source Can Not Be Empty!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function MappingTypeIsNotValid(){
+    public static function MappingTypeIsNotValid()
+    {
         return new self('Mapping Type Is Not Valid!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function FieldMappingListNotFound(){
+    public static function FieldMappingListNotFound()
+    {
         return new self('Field Mapping List Not Found!');
     }
 
@@ -78,14 +83,16 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function MappingArrayIsNotValid($message){
-        return new self('Mapping Array Is Not Valid! Message: ' .$message);
+    public static function MappingArrayIsNotValid($message)
+    {
+        return new self('Mapping Array Is Not Valid! Message: '.$message);
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function ParamsOfRelationIsMissing(){
+    public static function ParamsOfRelationIsMissing()
+    {
         return new self('Params Of Relation Is Missing!');
     }
 
@@ -94,7 +101,8 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function MethodNotFound($method){
+    public static function MethodNotFound($method)
+    {
         return new self('The method '.$method.' not found!');
     }
 
@@ -103,29 +111,33 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function FunctionMustBeCallable($name){
-        return new self("Function " .$name. " Must Be Callable!");
+    public static function FunctionMustBeCallable($name)
+    {
+        return new self('Function '.$name.' Must Be Callable!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function PaginateDataNotFound(){
-        return new self("The Paginate Data Not Found!");
+    public static function PaginateDataNotFound()
+    {
+        return new self('The Paginate Data Not Found!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function LocalAliasIsNotCorrect(){
-        return new self("Local Alias Is Not Correct!");
+    public static function LocalAliasIsNotCorrect()
+    {
+        return new self('Local Alias Is Not Correct!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function ForeignAliasNotExists(){
-        return new self("Foreign Alias Not Exists! Please call innerJoinForeign() or outerJoinForeign()function first");
+    public static function ForeignAliasNotExists()
+    {
+        return new self('Foreign Alias Not Exists! Please call innerJoinForeign() or outerJoinForeign()function first');
     }
 
     /**
@@ -133,15 +145,17 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function UndefinedOffset($offset){
-        return new self("Undefined Offset " .$offset. " !");
+    public static function UndefinedOffset($offset)
+    {
+        return new self('Undefined Offset '.$offset.' !');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function ParamaterIsNotArray(){
-        return new self("Paramater Is Not Array !");
+    public static function ParamaterIsNotArray()
+    {
+        return new self('Paramater Is Not Array !');
     }
 
     /**
@@ -149,22 +163,25 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function FieldOrMappingNotFound($name){
-        return new self("Field Or Mapping " .$name. " Not Found!");
+    public static function FieldOrMappingNotFound($name)
+    {
+        return new self('Field Or Mapping '.$name.' Not Found!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function LocalArrayCantBeEmpty(){
+    public static function LocalArrayCantBeEmpty()
+    {
         return new self("Local Array Can't Be Empty!");
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function RelationParamaterMustBeKeyValue(){
-        return new self("Relation Paramater Must Be Structure Of Key-Value!");
+    public static function RelationParamaterMustBeKeyValue()
+    {
+        return new self('Relation Paramater Must Be Structure Of Key-Value!');
     }
 
     /**
@@ -172,8 +189,9 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function FieldMappingIsInvalid($name){
-        return new self("Field Mapping ".$name." Is Invalid!");
+    public static function FieldMappingIsInvalid($name)
+    {
+        return new self('Field Mapping '.$name.' Is Invalid!');
     }
 
     /**
@@ -181,14 +199,16 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function FunctionExistsAlready($name){
-        return new self("Function ". $name ." Exists Already!");
+    public static function FunctionExistsAlready($name)
+    {
+        return new self('Function '.$name.' Exists Already!');
     }
 
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function ItemIsNotJsonString(){
-        return new self("Item Is Not Json String!");
+    public static function ItemIsNotJsonString()
+    {
+        return new self('Item Is Not Json String!');
     }
 }

@@ -21,117 +21,117 @@ use Iterator;
  * Abstract class for iterator pattern.
  *
  * Class AbstractList
- *
- * @package Bardoqi\Sight\Abstracts
  */
-abstract class AbstractList implements ArrayAccess,Iterator,Countable
+abstract class AbstractList implements ArrayAccess, Iterator, Countable
 {
-
     /**
      * @var array
      */
     protected $data = [];
 
     /**
-     * FieldMapping Constructor
-     *
-     *
+     * FieldMapping Constructor.
      */
     public function __construct()
     {
-
     }
 
     /**
-     * Assigns a value to the specified offset
+     * Assigns a value to the specified offset.
      *
      * @param string $offset ,The offset to assign the value to
-     * @param mixed  $value ,The value to set
-     * @access public
+     * @param mixed  $value  ,The value to set
      * @abstracting ArrayAccess
      */
-    public function offsetSet($offset,$value) {
+    public function offsetSet($offset, $value)
+    {
         $this->data[$offset] = $value;
-
     }
 
     /**
-     * Whether or not an offset exists
+     * Whether or not an offset exists.
      *
      * @param string $offset ,An offset to check for
-     * @access public
-     * @return boolean
+     *
+     * @return bool
      * @abstracting ArrayAccess
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->data[$offset]);
     }
 
     /**
-     * Unsets an offset
+     * Unsets an offset.
      *
      * @param string $offset ,The offset to unset
-     * @access public
      * @abstracting ArrayAccess
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         if ($this->offsetExists($offset)) {
             unset($this->data[$offset]);
         }
     }
 
     /**
-     * Returns the value at specified offset
+     * Returns the value at specified offset.
      *
      * @param string $offset ,The offset to retrieve
-     * @access public
+     *
      * @return mixed
      * @abstracting ArrayAccess
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return $this->offsetExists($offset) ? $this->data[$offset] : null;
     }
 
     /**
      * @return mixed
      */
-    public function rewind() {
-        return reset( $this->data);
+    public function rewind()
+    {
+        return reset($this->data);
     }
 
     /**
      * @return mixed
      */
-    public function current() {
-        return current( $this->data);
+    public function current()
+    {
+        return current($this->data);
     }
 
     /**
      * @return mixed
      */
-    public function key() {
+    public function key()
+    {
         return key($this->data);
     }
 
     /**
      * @return mixed
      */
-    public function next() {
+    public function next()
+    {
         return next($this->data);
     }
 
     /**
      * @return bool
      */
-    public function valid() {
+    public function valid()
+    {
         return key($this->data) !== null;
     }
 
     /**
      * @return int
      */
-    public function count(){
+    public function count()
+    {
         return count($this->data);
     }
-
 }

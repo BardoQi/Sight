@@ -1,28 +1,25 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: bardo
  * Date: 2020-08-29
- * Time: 0:46
+ * Time: 0:46.
  */
 
 namespace Bardoqi\Sight\Mapping;
 
-use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Abstracts\AbstractList;
+use Bardoqi\Sight\Enums\MappingTypeEnum;
 
 /**
- * Class FieldMappingList
- *
- * @package Bardoqi\Sight\Mapping
+ * Class FieldMappingList.
  */
 class FieldMappingList extends AbstractList
 {
     /**
-     * FieldMapping Constructor
-     *
-     *
+     * FieldMapping Constructor.
      */
     public function __construct()
     {
@@ -30,10 +27,10 @@ class FieldMappingList extends AbstractList
     }
 
     /**
-     *
      * @return \Bardoqi\Sight\Mapping\static
      */
-    public static function of(){
+    public static function of()
+    {
         return new static();
     }
 
@@ -45,11 +42,13 @@ class FieldMappingList extends AbstractList
      *
      * @return $this
      */
-    public function addMapping($key,$src,$type = MappingTypeEnum::FIELD_NAME, $alias='' ){
-        $mapping = FieldMapping::of($key,$src,$type,$alias);
-        if($mapping->isValid()){
+    public function addMapping($key, $src, $type = MappingTypeEnum::FIELD_NAME, $alias = '')
+    {
+        $mapping = FieldMapping::of($key, $src, $type, $alias);
+        if ($mapping->isValid()) {
             $this->data[$key] = $mapping;
         }
+
         return $this;
     }
 
@@ -58,10 +57,12 @@ class FieldMappingList extends AbstractList
      *
      * @return $this
      */
-    public function addMappingByObject(FieldMapping $mapping){
-        if($mapping->isValid()){
+    public function addMappingByObject(FieldMapping $mapping)
+    {
+        if ($mapping->isValid()) {
             $this->data[$mapping->key] = $mapping;
         }
+
         return $this;
     }
 
@@ -70,11 +71,12 @@ class FieldMappingList extends AbstractList
      *
      * @return $this
      */
-    public function addItem(...$param){
-        if($param[0] instanceof FieldMapping){
+    public function addItem(...$param)
+    {
+        if ($param[0] instanceof FieldMapping) {
             return $this->addMappingByObject($param[0]);
         }
+
         return $this->addMapping(...$param);
     }
-
 }

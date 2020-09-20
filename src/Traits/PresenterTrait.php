@@ -14,9 +14,7 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Traits;
 
 /**
- * Trait PresenterTrait
- *
- * @package Bardoqi\Sight\Traits
+ * Trait PresenterTrait.
  */
 trait PresenterTrait
 {
@@ -25,8 +23,9 @@ trait PresenterTrait
      *
      * @return string
      */
-    public function created_at($value){
-        return date("Y-m-d H:i:s",intval($value));
+    public function created_at($value)
+    {
+        return date('Y-m-d H:i:s', intval($value));
     }
 
     /**
@@ -34,8 +33,9 @@ trait PresenterTrait
      *
      * @return string
      */
-    public function updated_at($value){
-        return date("Y-m-d H:i:s",intval($value));
+    public function updated_at($value)
+    {
+        return date('Y-m-d H:i:s', intval($value));
     }
 
     /**
@@ -43,9 +43,8 @@ trait PresenterTrait
      *
      * @return string
      */
-    public function deleted_at($value){
-        return date("Y-m-d H:i:s",intval($value));
+    public function deleted_at($value)
+    {
+        return date('Y-m-d H:i:s', intval($value));
     }
-
-
 }
