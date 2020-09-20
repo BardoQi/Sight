@@ -1,6 +1,8 @@
 # Sight
 ## Your Missing Presenter for Laravel
-
+  
+[![Latest Stable Version](https://poser.pugx.org/bardoqi/sight/v)](//packagist.org/packages/bardoqi/sight) [![Total Downloads](https://poser.pugx.org/bardoqi/sight/downloads)](//packagist.org/packages/bardoqi/sight) [![Latest Unstable Version](https://poser.pugx.org/bardoqi/sight/v/unstable)](//packagist.org/packages/bardoqi/sight) [![License](https://poser.pugx.org/bardoqi/sight/license)](//packagist.org/packages/bardoqi/sight)
+  
 ### About Sight
 
 [中文(Chinese)](https://github.com/BardoQi/Sight/blob/master/README.cn.md)
