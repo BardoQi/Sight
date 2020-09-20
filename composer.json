@@ -35,6 +35,10 @@
   "suggest": {
     "prettus/l5-repository": "Required to use the l5-repository (2.6.*)."
   },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin",
+  },
   "scripts": {
     "test": "phpunit",
     "check-style": "phpcs -p --standard=PSR2 src/",
