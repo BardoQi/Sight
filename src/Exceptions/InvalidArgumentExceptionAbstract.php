@@ -15,12 +15,10 @@ namespace Bardoqi\Sight\Exceptions;
 
 use InvalidArgumentException;
 use Throwable;
+
 /**
- * Class AbstractPresenterException
- *
- * @package Bardoqi\Sight\Exceptions
+ * Class AbstractPresenterException.
  */
 abstract class InvalidArgumentExceptionAbstract extends InvalidArgumentException implements Throwable
 {
-
 }

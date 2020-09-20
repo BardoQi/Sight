@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -13,9 +14,7 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Enums;
 
 /**
- * Class FormatterEnum
- *
- * @package Bardoqi\Sight\Enums
+ * Class FormatterEnum.
  */
 final class FormatterEnum
 {

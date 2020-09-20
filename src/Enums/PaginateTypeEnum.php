@@ -14,19 +14,17 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Enums;
 
 /**
- * Class PaginateTypeEnum
- *
- * @package Brdoqi\Sight\Enums
+ * Class PaginateTypeEnum.
  */
 final class PaginateTypeEnum
 {
     /**
-     * paginate data for api applications
+     * paginate data for api applications.
      */
     const PAGINATE_API = 0;
 
     /**
-     * paginate data for web applications
+     * paginate data for web applications.
      */
     const PAGINATE_WEB = 1;
 }

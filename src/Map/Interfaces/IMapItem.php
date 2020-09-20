@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: bardo
  * Date: 2020-09-11
- * Time: 15:20
+ * Time: 15:20.
  */
 
 namespace Bardoqi\Sight\Map\Interfaces;
@@ -18,7 +19,7 @@ interface IMapItem
      *
      * @return mixed
      */
-    public static function of($data,$keyed_by,$relation_type);
+    public static function of($data, $keyed_by, $relation_type);
 
     /**
      * @param $path
@@ -26,9 +27,9 @@ interface IMapItem
      *
      * @return mixed
      */
-    public function findByPath($path,$offset = null);
+    public function findByPath($path, $offset = null);
 
-   /**
+    /**
      * @param $name
      *
      * @return mixed
@@ -41,5 +42,5 @@ interface IMapItem
      *
      * @return mixed
      */
-    public function getItemValue($column_name,$offset = null);
+    public function getItemValue($column_name, $offset = null);
 }

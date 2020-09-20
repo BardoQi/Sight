@@ -1,26 +1,20 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: bardo
  * Date: 2020-09-06
- * Time: 16:14
+ * Time: 16:14.
  */
 
 namespace Bardoqi\Sight\Iterators;
 
-
-
-use Tolawho\Loggy\Facades\Loggy;
-
 /**
- * Class ListIterator
- *
- * @package Bardoqi\Sight\Iterators
+ * Class ListIterator.
  */
 final class ListIterator
 {
-
     /**
      * @var array
      */
@@ -36,19 +30,15 @@ final class ListIterator
      */
     protected $relation_list = [];
 
-    /**
-     *
-     */
     public function __construct()
     {
-
     }
 
     /**
-     *
      * @return \Bardoqi\Sight\Abstracts\static
      */
-    public static function of(){
+    public static function of()
+    {
         return new static();
     }
 
@@ -59,21 +49,25 @@ final class ListIterator
      *
      * @return $this
      */
-    public function setList($local_list,$join_lists,$relation_list){
+    public function setList($local_list, $join_lists, $relation_list)
+    {
         $this->local_list = $local_list;
         $this->join_lists = $join_lists;
         $this->relation_list = $relation_list;
+
         return $this;
     }
 
     /**
      * @return \Generator
      */
-    public function LocalItems(){
+    public function LocalItems()
+    {
         /** @var \Bardoqi\Sight\Map\MultiMap $local_list */
         $local_list = $this->local_list;
-        if(0 === $local_list->count()){
+        if (0 === $local_list->count()) {
             yield [];
+
             return false;
         }
         foreach ($local_list->singleListItems() as $key => $item) {
@@ -88,38 +82,38 @@ final class ListIterator
      *
      * @return \Generator
      */
-    protected function hasOneList(){
+    protected function hasOneList()
+    {
         /**
-         * @var int $key
+         * @var int                                  $key
          * @var \Bardoqi\Sight\Iterators\CombineItem $item
          */
-        foreach($this->LocalItems() as $key => $item){
+        foreach ($this->LocalItems() as $key => $item) {
             /** @var \Bardoqi\Sight\Relations\RelationList $relation_list */
             $relation_list = $this->relation_list;
-            foreach ($relation_list->hasOneRelations() as $alias => $relation){
+            foreach ($relation_list->hasOneRelations() as $alias => $relation) {
                 $local_key = $item->getItemValue($relation->local_field);
                 /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
                 $join_list = $this->join_lists[$alias];
                 $list = $join_list->getHasOne($local_key);
-                $item->addJoinItem($alias,$list);
+                $item->addJoinItem($alias, $list);
             }
-            foreach ($relation_list->hasManyMergeRelations() as $alias => $relation){
+            foreach ($relation_list->hasManyMergeRelations() as $alias => $relation) {
                 $local_key = $item->getItemValue($relation->local_field);
                 /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
                 $join_list = $this->join_lists[$alias];
                 $list = $join_list->getHasManyMerge($local_key);
-                $item->addJoinItem($alias,$list);
+                $item->addJoinItem($alias, $list);
             }
-            foreach ($relation_list->hasManySplitRelations()as $alias => $relation){
+            foreach ($relation_list->hasManySplitRelations()as $alias => $relation) {
                 $local_key = $item->getItemValue($relation->local_field);
                 /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
                 $join_list = $this->join_lists[$alias];
                 $list = $join_list->getHasManySplit($local_key);
-                $item->addJoinItem($alias,$list);
+                $item->addJoinItem($alias, $list);
             }
             yield $key => $item;
         }
-
     }
 
     /**
@@ -127,29 +121,31 @@ final class ListIterator
      *
      * @return \Bardoqi\Sight\Iterators\ListIterator|\Bardoqi\Sight\Iterators\TreeIterator
      */
-    protected function buildTreeIterator(CombineItem $item){
+    protected function buildTreeIterator(CombineItem $item)
+    {
         /**
          * @var \Bardoqi\Sight\Iterators\TreeIterator $tree_iterator
          * @var \Bardoqi\Sight\Iterators\TreeIterator $iterator_node
          */
         $tree_iterator = $iterator_node = null;
         /**
-         * @var string $alias
+         * @var string                            $alias
          * @var \Bardoqi\Sight\Relations\Relation $relation
          */
         $relation_list = $this->relation_list;
-        foreach ($relation_list->hasManyRelations() as $alias => $relation){
+        foreach ($relation_list->hasManyRelations() as $alias => $relation) {
             $local_key = $item->getItemValue($relation->local_field);
 
             /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
             $join_list = $this->join_lists[$alias];
             $list = $join_list->getHasOne($local_key);
-            if(null === $tree_iterator){
-                $iterator_node = $tree_iterator = TreeIterator::of($list,$alias);
-            }else{
-                $iterator_node = $iterator_node->addChildren($list,$alias);
+            if (null === $tree_iterator) {
+                $iterator_node = $tree_iterator = TreeIterator::of($list, $alias);
+            } else {
+                $iterator_node = $iterator_node->addChildren($list, $alias);
             }
         }
+
         return $tree_iterator;
     }
 
@@ -158,13 +154,13 @@ final class ListIterator
      */
     public function listItems()
     {
-        foreach($this->hasOneList() as $key => $item){
+        foreach ($this->hasOneList() as $key => $item) {
             /** @var \Bardoqi\Sight\Iterators\TreeIterator $tree_iterator */
             $tree_iterator = $this->buildTreeIterator($item);
-            if(null === $tree_iterator){
+            if (null === $tree_iterator) {
                 yield $item;
-            }else{
-                foreach($tree_iterator->listItems($item) as $key=> $new_item){
+            } else {
+                foreach ($tree_iterator->listItems($item) as $key=> $new_item) {
                     yield $new_item;
                 }
             }
