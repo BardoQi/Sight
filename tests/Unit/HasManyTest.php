@@ -25,8 +25,6 @@ use Bardoqi\Sight\Tests\TestCase;
  */
 final class HasManyTest extends TestCase
 {
-
-
     /** @test */
     public function testPresenterJoin()
     {

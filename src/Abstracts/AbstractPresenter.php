@@ -221,7 +221,6 @@ abstract class AbstractPresenter
      * @param $data_list
      * @param $save
      *
-     *
      * @return array
      */
     protected function huskPaginator($data_list, $save = true)

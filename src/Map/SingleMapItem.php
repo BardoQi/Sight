@@ -55,7 +55,6 @@ class SingleMapItem extends AbstractList implements IMapItem
      * @param $list
      * @param $key
      *
-     *
      * @return array
      */
     protected function getItemBykey($list, $key)
