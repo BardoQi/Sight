@@ -37,7 +37,7 @@
   },
   "config": {
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin",
+    "bin-dir": ".Build/bin"
   },
   "scripts": {
     "test": "phpunit",
