@@ -86,7 +86,7 @@ final class FieldMapping
         if (empty($this->src)) {
             throw InvalidArgumentException::MappingSourceCanNotBeEmpty();
         }
-        if (!MappingTypeEnum::valid($this->type)) {
+        if (! MappingTypeEnum::valid($this->type)) {
             throw InvalidArgumentException::MappingTypeIsNotValid();
         }
 
@@ -166,16 +166,16 @@ final class FieldMapping
             /** item format is  ['key' => ['src'=>a, 'type'=>b  ]] */
             if (isset($array_item['src'])) {
                 if (isset($array_item['alias'])) {
-                    ['src'=> $src, 'type'=>$type, 'alias'=>$alias] = $array_item;
+                    ['src' => $src, 'type' => $type, 'alias' => $alias] = $array_item;
                 } else {
-                    ['src'=> $src, 'type'=>$type] = $array_item;
+                    ['src' => $src, 'type' => $type] = $array_item;
                 }
             } else {
                 /** item format is  ['key' => [a, b]] */
                 if (isset($array_item['alias'])) {
-                    list($src, $type, $alias) = $array_item;
+                    [$src, $type, $alias] = $array_item;
                 } else {
-                    list($src, $type) = $array_item;
+                    [$src, $type] = $array_item;
                 }
             }
         } catch (\Exception $e) {

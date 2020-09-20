@@ -122,7 +122,7 @@ class MultiMap extends AbstractList
      */
     public function getHasOne($offset)
     {
-        if (!isset($this->data[$offset])) {
+        if (! isset($this->data[$offset])) {
             if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
                 return null;
             }
@@ -140,7 +140,7 @@ class MultiMap extends AbstractList
      */
     public function getHasManyMerge($offset)
     {
-        if (!isset($this->data[$offset])) {
+        if (! isset($this->data[$offset])) {
             if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
                 return null;
             }
@@ -162,7 +162,7 @@ class MultiMap extends AbstractList
         $offsets = explode(',', $offset_values);
         $item = [];
         foreach ($offsets as $offset) {
-            if ((!isset($this->data[$offset])) || (!isset($this->data[$offset][0]))) {
+            if ((! isset($this->data[$offset])) || (! isset($this->data[$offset][0]))) {
                 if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
                     continue;
                 }
@@ -183,7 +183,7 @@ class MultiMap extends AbstractList
      */
     public function getItems($offset)
     {
-        if (!isset($this->data[$offset])) {
+        if (! isset($this->data[$offset])) {
             return [];
         }
         foreach ($this->data[$offset] as $key => $item) {
@@ -221,7 +221,7 @@ class MultiMap extends AbstractList
         // get the first item.
         $item = reset($this->data);
         // if keyed_by, it is a  multimap, so we must get first item.
-        if (!empty($this->keyed_by)) {
+        if (! empty($this->keyed_by)) {
             // if there is no data, the $item would be false
             if (false === $item) {
                 $this->data[0][$name] = '';

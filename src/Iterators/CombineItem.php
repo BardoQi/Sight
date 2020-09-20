@@ -160,7 +160,7 @@ final class CombineItem
      */
     public function getAliasMapping($item_key)
     {
-        if (!isset($this->alias_mapping[$item_key])) {
+        if (! isset($this->alias_mapping[$item_key])) {
             if (isset($this->local_item[$item_key])) {
                 $this->alias_mapping[$item_key] = 'local';
             }
@@ -185,9 +185,9 @@ final class CombineItem
     {
         if ('local' == $alias) {
             return $this->local_item;
-        } else {
-            return $this->join_items[$alias][$offfset];
         }
+
+        return $this->join_items[$alias][$offfset];
     }
 
     /**
@@ -219,7 +219,7 @@ final class CombineItem
         if (null === $alias) {
             return $this->local_item;
         }
-        if (!isset($this->join_items[$alias])) {
+        if (! isset($this->join_items[$alias])) {
             return $this->local_item;
         }
 
