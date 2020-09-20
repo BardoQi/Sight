@@ -1,9 +1,20 @@
 language: php
 
 php:
-  - '7.2'
+  - 7.2
 
 before_script:
-  - composer install
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+
 script:
-  - ./vendor/bin/phpunit tests
+  - vendor/bin/phpunit
+
+notifications:
+email:
+  recipients:
+    - bardoqi@gmail.com
+  on_success: always
+  on_failure: always
+
