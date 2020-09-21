@@ -58,7 +58,7 @@ abstract class AbstractPresenter
     /**
      * The local array.
      *
-     * @var null|MultiMap
+     * @var null|\Bardoqi\Sight\Map\SingleMap
      */
     protected $local_list = null;
 
@@ -326,7 +326,7 @@ abstract class AbstractPresenter
             if (isset($mapping[$field_name])) {
                 continue;
             }
-            if (isset($this->local_list[0][$field_name])) {
+            if ($this->local_list->hasColumn($field_name)) {
                 $mapping_item = FieldMapping::of()
                     ->key($field_name)
                     ->src($field_name)
@@ -363,7 +363,7 @@ abstract class AbstractPresenter
         $this->field_mapping = $mapping;
     }
 
-    /**
+   /**
      * Compose the items with the arrays.
      *
      * @return \Generator
@@ -378,6 +378,7 @@ abstract class AbstractPresenter
                 $this->join_lists,
                 $this->relations
             );
+
         /**
          * @var int                                  $offset
          * @var \Bardoqi\Sight\Iterators\CombineItem $item

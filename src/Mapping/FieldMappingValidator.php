@@ -16,6 +16,7 @@ use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Formatters\DataFormatter;
 use Bardoqi\Sight\Map\MultiMap;
+use Bardoqi\Sight\Map\SingleMap;
 use Bardoqi\Sight\Registries\FunctionRegistry;
 
 /**
@@ -60,13 +61,13 @@ final class FieldMappingValidator
     public $data_formatter = null;
 
     /**
-     * @param \Bardoqi\Sight\Map\MultiMap $local_list
+     * @param \Bardoqi\Sight\Map\SingleMap $local_list
      * @param array                       $join_lists
      *
      * AbstractPresenter Constructor
      */
     public function __construct(
-        MultiMap $local_list,
+        SingleMap $local_list,
         array $join_lists
     ) {
         $this->local_list = $local_list;
@@ -82,7 +83,7 @@ final class FieldMappingValidator
      * @return \Bardoqi\Sight\Mapping\FieldMappingValidator
      */
     public static function of(
-        MultiMap $local_list,
+        SingleMap $local_list,
         array $join_lists
     ) {
         return new static($local_list,$join_lists);
