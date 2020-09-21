@@ -202,7 +202,6 @@ class MultiMap extends AbstractList implements IMap
         }
     }
 
-
     /**
      * @return \Generator
      */

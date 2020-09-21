@@ -363,7 +363,7 @@ abstract class AbstractPresenter
         $this->field_mapping = $mapping;
     }
 
-   /**
+    /**
      * Compose the items with the arrays.
      *
      * @return \Generator

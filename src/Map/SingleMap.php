@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: bardo
- * Date: 2020-09-21
- * Time: 19:05
+/*
+ * This file is part of the bardoqi/sight package.
+ *
+ * (c) BardoQi <bardoqi@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Bardoqi\Sight\Map;
 
 use Bardoqi\Sight\Abstracts\AbstractList;
 use Bardoqi\Sight\Enums\JoinTypeEnum;
-use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Map\Interfaces\IMap;
+
 /**
  * Class SingleMap
- *
- * @package Bardoqi\Sight\Map
  */
 final class SingleMap extends AbstractList implements IMap
 {
@@ -91,25 +91,10 @@ final class SingleMap extends AbstractList implements IMap
     }
 
     /**
-     * @param $filter_list
-     * @param \Bardoqi\Sight\Filters\Condition $filter_condition
-     *
      * @return \Generator
      */
-    public function listItems($filter_list,$filter_condition)
+    public function listItems()
     {
-        /**
-         * for filter
-         */
-        if(!empty($filter_list)){
-            foreach($filter_list as $filter_item){
-
-                $key = $filter_item[$filter_condition->filter_field];
-                $item=  $this->data[$key];
-                yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
-            }
-            return false;
-        }
         foreach ($this->data as $key => $item) {
             yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
         }
@@ -117,24 +102,10 @@ final class SingleMap extends AbstractList implements IMap
 
 
     /**
-     * @param $filter_list
-     * @param \Bardoqi\Sight\Filters\Condition $filter_condition
-     *
      * @return \Generator
      */
-    public function singleListItems($filter_list,$filter_condition)
+    public function singleListItems()
     {
-        /**
-         * for filter
-         */
-        if(!empty($filter_list)){
-            foreach($filter_list[$filter_condition->filter_alias] as $filter_item){
-                $key = $filter_item[$filter_condition->filter_field];
-                $item=  $this->data[$key];
-                yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
-            }
-            return false;
-        }
         foreach ($this->data as $key => $item) {
             yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
         }

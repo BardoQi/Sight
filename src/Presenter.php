@@ -18,7 +18,6 @@ use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\PaginateTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
-use Bardoqi\Sight\Map\MultiMap;
 use Bardoqi\Sight\Map\SingleMap;
 use Bardoqi\Sight\Mapping\FieldMapping;
 use Bardoqi\Sight\Relations\Relation;
@@ -94,7 +93,7 @@ class Presenter extends AbstractPresenter
             throw InvalidArgumentException::LocalArrayCantBeEmpty();
         }
         $this->local_alias = $alias;
-        $this->local_list = SingleMap::of($data_list,$keyed_by);
+        $this->local_list = SingleMap::of($data_list, $keyed_by);
 
         return $this;
     }
@@ -408,6 +407,4 @@ class Presenter extends AbstractPresenter
     {
         return $this->status_code;
     }
-
-
 }
