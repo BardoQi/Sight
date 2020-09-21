@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Map\Interfaces;
 
 /**
- * Class IMap
+ * Class IMap.
  */
 interface IMap
 {
