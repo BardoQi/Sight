@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the bardoqi/sight package.
@@ -16,7 +17,7 @@ use Bardoqi\Sight\Enums\JoinTypeEnum;
 use Bardoqi\Sight\Map\Interfaces\IMap;
 
 /**
- * Class SingleMap
+ * Class SingleMap.
  */
 final class SingleMap extends AbstractList implements IMap
 {
@@ -100,7 +101,6 @@ final class SingleMap extends AbstractList implements IMap
         }
     }
 
-
     /**
      * @return \Generator
      */
@@ -120,6 +120,7 @@ final class SingleMap extends AbstractList implements IMap
     {
         // get the first item.
         $item = reset($this->data);
+
         return isset($item[$name]);
     }
 }
