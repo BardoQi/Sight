@@ -10,13 +10,12 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Tests;
 
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 /**
  * Class BaseTestCase.
  */
-class TestCase extends BaseTestCase
+class TestCase extends Orchestra
 {
     /**
      * The base URL to use while testing the application.
@@ -38,17 +37,19 @@ class TestCase extends BaseTestCase
     }
 
     /**
-     * Creates the application.
+     * Define environment setup.
      *
-     * @return \Illuminate\Foundation\Application
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
      */
-    public function createApplication()
+    protected function getEnvironmentSetUp($app)
     {
-        $path = dirname(dirname(dirname(dirname(__DIR__))));
-        $app = require $path.'/bootstrap/app.php';
-
-        $app->make(Kernel::class)->bootstrap();
-
-        return $app;
+        // Setup default database to use sqlite :memory:
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
     }
 }

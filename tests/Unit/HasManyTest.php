@@ -10,11 +10,6 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Tests\Unit;
 
-require dirname(dirname(dirname(dirname(__DIR__)))).'/autoload.php';
-require dirname(__DIR__).'\Fixture\BlogPresenter.php';
-require dirname(__DIR__).'\Fixture\UserPresenter.php';
-require dirname(__DIR__).'\TestCase.php';
-
 use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Tests\Fixture\BlogPresenter;
@@ -28,14 +23,14 @@ final class HasManyTest extends TestCase
     /** @test */
     public function testPresenterJoin()
     {
-        $blog_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Blogs.php';
+        $blog_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Blogs.php';
         $blog_array = json_decode($blog_array_string, true);
 
         $Blog = new BlogPresenter();
         $blog = $Blog->selectFields(['id', 'title', 'text', 'images', 'created_at', 'created_by'])
             ->fromLocal($blog_array, 'blog');
 
-        $user_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Users.php';
+        $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';
         $user_array = json_decode($user_array_string, true);
 
         $user_ids = $blog->pluck('created_by');
@@ -44,7 +39,7 @@ final class HasManyTest extends TestCase
         $blog = $blog->innerJoinForeign($user_array, 'user')
             ->onRelation('created_by', 'user', 'id');
 
-        $image_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Images.php';
+        $image_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Images.php';
         $image_ids = $blog->pluck('images');
         //You can check the $image_ids result with:
         // print_r($image_ids);
