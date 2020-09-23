@@ -72,7 +72,7 @@ abstract class AbstractPresenter
     /**
      * Keep the current item.
      *
-     * @var null
+     * @var null|\Bardoqi\Sight\Iterators\CombineItem
      */
     protected $current_item = null;
 
@@ -349,7 +349,6 @@ abstract class AbstractPresenter
             if ($hasMapping) {
                 continue;
             }
-
             throw InvalidArgumentException::FieldOrMappingNotFound($field_name);
         }
         // This is just for debuging. It wiil not rum in rpoduction env.

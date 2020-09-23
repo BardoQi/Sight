@@ -123,7 +123,7 @@ class MultiMap extends AbstractList implements IMap
      */
     public function getHasOne($offset)
     {
-        if (! isset($this->data[$offset])) {
+        if ((! isset($this->data[$offset])) ||(! isset($this->data[$offset][0]))) {
             if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
                 return null;
             }

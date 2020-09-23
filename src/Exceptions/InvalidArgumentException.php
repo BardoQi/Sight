@@ -165,7 +165,7 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      */
     public static function FieldOrMappingNotFound($name)
     {
-        return new self('Field Or Mapping '.$name.' Not Found!');
+        return new self('Field Or Mapping '.$name.' Not Found, Or value is null! Please give default value!');
     }
 
     /**
