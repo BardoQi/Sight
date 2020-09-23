@@ -10,10 +10,6 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Tests\Unit;
 
-require dirname(dirname(dirname(dirname(__DIR__)))).'/autoload.php';
-require dirname(__DIR__).'\Fixture\UserPresenter.php';
-require dirname(__DIR__).'\TestCase.php';
-
 use Bardoqi\Sight\Tests\Fixture\UserPresenter;
 use Bardoqi\Sight\Tests\TestCase;
 
@@ -27,7 +23,7 @@ final class SingleArrayTest extends TestCase
     /** @test */
     public function testPresenterCreate()
     {
-        $user_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Users.php';
+        $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';
         $user_array = json_decode($user_array_string, true);
         $user = new UserPresenter();
         $users = $user->selectFields(['id', 'username', 'mobile', 'name', 'avatar_id', 'created_at', 'updated_at'])

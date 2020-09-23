@@ -10,10 +10,6 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Tests\Unit;
 
-require dirname(dirname(dirname(dirname(__DIR__)))).'/autoload.php';
-require dirname(__DIR__).'\Fixture\UserPresenter.php';
-require dirname(__DIR__).'\TestCase.php';
-
 use Bardoqi\Sight\Tests\Fixture\UserPresenter;
 use Bardoqi\Sight\Tests\TestCase;
 
@@ -25,7 +21,7 @@ final class HasOneTest extends TestCase
     /** @test */
     public function testPresenterJoin()
     {
-        $user_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Users.php';
+        $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';
         $user_array = json_decode($user_array_string, true);
 
         $user = new UserPresenter();
@@ -34,7 +30,7 @@ final class HasOneTest extends TestCase
 
         $avatar_ids = $users->pluck('avatar_id');
 
-        $image_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Images.php';
+        $image_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Images.php';
         $image_array = json_decode($image_array_string, true);
 
         $users = $users->innerJoinForeign($image_array, 'images')
@@ -48,7 +44,7 @@ final class HasOneTest extends TestCase
     /** @test */
     public function testItemPresenter()
     {
-        $user_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Users.php';
+        $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';
         $user_array = json_decode($user_array_string, true);
 
         $user = new UserPresenter();
@@ -57,7 +53,7 @@ final class HasOneTest extends TestCase
 
         $avatar_ids = $users->pluck('avatar_id');
 
-        $image_array_string = include dirname(dirname(__DIR__)).'\\tests\\Fixture\\Images.php';
+        $image_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Images.php';
         $image_array = json_decode($image_array_string, true);
 
         $users = $users->innerJoinForeign($image_array, 'images')
