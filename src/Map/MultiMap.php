@@ -15,11 +15,12 @@ namespace Bardoqi\Sight\Map;
 use Bardoqi\Sight\Abstracts\AbstractList;
 use Bardoqi\Sight\Enums\JoinTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
+use Bardoqi\Sight\Map\Interfaces\IMap;
 
 /**
  * Class MultiMap.
  */
-class MultiMap extends AbstractList
+class MultiMap extends AbstractList implements IMap
 {
     /**
      * $keyed_by : Indicating which key is used for sort;.

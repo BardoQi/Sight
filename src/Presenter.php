@@ -18,7 +18,7 @@ use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\PaginateTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
-use Bardoqi\Sight\Map\MultiMap;
+use Bardoqi\Sight\Map\SingleMap;
 use Bardoqi\Sight\Mapping\FieldMapping;
 use Bardoqi\Sight\Relations\Relation;
 use Bardoqi\Sight\Traits\PresenterTrait;
@@ -73,10 +73,11 @@ class Presenter extends AbstractPresenter
      * @param array|Collection $data_list
      * @param string           $alias
      * @param null|string      $data_path It is for the data from elasticsearch
+     * @param null|string      $keyed_by
      *
      * @return $this
      */
-    public function fromLocal($data_list, $alias = 'main', $data_path = null)
+    public function fromLocal($data_list, $alias = 'main', $data_path = null, $keyed_by = null)
     {
         if (null !== $data_path) { // maybe id is elasticsearch result
             $data_list = Arr::get($data_list, $data_path);
@@ -92,7 +93,7 @@ class Presenter extends AbstractPresenter
             throw InvalidArgumentException::LocalArrayCantBeEmpty();
         }
         $this->local_alias = $alias;
-        $this->local_list = MultiMap::of($data_list);
+        $this->local_list = SingleMap::of($data_list, $keyed_by);
 
         return $this;
     }
