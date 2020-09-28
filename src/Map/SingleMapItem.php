@@ -80,7 +80,6 @@ class SingleMapItem extends AbstractList implements IMapItem
 
         $decode_item = null;
         if (! is_array($item)) {
-            
             $decode_item = json_decode($item, true);
             if (null === $decode_item) {
                 throw InvalidArgumentException::ItemIsNotJsonString();
@@ -88,7 +87,7 @@ class SingleMapItem extends AbstractList implements IMapItem
             $this->data[$key] = $decode_item;
             $item = $decode_item;
         }
-        
+
         foreach ($path as $key) {
             $item = $this->getItemBykey($item, $key);
         }

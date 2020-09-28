@@ -15,11 +15,9 @@ namespace Bardoqi\Sight\Tests\Unit;
 use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Tests\Fixture\BlogPresenter;
-use Bardoqi\Sight\Tests\Fixture\JphUserAlbums;
-use Bardoqi\Sight\Tests\Fixture\JphUserPresenter;
+use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
 use Bardoqi\Sight\Tests\Fixture\Mock;
 use Bardoqi\Sight\Tests\TestCase;
-use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
 
 /**
  * Class HasManyTest.
@@ -69,7 +67,8 @@ final class HasManyTest extends TestCase
     }
 
     /** @atest */
-    public function testHasManyJoin(){
+    public function testHasManyJoin()
+    {
         $user_array = Mock::getLocalData(Mock::USER_DATA);
         $user = new JphUserAlbumsPresenter();
 
@@ -77,8 +76,8 @@ final class HasManyTest extends TestCase
 
         $users = $user->selectFields($user->list_fields)
             ->fromLocal($user_array)
-            ->outerJoinForeign($albums_array,'albums','userId')
-            ->onRelation('id','albums','userId')
+            ->outerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelation('id', 'albums', 'userId')
             ->addFieldMappingList($user->list_mapping)
             ->toArray();
         $this->assertTrue(isset($users[0]['albums_id']));

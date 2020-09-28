@@ -142,7 +142,7 @@ final class FieldMappingValidator
         if ($this->local_list->hasColumn($name)) {
             return true;
         }
-        if(! empty($alias)) {
+        if (! empty($alias)) {
             if (isset($this->join_lists[$alias])) {
                 /** @var MultiMap $list */
                 $list = $this->join_lists[$alias];

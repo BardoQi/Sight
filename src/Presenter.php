@@ -136,9 +136,10 @@ class Presenter extends AbstractPresenter
             $out_array = explode(',', $out_str);
             $out_array = array_unique($out_array);
             // give a default value when only 0 in the array.
-            if((0==$out_array[0]) && (1 == count($out_array))){
+            if ((0 == $out_array[0]) && (1 == count($out_array))) {
                 $out_array[0] = 1;
             }
+
             return $out_array;
         }
 
