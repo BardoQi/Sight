@@ -76,6 +76,7 @@ class MultiMap extends AbstractList implements IMap
         if (isset($item[0])) {
             return $item[0];
         }
+
         return $item;
     }
 
@@ -97,6 +98,7 @@ class MultiMap extends AbstractList implements IMap
                 $this->empty_item = [];
             }
         }
+
         return $this->empty_item;
     }
 
@@ -115,15 +117,18 @@ class MultiMap extends AbstractList implements IMap
      *
      * @return \Bardoqi\Sight\Map\MultiMapItem|null
      */
-    public function getHasMany($offset){
+    public function getHasMany($offset)
+    {
         if (! isset($this->data[$offset])) {
             if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
                 return null;
             }
             $item[$offset] = $this->getEmptyOne();
-            return SingleMap::of($item,null, $this->join_type);
+
+            return SingleMap::of($item, null, $this->join_type);
         }
-        return SingleMap::of($this->data[$offset], null,  $this->join_type);
+
+        return SingleMap::of($this->data[$offset], null, $this->join_type);
     }
 
     /**
@@ -183,6 +188,7 @@ class MultiMap extends AbstractList implements IMap
                 $item[$offset] = $join_data[0];
             }
         }
+
         return MultiMapItem::of($item, $this->keyed_by, RelationEnum::HAS_MANY_SPLIT);
     }
 

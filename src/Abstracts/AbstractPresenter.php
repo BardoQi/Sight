@@ -261,7 +261,7 @@ abstract class AbstractPresenter
             if (! isset($data_list[0][$keyed_by])) {
                 throw InvalidArgumentException::KeyedByIsNotCorrect($keyed_by);
             }
-        }else{
+        } else {
             throw InvalidArgumentException::ThereMustBeAtLeast1EmptyItemInTheJoinArray($keyed_by);
         }
         $this->join_lists[$alias] = MultiMap::of($data_list, $keyed_by, $join_type);
@@ -428,6 +428,7 @@ abstract class AbstractPresenter
             case MappingTypeEnum::DATA_FORMATER:
                 $Formatter = $this->data_formatter;
                 $value = $item->getItemValue($mapping->key(), 0, $mapping->alias());
+
                 return call_user_func_array([$Formatter, 'format'], [$mapping->src(), $value]);
             case MappingTypeEnum::METHOD_NAME:
                 return $this->forwardCall($mapping, $item);
@@ -454,6 +455,7 @@ abstract class AbstractPresenter
             /** @var \Bardoqi\Sight\Mapping\FieldMapping $mapping */
             $mapping = $this->field_mapping[$field_name];
             $newValue = $this->getItemValueWithMapping($mapping, $item);
+
             return $newValue;
         }
         // If  we have not got the value, we use the key

@@ -136,7 +136,6 @@ final class ListIterator
          */
         $relation_list = $this->relation_list;
         foreach ($relation_list->hasManyRelations() as $alias => $relation) {
-
             $local_key = $item->getItemValue($relation->local_field);
 
             /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
@@ -149,6 +148,7 @@ final class ListIterator
                 $iterator_node = $iterator_node->addChildren($list, $alias);
             }
         }
+
         return $tree_iterator;
     }
 
