@@ -215,7 +215,8 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function ThereMustBeAtLeast1EmptyItemInTheJoinArray(){
+    public static function ThereMustBeAtLeast1EmptyItemInTheJoinArray()
+    {
         return new self('There Must Be At Least 1 Empty Item In The Join Array!');
     }
 }

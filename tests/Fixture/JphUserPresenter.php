@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the bardoqi/sight package.
@@ -15,27 +16,26 @@ use Bardoqi\Sight\Enums\MappingTypeEnum as MTE;
 use Bardoqi\Sight\Presenter;
 
 /**
- * Class JphUserPresenter
+ * Class JphUserPresenter.
  */
 final class JphUserPresenter extends Presenter
 {
     /**
      * @var array
      */
-    public $list_fields = ["id","name","username","email",
-        "address_detail","phone","website","commpany_name"];
-
+    public $list_fields = ['id', 'name', 'username', 'email',
+        'address_detail', 'phone', 'website', 'commpany_name', ];
 
     /**
      * @var array
      */
     public $list_mappings = [
-        'address_detail' => ['src'=>'address', 'type'=>MTE::METHOD_NAME],
-        'commpany_name' => ['src'=>'company.name', 'type'=>MTE::ARRAY_PATH,'local'],
-        'street' => ['src'=>'address.street', 'type'=>MTE::ARRAY_PATH,'local'],
-        'suite' => ['src'=>'address.suite', 'type'=>MTE::ARRAY_PATH,'local'],
-        'city' => ['src'=>'address.city', 'type'=>MTE::ARRAY_PATH,'local'],
-        'zipcode' => ['src'=>'address.zipcode', 'type'=>MTE::ARRAY_PATH,'local'],
+        'address_detail' => ['src' => 'address', 'type' => MTE::METHOD_NAME],
+        'commpany_name' => ['src' => 'company.name', 'type' => MTE::ARRAY_PATH, 'local'],
+        'street' => ['src' => 'address.street', 'type' => MTE::ARRAY_PATH, 'local'],
+        'suite' => ['src' => 'address.suite', 'type' => MTE::ARRAY_PATH, 'local'],
+        'city' => ['src' => 'address.city', 'type' => MTE::ARRAY_PATH, 'local'],
+        'zipcode' => ['src' => 'address.zipcode', 'type' => MTE::ARRAY_PATH, 'local'],
     ];
 
     public function __construct()
@@ -48,13 +48,15 @@ final class JphUserPresenter extends Presenter
      *
      * @return void
      */
-    public function address_detail($value){
+    public function address_detail($value)
+    {
         // Just For test the function getValue,
         // Otherwise you could using the $value!
-        $value = $this->getValue('street') . "\r\n"
-            . $this->getValue('suite') . "\r\n"
-            . $this->getValue('city')  ."  "
-            . $this->getValue('cizipcodety');
+        $value = $this->getValue('street')."\r\n"
+            .$this->getValue('suite')."\r\n"
+            .$this->getValue('city').'  '
+            .$this->getValue('cizipcodety');
+
         return $value;
     }
 }

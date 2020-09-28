@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Tests\Unit;
 
-use Bardoqi\Sight\Tests\Fixture\UserPresenter;
 use Bardoqi\Sight\Tests\Fixture\JphUserPresenter;
-use Bardoqi\Sight\Tests\TestCase;
 use Bardoqi\Sight\Tests\Fixture\Mock;
+use Bardoqi\Sight\Tests\Fixture\UserPresenter;
+use Bardoqi\Sight\Tests\TestCase;
 
 /**
  * Class SingleArrayTest.
@@ -37,7 +37,8 @@ final class SingleArrayTest extends TestCase
     }
 
     /** @test */
-    public function testFindByPathAndMergeFields(){
+    public function testFindByPathAndMergeFields()
+    {
         $user_array = Mock::getLocalData(Mock::USER_DATA);
         $user = new JphUserPresenter();
 
