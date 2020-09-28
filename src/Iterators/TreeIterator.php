@@ -18,7 +18,7 @@ namespace Bardoqi\Sight\Iterators;
 final class TreeIterator
 {
     /**
-     * @var array;
+     * @var \Bardoqi\Sight\Map\SingleMap;
      */
     protected $list;
 
@@ -69,10 +69,11 @@ final class TreeIterator
     {
         if (0 === count($this->list)) {
             yield $combine_item;
-        }
-        foreach ($this->list as $key => $item) {
-            $combine_item->addJoinItem($this->alias, $item);
-            yield $combine_item;
+        }else{
+            foreach ($this->list->listItems() as $key => $item) {
+                $combine_item->addJoinItem($this->alias, $item);
+                yield $combine_item;
+            }
         }
     }
 
@@ -85,10 +86,11 @@ final class TreeIterator
     {
         if (null === $this->children) {
             yield $combine_item;
-        }
-        $node = $this->children;
-        foreach ($node->listItems($combine_item) as $key => $items) {
-            yield $items;
+        }else{
+            $node = $this->children;
+            foreach ($node->listItems($combine_item) as $key => $items) {
+                yield $items;
+            }
         }
     }
 

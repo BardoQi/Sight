@@ -1,11 +1,13 @@
 <?php
 
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: bardo
- * Date: 2020-08-31
- * Time: 0:31.
+/*
+ * This file is part of the bardoqi/sight package.
+ *
+ * (c) BardoQi <bardoqi@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Bardoqi\Sight\Tests\Unit;
@@ -18,7 +20,7 @@ use Bardoqi\Sight\Tests\TestCase;
  */
 final class HasOneTest extends TestCase
 {
-    /** @test */
+    /** @atest */
     public function testPresenterJoin()
     {
         $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';
@@ -41,7 +43,7 @@ final class HasOneTest extends TestCase
         $this->assertTrue(isset($users[0]['img_url']));
     }
 
-    /** @test */
+    /** @atest */
     public function testItemPresenter()
     {
         $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';

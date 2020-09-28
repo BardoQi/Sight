@@ -1,11 +1,13 @@
 <?php
 
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: bardo
- * Date: 2020-09-13
- * Time: 13:52.
+/*
+ * This file is part of the bardoqi/sight package.
+ *
+ * (c) BardoQi <bardoqi@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Bardoqi\Sight\Tests;
@@ -13,7 +15,7 @@ namespace Bardoqi\Sight\Tests;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 /**
- * Class BaseTestCase.
+ * Class TestCase.
  */
 class TestCase extends Orchestra
 {

@@ -1,11 +1,13 @@
 <?php
 
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: bardo
- * Date: 2020-08-31
- * Time: 0:32.
+/*
+ * This file is part of the bardoqi/sight package.
+ *
+ * (c) BardoQi <bardoqi@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Bardoqi\Sight\Tests\Unit;
@@ -13,14 +15,18 @@ namespace Bardoqi\Sight\Tests\Unit;
 use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Tests\Fixture\BlogPresenter;
+use Bardoqi\Sight\Tests\Fixture\JphUserAlbums;
+use Bardoqi\Sight\Tests\Fixture\JphUserPresenter;
+use Bardoqi\Sight\Tests\Fixture\Mock;
 use Bardoqi\Sight\Tests\TestCase;
+use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
 
 /**
  * Class HasManyTest.
  */
 final class HasManyTest extends TestCase
 {
-    /** @test */
+    /** @atest */
     public function testPresenterJoin()
     {
         $blog_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Blogs.php';
@@ -52,7 +58,7 @@ final class HasManyTest extends TestCase
             [
                 'created_by' => ['src' => 'name', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'user'],
                 'images' => ['src' => 'images', 'type' => MappingTypeEnum::METHOD_NAME],
-          ]
+            ]
         );
 
         $blogs = $blog->toArray();
@@ -60,5 +66,22 @@ final class HasManyTest extends TestCase
         //You can check the $blogs result with:
         // print_r($blogs);
         $this->assertTrue(is_array($blogs[0]['images']));
+    }
+
+    /** @atest */
+    public function testHasManyJoin(){
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
+
+        $users = $user->selectFields($user->list_fields)
+            ->fromLocal($user_array)
+            ->outerJoinForeign($albums_array,'albums','userId')
+            ->onRelation('id','albums','userId')
+            ->addFieldMappingList($user->list_mapping)
+            ->toArray();
+        $this->assertTrue(isset($users[0]['albums_id']));
+        $this->assertTrue(isset($users[0]['albums_title']));
     }
 }

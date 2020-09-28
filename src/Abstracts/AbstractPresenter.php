@@ -37,7 +37,7 @@ abstract class AbstractPresenter
     /**
      * Keep the join relations.
      *
-     * @var \Bardoqi\Sight\Relations\RelationList
+     * @var null | \Bardoqi\Sight\Relations\RelationList
      */
     protected $relations = null;
 
@@ -58,7 +58,7 @@ abstract class AbstractPresenter
     /**
      * The local array.
      *
-     * @var null|\Bardoqi\Sight\Map\SingleMap
+     * @var null | \Bardoqi\Sight\Map\SingleMap
      */
     protected $local_list = null;
 
@@ -72,14 +72,14 @@ abstract class AbstractPresenter
     /**
      * Keep the current item.
      *
-     * @var null|\Bardoqi\Sight\Iterators\CombineItem
+     * @var null | \Bardoqi\Sight\Iterators\CombineItem
      */
     protected $current_item = null;
 
     /**
      * Keep the fields transform mappings.
      *
-     * @var \Bardoqi\Sight\Mapping\FieldMappingList
+     * @var null | \Bardoqi\Sight\Mapping\FieldMappingList
      */
     protected $field_mapping = null;
 
@@ -119,6 +119,9 @@ abstract class AbstractPresenter
         $this->field_mapping = FieldMappingList::of();
         $this->data_formatter = DataFormatter::getInstance();
         $this->relations = RelationList::of();
+
+        // Just for the validation of mapping
+        // Only run in debug
         if (true === config('app.debug')) {
             FunctionRegistry::getInstance()->setItem('hasMethod', $this, 'hasMethod');
         }
@@ -258,6 +261,8 @@ abstract class AbstractPresenter
             if (! isset($data_list[0][$keyed_by])) {
                 throw InvalidArgumentException::KeyedByIsNotCorrect($keyed_by);
             }
+        }else{
+            throw InvalidArgumentException::ThereMustBeAtLeast1EmptyItemInTheJoinArray($keyed_by);
         }
         $this->join_lists[$alias] = MultiMap::of($data_list, $keyed_by, $join_type);
 
@@ -321,7 +326,6 @@ abstract class AbstractPresenter
     protected function prepareMapping()
     {
         $mapping = $this->initMapping();
-
         foreach ($this->field_list as $field_name) {
             if (isset($mapping[$field_name])) {
                 continue;
@@ -335,6 +339,7 @@ abstract class AbstractPresenter
                 continue;
             }
             $hasMapping = false;
+            //dd($this->join_lists);
             foreach ($this->join_lists as $alias => $list) {
                 if ($list->hasColumn($field_name)) {
                     $mapping_item = FieldMapping::of()
@@ -359,6 +364,7 @@ abstract class AbstractPresenter
             );
             $mapping_validator->validate($mapping);
         }
+        // print_r($mapping);
         $this->field_mapping = $mapping;
     }
 
@@ -422,7 +428,6 @@ abstract class AbstractPresenter
             case MappingTypeEnum::DATA_FORMATER:
                 $Formatter = $this->data_formatter;
                 $value = $item->getItemValue($mapping->key(), 0, $mapping->alias());
-
                 return call_user_func_array([$Formatter, 'format'], [$mapping->src(), $value]);
             case MappingTypeEnum::METHOD_NAME:
                 return $this->forwardCall($mapping, $item);
@@ -449,7 +454,6 @@ abstract class AbstractPresenter
             /** @var \Bardoqi\Sight\Mapping\FieldMapping $mapping */
             $mapping = $this->field_mapping[$field_name];
             $newValue = $this->getItemValueWithMapping($mapping, $item);
-
             return $newValue;
         }
         // If  we have not got the value, we use the key

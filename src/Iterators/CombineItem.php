@@ -139,7 +139,6 @@ final class CombineItem
             if ($item->hasColumn($column_name)) {
                 return $item->getItemValue($column_name, $offset);
             }
-
             return '';
         }
         /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $item */
@@ -160,6 +159,7 @@ final class CombineItem
      */
     public function getAliasMapping($item_key)
     {
+
         if (! isset($this->alias_mapping[$item_key])) {
             if (isset($this->local_item[$item_key])) {
                 $this->alias_mapping[$item_key] = 'local';
@@ -183,7 +183,7 @@ final class CombineItem
      */
     private function getMapItem($alias, $offfset = 0)
     {
-        if ('local' == $alias) {
+        if (('local' == $alias) || (Empty($alias))) {
             return $this->local_item;
         }
 
@@ -198,11 +198,13 @@ final class CombineItem
      */
     public function findByPath($path, $alias = null)
     {
-        $path_arr = explode(',', $path);
+        $path_arr = explode('.', $path);
         $item_key = $path_arr[0];
+
         if (null === $alias) {
             $alias = $this->getAliasMapping($item_key);
         }
+
         /** @var \Bardoqi\Sight\Map\MultiMapItem $map_item */
         $map_item = $this->getMapItem($alias);
 

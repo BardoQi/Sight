@@ -76,18 +76,16 @@ class MultiMap extends AbstractList implements IMap
         if (isset($item[0])) {
             return $item[0];
         }
-
         return $item;
     }
 
     /**
      * Create a empty row with given offset.
      *
-     * @param bool $is_single
      *
      * @return array
      */
-    public function getEmptyOne($is_single)
+    public function getEmptyOne()
     {
         if (null === $this->empty_item) {
             $item = $this->getAnyOne();
@@ -99,11 +97,7 @@ class MultiMap extends AbstractList implements IMap
                 $this->empty_item = [];
             }
         }
-        if ($is_single) {
-            return SingleMapItem::of($this->empty_item, $this->keyed_by, 0);
-        }
-
-        return MultiMapItem::of($this->empty_item, $this->keyed_by, RelationEnum::HAS_MANY);
+        return $this->empty_item;
     }
 
     /**
@@ -119,6 +113,22 @@ class MultiMap extends AbstractList implements IMap
     /**
      * @param $offset
      *
+     * @return \Bardoqi\Sight\Map\MultiMapItem|null
+     */
+    public function getHasMany($offset){
+        if (! isset($this->data[$offset])) {
+            if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
+                return null;
+            }
+            $item[$offset] = $this->getEmptyOne();
+            return SingleMap::of($item,null, $this->join_type);
+        }
+        return SingleMap::of($this->data[$offset], null,  $this->join_type);
+    }
+
+    /**
+     * @param $offset
+     *
      * @return \Bardoqi\Sight\Map\SingleMapItem|null
      */
     public function getHasOne($offset)
@@ -128,7 +138,7 @@ class MultiMap extends AbstractList implements IMap
                 return null;
             }
 
-            return SingleMapItem::of($this->getEmptyOne(true), $this->keyed_by, 0);
+            return SingleMapItem::of($this->getEmptyOne(), $this->keyed_by, 0);
         }
 
         return SingleMapItem::of($this->data[$offset][0], $this->keyed_by, 0);
@@ -145,7 +155,7 @@ class MultiMap extends AbstractList implements IMap
             if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
                 return null;
             }
-            $item[0] = $this->getEmptyOne(false);
+            $item[$offset] = $this->getEmptyOne();
 
             return MultiMapItem::of($item, $this->keyed_by, RelationEnum::HAS_MANY_MERGE);
         }
@@ -167,13 +177,12 @@ class MultiMap extends AbstractList implements IMap
                 if (JoinTypeEnum::INNER_JOIN === $this->join_type) {
                     continue;
                 }
-                $item[] = $this->getEmptyOne(false);
+                $item[$offset] = $this->getEmptyOne();
             } else {
                 $join_data = $this->data[$offset];
                 $item[$offset] = $join_data[0];
             }
         }
-
         return MultiMapItem::of($item, $this->keyed_by, RelationEnum::HAS_MANY_SPLIT);
     }
 

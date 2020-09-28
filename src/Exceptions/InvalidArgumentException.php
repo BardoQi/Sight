@@ -211,4 +211,11 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     {
         return new self('Item Is Not Json String!');
     }
+
+    /**
+     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
+     */
+    public static function ThereMustBeAtLeast1EmptyItemInTheJoinArray(){
+        return new self('There Must Be At Least 1 Empty Item In The Join Array!');
+    }
 }

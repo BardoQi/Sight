@@ -172,7 +172,7 @@ final class FieldMapping
                 }
             } else {
                 /** item format is  ['key' => [a, b]] */
-                if (isset($array_item['alias'])) {
+                if (count($array_item) == 3) {
                     [$src, $type, $alias] = $array_item;
                 } else {
                     [$src, $type] = $array_item;

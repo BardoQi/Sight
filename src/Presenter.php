@@ -77,7 +77,7 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function fromLocal($data_list, $alias = 'main', $data_path = null, $keyed_by = null)
+    public function fromLocal($data_list, $alias = 'local', $data_path = null, $keyed_by = null)
     {
         if (null !== $data_path) { // maybe id is elasticsearch result
             $data_list = Arr::get($data_list, $data_path);
@@ -105,7 +105,7 @@ class Presenter extends AbstractPresenter
      *
      * @return \Bardoqi\Sight\Presenter
      */
-    public function fromLocalItem($data_item, $alias = 'main', $data_path = null)
+    public function fromLocalItem($data_item, $alias = 'local', $data_path = null)
     {
         return $this->fromLocal([$data_item], $alias, $data_path);
     }
@@ -132,14 +132,14 @@ class Presenter extends AbstractPresenter
 
         if (! empty($out_array)) {
             /** maybe the value is comma separated values */
-            try {
-                $out_str = implode(',', $out_array);
-                $out_array = explode(',', $out_str);
-            } catch (\Exception $e) {
-                dd($e->getMessage(), $out_array, $fields, $this->local_list);
+            $out_str = implode(',', $out_array);
+            $out_array = explode(',', $out_str);
+            $out_array = array_unique($out_array);
+            // give a default value when only 0 in the array.
+            if((0==$out_array[0]) && (1 == count($out_array))){
+                $out_array[0] = 1;
             }
-
-            return array_unique($out_array);
+            return $out_array;
         }
 
         return [];
@@ -313,7 +313,7 @@ class Presenter extends AbstractPresenter
      *
      * @return array
      */
-    protected function toTreeArray($parent_id_key = 'parent_d')
+    protected function toTreeArray($parent_id_key = 'parent_id')
     {
         $src_array = $this->toArray();
         $out_array = [];

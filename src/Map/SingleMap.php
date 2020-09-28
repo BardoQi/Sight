@@ -77,21 +77,6 @@ final class SingleMap extends AbstractList implements IMap
     }
 
     /**
-     * @param $offset
-     *
-     * @return bool|\Generator
-     */
-    public function getItems($offset)
-    {
-        if (! isset($this->data[$offset])) {
-            return [];
-        }
-        foreach ($this->data[$offset] as $key => $item) {
-            yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
-        }
-    }
-
-    /**
      * @return \Generator
      */
     public function listItems()

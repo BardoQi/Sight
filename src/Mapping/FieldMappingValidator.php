@@ -142,11 +142,13 @@ final class FieldMappingValidator
         if ($this->local_list->hasColumn($name)) {
             return true;
         }
-        if (isset($this->join_lists[$alias])) {
-            /** @var MultiMap $list */
-            $list = $this->join_lists[$alias];
+        if(! empty($alias)) {
+            if (isset($this->join_lists[$alias])) {
+                /** @var MultiMap $list */
+                $list = $this->join_lists[$alias];
 
-            return $list->hasColumn($name);
+                return $list->hasColumn($name);
+            }
         }
         /** @var MultiMap $list */
         foreach ($this->join_lists as $list) {
@@ -166,7 +168,7 @@ final class FieldMappingValidator
      */
     private function hasPath($path, $alias)
     {
-        $path_arr = explode(',', $path);
+        $path_arr = explode('.', $path);
         $name = array_shift($path_arr);
 
         return $this->hasField($name, $alias);

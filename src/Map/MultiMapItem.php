@@ -76,17 +76,18 @@ class MultiMapItem extends AbstractList implements IMapItem
     public function findByPath($path, $offset = 0)
     {
         $key = array_shift($path);
-        $item = $this->data[$offset];
+        $item = $this->data[$offset][$key];
+
         $decode_item = null;
         if (! is_array($item)) {
             $decode_item = json_decode($item, true);
+            if (null === $decode_item) {
+                throw InvalidArgumentException::ItemIsNotJsonString();
+            }
+            $this->data[$offset][$key] = $decode_item;
+            $item = $decode_item;
         }
-        if (null === $decode_item) {
-            throw InvalidArgumentException::ItemIsNotJsonString();
-        }
-        $this->data[$offset][$key] = $decode_item;
 
-        $item = $decode_item;
         foreach ($path as $key) {
             $item = $this->getItemBykey($item, $key);
         }
@@ -101,9 +102,15 @@ class MultiMapItem extends AbstractList implements IMapItem
      */
     public function hasColumn($name)
     {
-        $tem = reset($this->data);
-
-        return isset($tem[$name]);
+        $item = reset($this->data);
+        if(! isset($item[$name])){
+            $keys = array_keys($item);
+            if(in_array($name,$keys)){
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -114,14 +121,14 @@ class MultiMapItem extends AbstractList implements IMapItem
      */
     public function getItemValue($column_name, $offset = null)
     {
-        $tem = reset($this->data);
+        $item = reset($this->data);
         if (null !== $offset) {
             if (isset($this->data[$offset])) {
-                $tem = $this->data[$offset];
+                $item = $this->data[$offset];
             }
         }
-        if (isset($tem[$column_name])) {
-            return $tem[$column_name];
+        if (isset($item[$column_name])) {
+            return $item[$column_name];
         }
 
         return false;
