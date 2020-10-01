@@ -40,9 +40,6 @@ final class JphUserAlbumsPresenter extends Presenter
         'albums' => ['src' => 'albums', 'type' => MappingTypeEnum::METHOD_NAME],
     ];
 
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();
