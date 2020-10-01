@@ -24,7 +24,7 @@ use Bardoqi\Sight\Tests\TestCase;
  */
 final class HasManyTest extends TestCase
 {
-    /** @atest */
+    /** @test */
     public function testPresenterJoin()
     {
         $blog_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Blogs.php';
@@ -66,7 +66,7 @@ final class HasManyTest extends TestCase
         $this->assertTrue(is_array($blogs[0]['images']));
     }
 
-    /** @atest */
+    /** @test */
     public function testHasManyJoin()
     {
         $user_array = Mock::getLocalData(Mock::USER_DATA);
@@ -82,5 +82,23 @@ final class HasManyTest extends TestCase
             ->toArray();
         $this->assertTrue(isset($users[0]['albums_id']));
         $this->assertTrue(isset($users[0]['albums_title']));
+    }
+
+    /* @test */
+    public function testHasManyMerge()
+    {
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
+
+        $users = $user->selectFields($user->list_merge_fields)
+            ->fromLocal($user_array)
+            ->outerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY_MERGE)
+            ->addFieldMappingList($user->list_merge_mapping)
+            ->toArray();
+        $this->assertTrue(isset($users[0]['albums']));
+        $this->assertTrue(isset($users[0]['albums'][0]['id']));
     }
 }

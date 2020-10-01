@@ -20,7 +20,7 @@ use Bardoqi\Sight\Tests\TestCase;
  */
 final class HasOneTest extends TestCase
 {
-    /** @atest */
+    /** @test */
     public function testPresenterJoin()
     {
         $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';
@@ -43,7 +43,7 @@ final class HasOneTest extends TestCase
         $this->assertTrue(isset($users[0]['img_url']));
     }
 
-    /** @atest */
+    /** @test */
     public function testItemPresenter()
     {
         $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';

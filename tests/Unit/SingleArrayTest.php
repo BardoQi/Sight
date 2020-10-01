@@ -24,7 +24,7 @@ final class SingleArrayTest extends TestCase
 {
     public $userPresenter;
 
-    /** @atest */
+    /** @test */
     public function testPresenterCreate()
     {
         $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';

@@ -1,6 +1,6 @@
 Changelog
 =========
-## 0.1.3.3Rrelase (2020-09-29)
+## 0.1.3.3 Relase (2020-09-29)
 
 * Finish the testing of HAS_MANY and FindByPath
 
