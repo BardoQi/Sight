@@ -33,13 +33,16 @@ final class JphUserAlbumsPresenter extends Presenter
 
     public $list_merge_fields = [
         'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
-        'albums'£¬
+        'albums',
     ];
 
     public $list_merge_mapping = [
         'albums' => ['src' => 'albums', 'type' => MappingTypeEnum::METHOD_NAME],
     ];
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
