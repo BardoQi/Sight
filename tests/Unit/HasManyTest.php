@@ -95,7 +95,7 @@ final class HasManyTest extends TestCase
         $users = $user->selectFields($user->list_merge_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY_MERGE)
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY_MERGE)
             ->addFieldMappingList($user->list_merge_mapping)
             ->toArray();
         $this->assertTrue(isset($users[0]['albums']));

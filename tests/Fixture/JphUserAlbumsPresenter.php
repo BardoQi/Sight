@@ -33,7 +33,7 @@ final class JphUserAlbumsPresenter extends Presenter
 
     public $list_merge_fields = [
         'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
-        'albums'
+        'albums'£¬
     ];
 
     public $list_merge_mapping = [
