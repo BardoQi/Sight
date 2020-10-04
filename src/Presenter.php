@@ -22,6 +22,7 @@ use Bardoqi\Sight\Map\SingleMap;
 use Bardoqi\Sight\Mapping\FieldMapping;
 use Bardoqi\Sight\Relations\Relation;
 use Bardoqi\Sight\Traits\PresenterTrait;
+use Illuminate\Support\Arr;
 
 /**
  * Class Presenter.
@@ -399,9 +400,9 @@ class Presenter extends AbstractPresenter
     }
 
     /**
-     * @param $code
+     * @param
      */
-    public function getStatusCode($code)
+    public function getStatusCode()
     {
         return $this->status_code;
     }
