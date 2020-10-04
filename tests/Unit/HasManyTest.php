@@ -85,8 +85,7 @@ final class HasManyTest extends TestCase
     }
 
     /* @test */
-    public function testHasManyMerge()
-    {
+    public function testHasManyMerge(){
         $user_array = Mock::getLocalData(Mock::USER_DATA);
         $user = new JphUserAlbumsPresenter();
 

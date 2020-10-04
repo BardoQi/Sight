@@ -120,9 +120,6 @@ class Presenter extends AbstractPresenter
      */
     public function pluck(...$fields)
     {
-        if (! is_array($fields)) {
-            $fields = [$fields];
-        }
         $out_array = [];
         foreach ($this->local_list as $item) {
             foreach ($fields as $key) {
@@ -314,7 +311,7 @@ class Presenter extends AbstractPresenter
      *
      * @return array
      */
-    protected function toTreeArray($parent_id_key = 'parent_id')
+    public function toTreeArray($parent_id_key = 'parent_id')
     {
         $src_array = $this->toArray();
         $out_array = [];
