@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the bardoqi/sight package.
@@ -18,9 +19,7 @@ use Bardoqi\Sight\Presenter;
 use Bardoqi\Sight\Traits\PresenterTrait;
 
 /**
- * Class NormalPresenter
- *
- * @package Bardoqi\Sight\Tests\Fixture
+ * Class NormalPresenter.
  */
 final class NormalPresenter extends Presenter
 {
@@ -32,28 +31,29 @@ final class NormalPresenter extends Presenter
     public function list_mapping()
     {
         $mappig = [
-            "price" => FieldMapping::of()->key("price")
+            'price' => FieldMapping::of()->key('price')
                 ->src(FormatterEnum::TO_CURRENCY)
                 ->type(MappingTypeEnum::DATA_FORMATER),
-            "amount" => FieldMapping::of()->key("amount")
+            'amount' => FieldMapping::of()->key('amount')
                 ->src(FormatterEnum::TO_CNY)
                 ->type(MappingTypeEnum::DATA_FORMATER),
-            "sum" => FieldMapping::of()->key("sum")
+            'sum' => FieldMapping::of()->key('sum')
                 ->src(FormatterEnum::TO_USD)
                 ->type(MappingTypeEnum::DATA_FORMATER),
-            "divered_at" => FieldMapping::of()->key("divered_at")
+            'divered_at' => FieldMapping::of()->key('divered_at')
                 ->src(FormatterEnum::TO_DATE)
                 ->type(MappingTypeEnum::DATA_FORMATER),
-            "created_at" => FieldMapping::of()->key("created_at")
-                ->src("created_at")
+            'created_at' => FieldMapping::of()->key('created_at')
+                ->src('created_at')
                 ->type(MappingTypeEnum::METHOD_NAME),
-            "updated_at" => FieldMapping::of()->key("updated_at")
-                ->src("updated_at")
+            'updated_at' => FieldMapping::of()->key('updated_at')
+                ->src('updated_at')
                 ->type(MappingTypeEnum::METHOD_NAME),
-            "deleted_at" => FieldMapping::of()->key("deleted_at")
-                ->src("deleted_at")
+            'deleted_at' => FieldMapping::of()->key('deleted_at')
+                ->src('deleted_at')
                 ->type(MappingTypeEnum::METHOD_NAME),
         ];
+
         return $mappig;
     }
 }
