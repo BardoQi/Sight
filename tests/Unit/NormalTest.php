@@ -14,7 +14,6 @@ use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\PaginateTypeEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Tests\Fixture\NormalPresenter;
-use Bardoqi\Sight\Presenter;
 use Bardoqi\Sight\Tests\TestCase;
 
 /**
@@ -104,35 +103,34 @@ final class NormalTest extends TestCase
         $status_code = $NormalPresenter->getStatusCode();
         $this->assertTrue($status_code === 200);
     }
+
     /** @test */
-    public function testPaginateData(){
-        $src_data = json_decode($this->data,true);
-        $src_data = ["sommepath" =>
-            [
-                "subpath" =>
-                    [
-                        'data' => $src_data,
-                        'current_page' =>1,
-                        'from' => 1,
-                        'last_page' =>1,
-                        'per_page' => 15,
-                        'to' =>1,
-                        'total' => 0,
-                    ]
-            ]
+    public function testPaginateData()
+    {
+        $src_data = json_decode($this->data, true);
+        $src_data = ['sommepath' => [
+            'subpath' => [
+                'data' => $src_data,
+                'current_page' => 1,
+                'from' => 1,
+                'last_page' => 1,
+                'per_page' => 15,
+                'to' => 1,
+                'total' => 0,
+            ],
+            ],
         ];
-        $NormalPresenter = NormalPresenter::of()->selectFields("id,parent_id,price,amount,sum,divered_at,created_at,updated_at,deleted_at")
-            ->fromLocal($src_data,'local',"sommepath.subpath");
-        foreach($NormalPresenter->list_mapping() as $key => $mapping){
+        $NormalPresenter = NormalPresenter::of()->selectFields('id,parent_id,price,amount,sum,divered_at,created_at,updated_at,deleted_at')
+            ->fromLocal($src_data, 'local', 'sommepath.subpath');
+        foreach ($NormalPresenter->list_mapping() as $key => $mapping) {
             $NormalPresenter->addFieldMappingByObject($mapping);
         }
         $NormalPresenter->addFieldMapping(
-            "deleted_at",
-            "deleted_at",
+            'deleted_at',
+            'deleted_at',
             MappingTypeEnum::METHOD_NAME,
-            "");
+            '');
         $data = $NormalPresenter->toPaginateArray(PaginateTypeEnum::PAGINATE_API);
         $this->assertTrue($data['current_page'] === 1);
     }
-
 }
