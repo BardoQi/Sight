@@ -6,7 +6,6 @@
 [![Codecov branch](https://img.shields.io/codecov/c/github/BardoQi/Sight/develop.svg?style=flat-square&logo=codecov)](https://codecov.io/github/BardoQi/Sight)
 [![Latest Stable Version](https://poser.pugx.org/bardoqi/sight/v)](//packagist.org/packages/bardoqi/sight)
 [![Total Downloads](https://poser.pugx.org/bardoqi/sight/downloads)](//packagist.org/packages/bardoqi/sight)
-[![Latest Unstable Version](https://poser.pugx.org/bardoqi/sight/v/unstable)](//packagist.org/packages/bardoqi/sight)
 [![License](https://poser.pugx.org/bardoqi/sight/license)](//packagist.org/packages/bardoqi/sight)
   
 ### 关于Sight
