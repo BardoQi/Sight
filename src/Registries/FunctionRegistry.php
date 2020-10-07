@@ -83,10 +83,9 @@ final class FunctionRegistry
      */
     public function setItem($function_alias, $object, $method_name)
     {
-        if (isset($this->callables[$function_alias])) {
-            throw InvalidArgumentException::FunctionExistsAlready($function_alias);
+        if (!isset($this->callables[$function_alias])) {
+            $this->callables[$function_alias] = [$object, $method_name];
         }
-        $this->callables[$function_alias] = [$object, $method_name];
     }
 
     /**

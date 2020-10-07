@@ -195,16 +195,6 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     }
 
     /**
-     * @param $name
-     *
-     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
-     */
-    public static function FunctionExistsAlready($name)
-    {
-        return new self('Function '.$name.' Exists Already!');
-    }
-
-    /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
     public static function ItemIsNotJsonString()
