@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -140,27 +141,27 @@ final class NormalTest extends TestCase
     public function addFunctionTest()
     {
         $NormalPresenter = NormalPresenter::of();
-        $NormalPresenter->addFunction("area_of",function ($value){
-            return number_format($value,2) . " ㎡";
+        $NormalPresenter->addFunction('area_of', function ($value) {
+            return number_format($value, 2).' ㎡';
         });
         $this->assertTrue($NormalPresenter->hasMethod('area_of'));
         // test call
         $test_area = $NormalPresenter->area_of(3.1415);
-        $this->assertTrue("3.14 ㎡" === $test_area);
+        $this->assertTrue('3.14 ㎡' === $test_area);
 
-        $NormalPresenter->addMethod("area_value",function ($value){
-            return number_format($value,2) . " ㎡";
+        $NormalPresenter->addMethod('area_value', function ($value) {
+            return number_format($value, 2).' ㎡';
         });
         $this->assertTrue($NormalPresenter->hasMethod('area_value'));
         // test call
         $test_area = $NormalPresenter->area_value(3.1415);
-        $this->assertTrue("3.14 ㎡" === $test_area);
+        $this->assertTrue('3.14 ㎡' === $test_area);
 
-        $NormalPresenter->addFormatter("toArea",function ($value){
-            return number_format($value,2) . " ㎡";
+        $NormalPresenter->addFormatter('toArea', function ($value) {
+            return number_format($value, 2).' ㎡';
         });
         $formatter = $NormalPresenter->data_formatter;
-        $test_area = call_user_func_array([$formatter, 'format'], ["toArea", 3.1415]);
-        $this->assertTrue("3.14 ㎡" === $test_area);
+        $test_area = call_user_func_array([$formatter, 'format'], ['toArea', 3.1415]);
+        $this->assertTrue('3.14 ㎡' === $test_area);
     }
 }
