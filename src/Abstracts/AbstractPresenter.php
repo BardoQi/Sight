@@ -211,7 +211,7 @@ abstract class AbstractPresenter
         if (isset($this->macros[$method])) {
             return true;
         }
-        if (method_exists($this, $method)) {
+        if (method_exists(get_called_class(), $method)) {
             return true;
         }
 
