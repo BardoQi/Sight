@@ -180,7 +180,7 @@ class ArticlePresenter extents Presenter
 接下来，你就可以从控制器中调用：
   
 ```php
-    return ArticlePresenter::getArticleList($where);    
+    return ArticlePresenter::of()->getArticleList($where);    
 ```
 
 并且你也可以定义Mapping:

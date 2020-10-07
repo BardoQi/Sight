@@ -182,7 +182,7 @@ class ArticlePresenter extents Presenter
 Then you can call from controller:
   
 ```php
-    return ArticlePresenter::getArticleList($where);    
+    return ArticlePresenter::of()->getArticleList($where);    
 ```
 
 And you also could define the mapping in the property:
