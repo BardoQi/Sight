@@ -37,7 +37,6 @@ final class RelationList extends AbstractList
         return new static();
     }
 
-
     /**
      * @param \Bardoqi\Sight\Relations\Relation $relation
      *
@@ -51,7 +50,6 @@ final class RelationList extends AbstractList
 
         return $this;
     }
-
 
     /**
      * @return \Generator
