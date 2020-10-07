@@ -122,7 +122,7 @@ abstract class AbstractPresenter
 
         // Just for the validation of mapping
         // Only run in debug
-        if (true == config('app.debug',true)) {
+        if (true == config('app.debug', true)) {
             FunctionRegistry::getInstance()->setItem('hasMethod', $this, 'hasMethod');
         }
     }
@@ -357,7 +357,7 @@ abstract class AbstractPresenter
             throw InvalidArgumentException::FieldOrMappingNotFound($field_name);
         }
         // This is just for debuging. It wiil not rum in production env.
-        if (true == config('app.debug',true)) {
+        if (true == config('app.debug', true)) {
             $mapping_validator = FieldMappingValidator::of(
                 $this->local_list,
                 $this->join_lists
