@@ -104,27 +104,6 @@ final class CombineItem
     }
 
     /**
-     * @param $alias
-     * @param $list
-     *
-     * @return void
-     */
-    public function addJoinItemList($alias, $list)
-    {
-        $this->join_items[$alias] = $list;
-    }
-
-    /**
-     * @return bool
-     */
-    public function resetJoinItems()
-    {
-        $this->join_items = [];
-
-        return true;
-    }
-
-    /**
      * @param      $column_name
      * @param int  $offset
      * @param null $alias

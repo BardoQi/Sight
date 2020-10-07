@@ -37,32 +37,6 @@ final class RelationList extends AbstractList
         return new static();
     }
 
-    /**
-     * @param $local_alias
-     * @param $local_field
-     * @param $foreign_alias
-     * @param $foreign_field
-     * @param $relation_type
-     *
-     * @return $this
-     */
-    public function addRelation(
-        $local_alias,
-        $local_field,
-        $foreign_alias,
-        $foreign_field,
-        $relation_type
-    ) {
-        $this->data[] = Relation::of(
-            $local_alias,
-            $local_field,
-            $foreign_alias,
-            $foreign_field,
-            $relation_type
-        );
-
-        return $this;
-    }
 
     /**
      * @param \Bardoqi\Sight\Relations\Relation $relation
@@ -78,19 +52,6 @@ final class RelationList extends AbstractList
         return $this;
     }
 
-    /**
-     * @param mixed ...$param
-     *
-     * @return $this
-     */
-    public function addItem(...$param)
-    {
-        if ($param[0] instanceof Relation) {
-            return $this->addRelationByObject($param[0]);
-        }
-
-        return $this->addRelation(...$param);
-    }
 
     /**
      * @return \Generator

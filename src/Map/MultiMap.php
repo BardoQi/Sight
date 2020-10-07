@@ -193,41 +193,6 @@ class MultiMap extends AbstractList implements IMap
     }
 
     /**
-     * @param $offset
-     *
-     * @return bool|\Generator
-     */
-    public function getItems($offset)
-    {
-        if (! isset($this->data[$offset])) {
-            return [];
-        }
-        foreach ($this->data[$offset] as $key => $item) {
-            yield $key => MultiMapItem::of($item, $this->keyed_by, 0);
-        }
-    }
-
-    /**
-     * @return \Generator
-     */
-    public function listItems()
-    {
-        foreach ($this->data as $key => $item) {
-            yield $key => MultiMapItem::of($item, $this->keyed_by, 0);
-        }
-    }
-
-    /**
-     * @return \Generator
-     */
-    public function singleListItems()
-    {
-        foreach ($this->data as $key => $item) {
-            yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
-        }
-    }
-
-    /**
      * @param $name
      *
      * @return bool
