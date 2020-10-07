@@ -3,6 +3,7 @@
   
 [![Build Status](https://travis-ci.org/BardoQi/Sight.png?branch=master)](https://travis-ci.org/BardoQi/Sight)
 [![StyleCI](https://github.styleci.io/repos/293536215/shield?branch=master)](https://github.styleci.io/repos/293536215?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/BardoQi/Sight/badge.svg?branch=master)](https://coveralls.io/github/BardoQi/Sight?branch=master)
 [![Codecov branch](https://img.shields.io/codecov/c/github/BardoQi/Sight/develop.svg?style=flat-square&logo=codecov)](https://codecov.io/github/BardoQi/Sight)
 [![Latest Stable Version](https://poser.pugx.org/bardoqi/sight/v)](//packagist.org/packages/bardoqi/sight)
 [![Total Downloads](https://poser.pugx.org/bardoqi/sight/downloads)](//packagist.org/packages/bardoqi/sight)
