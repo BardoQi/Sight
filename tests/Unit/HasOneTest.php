@@ -37,7 +37,7 @@ final class HasOneTest extends TestCase
         $image_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Images.php';
         $image_array = json_decode($image_array_string, true);
 
-        $users = $users->innerJoinForeign($image_array, 'images','id')
+        $users = $users->innerJoinForeign($image_array, 'images', 'id')
             ->onRelation('avatar_id', 'images', 'id')
             ->toArray();
 

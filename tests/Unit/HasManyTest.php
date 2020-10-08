@@ -41,7 +41,7 @@ final class HasManyTest extends TestCase
         $user_ids = $blog->pluck('created_by');
         //You can check the $user_ids result with:
         // print_r($user_ids);
-        $blog = $blog->innerJoinForeign($user_array, 'user','id')
+        $blog = $blog->innerJoinForeign($user_array, 'user', 'id')
             ->onRelation('created_by', 'user', 'id');
 
         $image_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Images.php';
@@ -50,7 +50,7 @@ final class HasManyTest extends TestCase
         // print_r($image_ids);
         $image_array = json_decode($image_array_string, true);
 
-        $blog = $blog->outerJoinForeign($image_array, 'image','id')
+        $blog = $blog->outerJoinForeign($image_array, 'image', 'id')
             ->onRelationbyObject(
                 Relation::of($blog->local_alias, 'images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT)
             );
