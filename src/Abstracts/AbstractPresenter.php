@@ -138,19 +138,6 @@ abstract class AbstractPresenter
     }
 
     /**
-     * @param $method
-     * @param $parameters
-     *
-     * @return mixed
-     */
-    public static function __callStatic($method, $parameters)
-    {
-        $instance = app(get_called_class());
-
-        return $instance->$method(...$parameters);
-    }
-
-    /**
      * Handle dynamic method calls.
      *
      * @param string $method

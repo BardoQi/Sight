@@ -74,17 +74,6 @@ class DataFormatter
     }
 
     /**
-     * @param $method_name
-     * @param $callable
-     *
-     * @return bool
-     */
-    public function addMethod($method_name, $callable)
-    {
-        return $this->addFunction($method_name, $callable);
-    }
-
-    /**
      * @param $method
      *
      * @return bool

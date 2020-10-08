@@ -186,11 +186,6 @@ final class Relation
         return $this;
     }
 
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-    }
-
     /**
      * @param $array_item
      *
