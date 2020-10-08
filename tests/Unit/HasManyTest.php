@@ -14,6 +14,7 @@ namespace Bardoqi\Sight\Tests\Unit;
 
 use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
+use Bardoqi\Sight\Relations\Relation;
 use Bardoqi\Sight\Tests\Fixture\BlogPresenter;
 use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
 use Bardoqi\Sight\Tests\Fixture\Mock;
@@ -50,8 +51,9 @@ final class HasManyTest extends TestCase
         $image_array = json_decode($image_array_string, true);
 
         $blog = $blog->outerJoinForeign($image_array, 'image')
-            ->onRelation('images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT);
-
+            ->onRelationbyObject(
+                Relation::of($blog->local_alias,'images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT)
+            );
         $blog->addFieldMappingList(
             [
                 'created_by' => ['src' => 'name', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'user'],
@@ -93,9 +95,16 @@ final class HasManyTest extends TestCase
         $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
 
         $users = $user->selectFields($user->list_merge_fields)
-            ->fromLocal($user_array)
+            ->fromLocal($user_array,'user')
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY_MERGE)
+            ->onRelationbyObject(
+                Relation::of()
+                    ->localAlias('user')
+                    ->localField('id')
+                    ->foreignAlias('albums')
+                    ->foreignField('userId')
+                    ->relationType(RelationEnum::HAS_MANY_MERGE)
+            )
             ->addFieldMappingList($user->list_merge_mapping)
             ->toArray();
         $this->assertTrue(isset($users[0]['albums']));

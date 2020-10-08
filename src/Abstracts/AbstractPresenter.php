@@ -53,7 +53,7 @@ abstract class AbstractPresenter
      *
      * @var string
      */
-    protected $local_alias = '';
+    public $local_alias = '';
 
     /**
      * The local array.

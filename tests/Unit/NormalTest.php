@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Tests\Unit;
 
+use App\Enums\DataTypeEnum;
+use Bardoqi\Sight\Enums\FormatterEnum;
 use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\PaginateTypeEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
@@ -163,5 +165,14 @@ final class NormalTest extends TestCase
         $formatter = $NormalPresenter->data_formatter;
         $test_area = call_user_func_array([$formatter, 'format'], ['toArea', 3.1415]);
         $this->assertTrue('3.14 ㎡' === $test_area);
+
+        $test_datetime = call_user_func_array([$formatter, 'format'], [FormatterEnum::TO_DATETIME, 1602125537]);
+        $this->assertTrue($test_datetime === date('Y-m-d H:i:s',1602125537));
+
+        $test_time = call_user_func_array([$formatter, 'format'], [FormatterEnum::TO_TIME, 1602125537]);
+        $this->assertTrue($test_time === date('H:i:s',1602125537));
+
+        $test_bool = call_user_func_array([$formatter, 'format'], [FormatterEnum::TO_BOOL, 1]);
+        $this->assertTrue('true' == $test_bool);
     }
 }

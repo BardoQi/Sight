@@ -54,11 +54,11 @@ final class Relation
      * @return \Bardoqi\Sight\Relations\Relation
      */
     public static function of(
-        $local_alias,
-        $local_field,
-        $foreign_alias,
-        $foreign_field,
-        $relation_type
+        $local_alias = null,
+        $local_field = null,
+        $foreign_alias = null,
+        $foreign_field = null,
+        $relation_type  = null
     ) {
         $instance = new static();
         $instance->init(
@@ -83,11 +83,11 @@ final class Relation
      * @return void
      */
     private function init(
-        $local_alias,
-        $local_field,
-        $foreign_alias,
-        $foreign_field,
-        $relation_type
+        $local_alias = null,
+        $local_field = null,
+        $foreign_alias = null,
+        $foreign_field = null,
+        $relation_type = null
     ) {
         $this->local_alias = $local_alias;
         $this->local_field = $local_field;
@@ -123,7 +123,7 @@ final class Relation
         }
         $this->local_alias = $local_alias;
 
-        return true;
+        return $this;
     }
 
     /**
@@ -138,7 +138,7 @@ final class Relation
         }
         $this->local_field = $local_field;
 
-        return true;
+        return $this;
     }
 
     /**
@@ -153,7 +153,7 @@ final class Relation
         }
         $this->foreign_alias = $foreign_alias;
 
-        return true;
+        return $this;
     }
 
     /**
@@ -168,7 +168,7 @@ final class Relation
         }
         $this->foreign_field = $foreign_field;
 
-        return true;
+        return $this;
     }
 
     /**
@@ -183,7 +183,7 @@ final class Relation
         }
         $this->relation_type = $relation_type;
 
-        return true;
+        return $this;
     }
 
     public function __set($name, $value)

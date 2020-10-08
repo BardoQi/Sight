@@ -85,14 +85,4 @@ final class FunctionRegistry
     {
         $this->callables[$function_alias] = [$object, $method_name];
     }
-
-    /**
-     * @return bool
-     */
-    public function clear()
-    {
-        $this->callables = [];
-
-        return true;
-    }
 }

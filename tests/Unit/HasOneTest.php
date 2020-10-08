@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Tests\Unit;
 
+use Bardoqi\Sight\Enums\RelationEnum;
+use Bardoqi\Sight\Relations\Relation;
 use Bardoqi\Sight\Tests\Fixture\UserPresenter;
 use Bardoqi\Sight\Tests\TestCase;
 
@@ -59,7 +61,15 @@ final class HasOneTest extends TestCase
         $image_array = json_decode($image_array_string, true);
 
         $users = $users->innerJoinForeign($image_array, 'images')
-            ->onRelation('avatar_id', 'images', 'id')
+            ->onRelationbyObject(
+                Relation::fromArray([
+                    'local_alias' => $users->local_alias,
+                    'local_field' => 'avatar_id',
+                    'foreign_alias' => 'images',
+                    'foreign_field' => 'id',
+                    'relation_type' => RelationEnum::HAS_ONE
+                ])
+            )
             ->toItemArray();
 
         $this->assertTrue(is_array($users));
