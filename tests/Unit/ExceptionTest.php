@@ -65,7 +65,7 @@ final class ExceptionTest extends TestCase
         $users = $users->fromLocal($user_array);
 
         try {
-            $users = $users->outerJoinForeign($albums_array, 'albums','');
+            $users = $users->outerJoinForeign($albums_array, 'albums', '');
         } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
@@ -164,6 +164,5 @@ final class ExceptionTest extends TestCase
         } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
-
     }
 }
