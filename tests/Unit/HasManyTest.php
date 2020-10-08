@@ -52,7 +52,7 @@ final class HasManyTest extends TestCase
 
         $blog = $blog->outerJoinForeign($image_array, 'image')
             ->onRelationbyObject(
-                Relation::of($blog->local_alias,'images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT)
+                Relation::of($blog->local_alias, 'images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT)
             );
         $blog->addFieldMappingList(
             [
