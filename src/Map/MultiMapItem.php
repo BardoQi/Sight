@@ -103,7 +103,8 @@ class MultiMapItem extends AbstractList implements IMapItem
     public function hasColumn($name)
     {
         $item = reset($this->data);
-        return array_key_exists($name, $item);        
+
+        return array_key_exists($name, $item);
     }
 
     /**
