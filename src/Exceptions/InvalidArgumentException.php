@@ -41,14 +41,6 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     /**
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
-    public static function AliasCanNotBeEmpty()
-    {
-        return new self('Alias Can Not Be Empty!');
-    }
-
-    /**
-     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
-     */
     public static function MappingKeyCanNotBeEmpty()
     {
         return new self('Mapping Key Can Not Be Empty!');
@@ -68,14 +60,6 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     public static function MappingTypeIsNotValid()
     {
         return new self('Mapping Type Is Not Valid!');
-    }
-
-    /**
-     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
-     */
-    public static function FieldMappingListNotFound()
-    {
-        return new self('Field Mapping List Not Found!');
     }
 
     /**
@@ -122,14 +106,6 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     public static function PaginateDataNotFound()
     {
         return new self('The Paginate Data Not Found!');
-    }
-
-    /**
-     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
-     */
-    public static function LocalAliasIsNotCorrect()
-    {
-        return new self('Local Alias Is Not Correct!');
     }
 
     /**
