@@ -67,7 +67,7 @@ final class HasOneTest extends TestCase
                     'local_field' => 'avatar_id',
                     'foreign_alias' => 'images',
                     'foreign_field' => 'id',
-                    'relation_type' => RelationEnum::HAS_ONE
+                    'relation_type' => RelationEnum::HAS_ONE,
                 ])
             )
             ->toItemArray();
