@@ -140,11 +140,11 @@ final class CombineItem
     public function getAliasMapping($item_key)
     {
         if (! isset($this->alias_mapping[$item_key])) {
-            if (isset($this->local_item[$item_key])) {
+            if (array_key_exists($item_key, $this->local_item)) {
                 $this->alias_mapping[$item_key] = 'local';
             }
             foreach ($this->join_items as $alias => $list) {
-                if (isset($list[$item_key])) {
+                if (array_key_exists(item_key, $list)) {
                     $this->alias_mapping[$item_key] = $alias;
                     break;
                 }
@@ -200,7 +200,7 @@ final class CombineItem
         if (null === $alias) {
             return $this->local_item;
         }
-        if (! isset($this->join_items[$alias])) {
+        if (! array_key_exists($alias, $this->join_items)) {
             return $this->local_item;
         }
 

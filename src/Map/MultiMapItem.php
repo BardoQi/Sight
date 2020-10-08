@@ -59,7 +59,7 @@ class MultiMapItem extends AbstractList implements IMapItem
      */
     protected function getItemBykey($list, $key)
     {
-        if (isset($list[$key])) {
+        if (array_key_exists($key, $list)) {
             return $list[$key];
         }
 
@@ -103,16 +103,7 @@ class MultiMapItem extends AbstractList implements IMapItem
     public function hasColumn($name)
     {
         $item = reset($this->data);
-        if (! isset($item[$name])) {
-            $keys = array_keys($item);
-            if (in_array($name, $keys)) {
-                return true;
-            }
-
-            return false;
-        }
-
-        return true;
+        return array_key_exists($name, $item);        
     }
 
     /**
@@ -129,7 +120,7 @@ class MultiMapItem extends AbstractList implements IMapItem
                 $item = $this->data[$offset];
             }
         }
-        if (isset($item[$column_name])) {
+        if (array_key_exists($column_name, $item)) {
             return $item[$column_name];
         }
 

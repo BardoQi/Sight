@@ -59,7 +59,7 @@ class SingleMapItem extends AbstractList implements IMapItem
      */
     protected function getItemBykey($list, $key)
     {
-        if (isset($list[$key])) {
+        if (array_key_exists($key, $list)) {
             return $list[$key];
         }
 
@@ -102,7 +102,7 @@ class SingleMapItem extends AbstractList implements IMapItem
      */
     public function hasColumn($name)
     {
-        return isset($this->data[$name]);
+        return array_key_exists($name, $this->data);
     }
 
     /**
@@ -113,7 +113,7 @@ class SingleMapItem extends AbstractList implements IMapItem
      */
     public function getItemValue($column_name, $offset = null)
     {
-        if (isset($this->data[$column_name])) {
+        if (array_key_exists($column_name, $this->data)) {
             return $this->data[$column_name];
         }
 

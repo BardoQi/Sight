@@ -73,7 +73,7 @@ class MultiMap extends AbstractList implements IMap
     public function getAnyOne()
     {
         $item = reset($this->data);
-        if (isset($item[0])) {
+        if (array_key_exists(0, $item)) {
             return $item[0];
         }
 
@@ -212,6 +212,6 @@ class MultiMap extends AbstractList implements IMap
             $item = reset($item);
         }
 
-        return isset($item[$name]);
+        return array_key_exists($name, $item);
     }
 }

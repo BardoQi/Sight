@@ -285,7 +285,7 @@ abstract class AbstractPresenter
         $foreign_field = 'id',
         $reltion_type = RelationEnum::HAS_ONE
     ) {
-        if (! isset($this->join_lists[$foreign_alias])) {
+        if (! array_key_exists($foreign_alias, $this->join_lists)) {
             throw InvalidArgumentException::ForeignAliasNotExists();
         }
 

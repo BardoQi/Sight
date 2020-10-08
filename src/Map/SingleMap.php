@@ -106,6 +106,6 @@ final class SingleMap extends AbstractList implements IMap
         // get the first item.
         $item = reset($this->data);
 
-        return isset($item[$name]);
+        return array_key_exists($name, $item);
     }
 }
