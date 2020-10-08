@@ -61,10 +61,11 @@ final class ExceptionTest extends TestCase
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
 
+        $users = JphUserAlbumsPresenter::of();
         $users = $users->fromLocal($user_array);
 
         try {
-            $users = $users->outerJoinForeign($albums_array, 'albums');
+            $users = $users->outerJoinForeign($albums_array, 'albums','');
         } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
@@ -158,10 +159,11 @@ final class ExceptionTest extends TestCase
 
         try {
             $users = $users->onRelation('id', 'albums', 'userId')
-            ->addFieldMappingList($user->list_mapping)
-            ->toPaginateArray();
+                ->addFieldMappingList($user->list_mapping)
+                ->toPaginateArray();
         } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
+
     }
 }

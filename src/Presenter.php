@@ -153,7 +153,7 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function innerJoinForeign($data_list, $alias, $keyed_by = 'id')
+    public function innerJoinForeign($data_list, $alias, $keyed_by)
     {
         $this->addJoinList($data_list, $alias, $keyed_by, JoinTypeEnum::INNER_JOIN);
 
@@ -169,7 +169,7 @@ class Presenter extends AbstractPresenter
      *
      * @return $this
      */
-    public function outerJoinForeign($data_list, $alias, $keyed_by = 'id')
+    public function outerJoinForeign($data_list, $alias, $keyed_by)
     {
         $this->addJoinList($data_list, $alias, $keyed_by, JoinTypeEnum::OUTER_JOIN);
 
