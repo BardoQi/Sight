@@ -58,7 +58,7 @@ final class Relation
         $local_field = null,
         $foreign_alias = null,
         $foreign_field = null,
-        $relation_type  = null
+        $relation_type = null
     ) {
         $instance = new static();
         $instance->init(

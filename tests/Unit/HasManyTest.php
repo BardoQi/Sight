@@ -52,7 +52,7 @@ final class HasManyTest extends TestCase
 
         $blog = $blog->outerJoinForeign($image_array, 'image')
             ->onRelationbyObject(
-                Relation::of($blog->local_alias,'images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT)
+                Relation::of($blog->local_alias, 'images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT)
             );
         $blog->addFieldMappingList(
             [
@@ -95,7 +95,7 @@ final class HasManyTest extends TestCase
         $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
 
         $users = $user->selectFields($user->list_merge_fields)
-            ->fromLocal($user_array,'user')
+            ->fromLocal($user_array, 'user')
             ->outerJoinForeign($albums_array, 'albums', 'userId')
             ->onRelationbyObject(
                 Relation::of()
