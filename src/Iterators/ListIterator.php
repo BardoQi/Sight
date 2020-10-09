@@ -28,9 +28,9 @@ final class ListIterator
     protected $join_lists = [];
 
     /**
-     * @var array
+     * @var null|\Bardoqi\Sight\Relations\RelationList
      */
-    protected $relation_list = [];
+    protected $relation_list = null;
 
     public function __construct()
     {
@@ -140,7 +140,6 @@ final class ListIterator
 
             /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
             $join_list = $this->join_lists[$alias];
-
             $list = $join_list->getHasMany($local_key);
             if (null === $tree_iterator) {
                 $iterator_node = $tree_iterator = TreeIterator::of($list, $alias);

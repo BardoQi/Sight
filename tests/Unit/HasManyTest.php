@@ -79,7 +79,7 @@ final class HasManyTest extends TestCase
         $users = $user->selectFields($user->list_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId')
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
             ->addFieldMappingList($user->list_mapping)
             ->toArray();
         $this->assertTrue(isset($users[0]['albums_id']));
