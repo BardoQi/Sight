@@ -163,7 +163,11 @@ final class NormalTest extends TestCase
         $NormalPresenter->addFormatter('toArea', function ($value) {
             return number_format($value, 2).' ㎡';
         });
+
         $formatter = $NormalPresenter->data_formatter;
+
+        $this->assertTrue($formatter->hasMothod('toArea'));
+
         $test_area = call_user_func_array([$formatter, 'format'], ['toArea', 3.1415]);
         $this->assertTrue('3.14 ㎡' === $test_area);
 
@@ -175,5 +179,11 @@ final class NormalTest extends TestCase
 
         $test_bool = call_user_func_array([$formatter, 'format'], [FormatterEnum::TO_BOOL, 1]);
         $this->assertTrue('true' == $test_bool);
+
+        try{
+            $NormalPresenter->addFormatter('toArea', 'bad_formatter');
+        }catch (\Exception $e){
+            $this->assertTrue($e instanceof InvalidArgumentException);
+        }
     }
 }

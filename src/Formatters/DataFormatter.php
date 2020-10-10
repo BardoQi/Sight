@@ -95,11 +95,7 @@ class DataFormatter
             return call_user_func($this->macros[$formatter], $value);
         }
         $class = get_called_class();
-        if (method_exists($class, $formatter)) {
-            return call_user_func([$class, $formatter], $value);
-        }
-
-        throw InvalidArgumentException::MethodNotFound($formatter);
+        return call_user_func([$class, $formatter], $value);
     }
 
     /**
