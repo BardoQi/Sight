@@ -130,7 +130,7 @@ abstract class AbstractPresenter
     /**
      * short static function to create new instance.
      *
-     * @return \Bardoqi\Sight\Abstracts\static
+     * @return \Bardoqi\Sight\Abstracts\AbstractPresenter
      */
     public static function of()
     {
@@ -249,7 +249,7 @@ abstract class AbstractPresenter
                 throw InvalidArgumentException::KeyedByIsNotCorrect($keyed_by);
             }
         } else {
-            throw InvalidArgumentException::ThereMustBeAtLeast1EmptyItemInTheJoinArray($keyed_by);
+            throw InvalidArgumentException::ThereMustBeAtLeast1EmptyItemInTheJoinArray();
         }
         $this->join_lists[$alias] = MultiMap::of($data_list, $keyed_by, $join_type);
 

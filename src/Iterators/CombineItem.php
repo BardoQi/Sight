@@ -179,8 +179,8 @@ final class CombineItem
     }
 
     /**
-     * @param int  $path
-     * @param null $alias
+     * @param string  $path
+     * @param null|string $alias
      *
      * @return mixed
      */

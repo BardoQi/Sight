@@ -29,7 +29,7 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
      */
