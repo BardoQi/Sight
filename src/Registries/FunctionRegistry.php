@@ -37,13 +37,6 @@ final class FunctionRegistry
     }
 
     /**
-     * @return void
-     */
-    private function __clone()
-    {
-    }
-
-    /**
      * @return \Bardoqi\Sight\Registries\FunctionRegistry|null
      */
     public static function getInstance()
@@ -63,9 +56,6 @@ final class FunctionRegistry
      */
     public function forwardCall($name, $parameters)
     {
-        if (! isset($this->callables[$name])) {
-            throw InvalidArgumentException::MethodNotFound($name);
-        }
         [$object, $method] = $this->callables[$name];
         if (! is_array($parameters)) {
             $parameters = [$parameters];
