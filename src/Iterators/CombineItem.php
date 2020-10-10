@@ -59,6 +59,7 @@ final class CombineItem
         if (null === self::$instance) {
             self::$instance = new static();
         }
+
         return self::$instance->reNew();
     }
 
@@ -69,6 +70,7 @@ final class CombineItem
     {
         $this->local_item = [];
         $this->join_items = [];
+
         return $this;
     }
 
@@ -141,7 +143,7 @@ final class CombineItem
              * @var \Bardoqi\Sight\Map\Interfaces\IMapItem $list
              */
             foreach ($this->join_items as $alias => $list) {
-                if($list->hasColumn($column_name)){
+                if ($list->hasColumn($column_name)) {
                     $this->alias_mapping[$column_name] = $alias;
                     break;
                 }
@@ -163,12 +165,13 @@ final class CombineItem
             return $this->local_item;
         }
 
-        if(array_key_exists($alias,$this->join_items)){
+        if (array_key_exists($alias, $this->join_items)) {
             /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $join_item */
             $join_item = $this->join_items[$alias];
-            if($join_item instanceof SingleMapItem){
+            if ($join_item instanceof SingleMapItem) {
                 return $join_item;
             }
+
             return $join_item[$offfset];
         }
 
@@ -186,19 +189,19 @@ final class CombineItem
         // First we get the field name from path
         $path_arr = explode('.', $path);
 
-	    // we must get the alias when it is null.
+        // we must get the alias when it is null.
         // we should get the alias by $field_name
         if (null === $alias) {
             $field_name = $path_arr[0];
             $alias = $this->getAliasMapping($field_name);
         }
-	    // get the item from data
+        // get the item from data
         /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $map_item */
         $map_item = $this->getMapItem($alias);
-        if(null === $map_item){
+        if (null === $map_item) {
             throw InvalidArgumentException::JsonFieldsNotFound($alias);
         }
-	    // call the findByPath of MultiMapItem
+        // call the findByPath of MultiMapItem
         return $map_item->findByPath($path_arr);
     }
 

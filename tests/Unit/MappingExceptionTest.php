@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the bardoqi/sight package.
@@ -14,12 +15,12 @@ namespace Bardoqi\Sight\Tests\Unit;
 use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
+use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
 use Bardoqi\Sight\Tests\Fixture\Mock;
 use Bardoqi\Sight\Tests\TestCase;
-use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
 
 /**
- * Class MappingExceptionTest
+ * Class MappingExceptionTest.
  */
 final class MappingExceptionTest extends TestCase
 {
@@ -57,11 +58,11 @@ final class MappingExceptionTest extends TestCase
         $users = $user->selectFields($user->list_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY);
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY);
         //->addFieldMappingList($user->list_mapping)
-        try{
+        try {
             $users = $users->toArray();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
 
@@ -69,11 +70,11 @@ final class MappingExceptionTest extends TestCase
         $users = $user->selectFields($user->list_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY)
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
             ->addFieldMappingList($this->list_bad_formatter);
-        try{
+        try {
             $users = $users->toArray();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
 
@@ -81,11 +82,11 @@ final class MappingExceptionTest extends TestCase
         $users = $user->selectFields($user->list_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY)
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
             ->addFieldMappingList($this->list_bad_method);
-        try{
+        try {
             $users = $users->toArray();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
 
@@ -93,11 +94,11 @@ final class MappingExceptionTest extends TestCase
         $users = $user->selectFields($user->list_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY)
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
             ->addFieldMappingList($this->list_bad_arraypath);
-        try{
+        try {
             $users = $users->toArray();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
 
@@ -105,13 +106,12 @@ final class MappingExceptionTest extends TestCase
         $users = $user->selectFields($user->list_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
-            ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY)
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
             ->addFieldMappingList($this->list_bad_joinfields);
-        try{
+        try {
             $users = $users->toArray();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
-
     }
 }

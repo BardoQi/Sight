@@ -198,6 +198,7 @@ final class FieldMappingValidator
         if (! $this->data_formatter->hasMothod($mapping->src())) {
             throw InvalidArgumentException::FieldMappingIsInvalid($mapping->key());
         }
+
         return true;
     }
 

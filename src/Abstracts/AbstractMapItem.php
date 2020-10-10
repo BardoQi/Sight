@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the bardoqi/sight package.
@@ -14,7 +15,7 @@ namespace Bardoqi\Sight\Abstracts;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 
 /**
- * Class AbstractMapItem
+ * Class AbstractMapItem.
  */
 abstract class AbstractMapItem extends AbstractList
 {

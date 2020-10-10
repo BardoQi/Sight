@@ -12,10 +12,9 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Map;
 
-use Bardoqi\Sight\Abstracts\AbstractList;
+use Bardoqi\Sight\Abstracts\AbstractMapItem;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Map\Interfaces\IMapItem;
-use Bardoqi\Sight\Abstracts\AbstractMapItem;
 
 /**
  * Class SingleMapItem.
@@ -24,7 +23,7 @@ class SingleMapItem extends AbstractMapItem implements IMapItem
 {
     /**
      * Find the row with specified path which is dot-separated string.
-     * The function is be called from CombineItem::findByPath
+     * The function is be called from CombineItem::findByPath.
      *
      * @param array $path
      *
@@ -34,7 +33,7 @@ class SingleMapItem extends AbstractMapItem implements IMapItem
     {
         // First we should get the root key as field name
         $key = array_shift($path);
-        if(! array_key_exists($key, $this->data )){
+        if (! array_key_exists($key, $this->data)) {
             throw InvalidArgumentException::UndefinedOffset($key);
         }
         $item = $this->data[$key];
