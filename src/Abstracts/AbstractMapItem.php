@@ -15,7 +15,7 @@ namespace Bardoqi\Sight\Abstracts;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 
 /**
- * Class AbstractMapItem
+ * Class AbstractMapItem.
  */
 abstract class AbstractMapItem extends AbstractList
 {

@@ -193,6 +193,6 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
      */
     public static function JsonFieldsNotFound($name)
     {
-        return new self('Json Fields in ' .$name. ' Not Found!');
+        return new self('Json Fields in '.$name.' Not Found!');
     }
 }

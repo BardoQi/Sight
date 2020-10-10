@@ -26,7 +26,7 @@ final class MappingExceptionTest extends TestCase
 {
     public $list_fields = [
         'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
-        'albums_id', 'albums_title','title',
+        'albums_id', 'albums_title', 'title',
     ];
 
     public $list_bad_formatter = [
