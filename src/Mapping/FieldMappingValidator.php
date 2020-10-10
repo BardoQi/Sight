@@ -106,14 +106,12 @@ final class FieldMappingValidator
     public function validate($mapping_list)
     {
         foreach ($mapping_list as $item) {
-            if (true === $this->validateItem($item)) {
-                continue;
+            if (fasle === $this->validateItem($item)) {
+                return false;
             }
-
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -123,9 +121,6 @@ final class FieldMappingValidator
      */
     private function validateItem($mapping)
     {
-        if (! isset($this->validators[$mapping->type()])) {
-            return true;
-        }
         $method = $this->validators[$mapping->type()];
 
         return $this->$method($mapping);
