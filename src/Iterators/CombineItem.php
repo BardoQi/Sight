@@ -45,13 +45,6 @@ final class CombineItem
     }
 
     /**
-     * @return void
-     */
-    private function __clone()
-    {
-    }
-
-    /**
      * @return \Bardoqi\Sight\Iterators\CombineItem
      */
     public static function getInstance()

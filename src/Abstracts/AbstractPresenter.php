@@ -301,7 +301,7 @@ abstract class AbstractPresenter
             } catch (\Exception $e) {
                 throw InvalidArgumentException::MappingArrayIsNotValid($e->getMessage());
             }
-            $this->field_mapping->addItem($mapping_object);
+            $this->field_mapping->addMappingByObject($mapping_object);
         }
 
         return $this->field_mapping;
