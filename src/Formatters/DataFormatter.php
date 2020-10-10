@@ -37,13 +37,6 @@ class DataFormatter
     }
 
     /**
-     * @return void
-     */
-    private function __clone()
-    {
-    }
-
-    /**
      * @return \Bardoqi\Sight\Formatters\DataFormatter
      */
     public static function getInstance()
