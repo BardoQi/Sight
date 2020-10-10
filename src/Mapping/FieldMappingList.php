@@ -67,5 +67,4 @@ class FieldMappingList extends AbstractList
 
         return $this;
     }
-
 }

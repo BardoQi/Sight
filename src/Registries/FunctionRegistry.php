@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Registries;
 
-use Bardoqi\Sight\Exceptions\InvalidArgumentException;
-
 /**
  * Class FunctionRegister.
  */
