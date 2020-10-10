@@ -413,6 +413,7 @@ abstract class AbstractPresenter
             case MappingTypeEnum::DATA_FORMATER:
                 $Formatter = $this->data_formatter;
                 $value = $item->getItemValue($mapping->key(), 0, $mapping->alias());
+
                 return call_user_func_array([$Formatter, 'format'], [$mapping->src(), $value]);
             case MappingTypeEnum::METHOD_NAME:
                 return $this->forwardCall($mapping, $item);
