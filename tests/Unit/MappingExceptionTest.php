@@ -25,7 +25,7 @@ final class MappingExceptionTest extends TestCase
 {
     public $list_fields = [
         'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
-        'albums_id', 'albums_title',
+        'albums_id', 'albums_title','title',
     ];
 
     public $list_bad_formatter = [
@@ -48,13 +48,18 @@ final class MappingExceptionTest extends TestCase
         'albums_title' => ['src' => 'm_title', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'albums'],
     ];
 
+    public $fields_bad_method = [
+        'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
+        'albums_id_a', 'albums_title_b',
+    ];
+
     /** @test  */
     public function testMappingExceptions()
     {
         $user_array = Mock::getLocalData(Mock::USER_DATA);
         $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
         $user = JphUserAlbumsPresenter::of();
-        $users = $user->selectFields($user->list_fields)
+        $users = $user->selectFields($this->list_fields)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
             ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY);
@@ -78,13 +83,14 @@ final class MappingExceptionTest extends TestCase
         }
 
         $user = JphUserAlbumsPresenter::of();
-        $users = $user->selectFields($user->list_fields)
+        $users = $user->selectFields($this->fields_bad_method)
             ->fromLocal($user_array)
             ->outerJoinForeign($albums_array, 'albums', 'userId')
             ->onRelation('id', 'albums', 'userId',RelationEnum::HAS_MANY)
             ->addFieldMappingList($this->list_bad_method);
         try{
             $users = $users->toArray();
+
         }catch (\Exception $e){
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
