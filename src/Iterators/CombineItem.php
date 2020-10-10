@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Iterators;
 
+use Bardoqi\Sight\Exceptions\InvalidArgumentException;
+use Bardoqi\Sight\Map\SingleMapItem;
+
 /**
  * Class CombineItem.
  */
@@ -56,7 +59,6 @@ final class CombineItem
         if (null === self::$instance) {
             self::$instance = new static();
         }
-
         return self::$instance->reNew();
     }
 
@@ -67,7 +69,6 @@ final class CombineItem
     {
         $this->local_item = [];
         $this->join_items = [];
-
         return $this;
     }
 
@@ -88,17 +89,6 @@ final class CombineItem
      * @return void
      */
     public function addJoinItem($alias, $item)
-    {
-        $this->join_items[$alias] = $item;
-    }
-
-    /**
-     * @param $alias
-     * @param $item
-     *
-     * @return void
-     */
-    public function setJoinItem($alias, $item)
     {
         $this->join_items[$alias] = $item;
     }
@@ -133,25 +123,32 @@ final class CombineItem
     }
 
     /**
-     * @param $item_key
+     * @param $column_name
      *
      * @return array
      */
-    public function getAliasMapping($item_key)
+    public function getAliasMapping($column_name)
     {
-        if (! isset($this->alias_mapping[$item_key])) {
-            if (array_key_exists($item_key, $this->local_item)) {
-                $this->alias_mapping[$item_key] = 'local';
+        // if we have not got the alias, we find first
+        if (! isset($this->alias_mapping[$column_name])) {
+            //  if column is in the local_item, we use the default alias 'local'
+            if (array_key_exists($column_name, $this->local_item)) {
+                $this->alias_mapping[$column_name] = 'local';
             }
+            // Then we find in the join_items
+            /**
+             * @var string $alias
+             * @var \Bardoqi\Sight\Map\Interfaces\IMapItem $list
+             */
             foreach ($this->join_items as $alias => $list) {
-                if (array_key_exists(item_key, $list)) {
-                    $this->alias_mapping[$item_key] = $alias;
+                if($list->hasColumn($column_name)){
+                    $this->alias_mapping[$column_name] = $alias;
                     break;
                 }
             }
         }
 
-        return $this->alias_mapping[$item_key];
+        return $this->alias_mapping[$column_name];
     }
 
     /**
@@ -166,7 +163,16 @@ final class CombineItem
             return $this->local_item;
         }
 
-        return $this->join_items[$alias][$offfset];
+        if(array_key_exists($alias,$this->join_items)){
+            /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $join_item */
+            $join_item = $this->join_items[$alias];
+            if($join_item instanceof SingleMapItem){
+                return $join_item;
+            }
+            return $join_item[$offfset];
+        }
+
+        return null;
     }
 
     /**
@@ -177,16 +183,22 @@ final class CombineItem
      */
     public function findByPath($path, $alias = null)
     {
+        // First we get the field name from path
         $path_arr = explode('.', $path);
-        $item_key = $path_arr[0];
 
+	    // we must get the alias when it is null.
+        // we should get the alias by $field_name
         if (null === $alias) {
-            $alias = $this->getAliasMapping($item_key);
+            $field_name = $path_arr[0];
+            $alias = $this->getAliasMapping($field_name);
         }
-
-        /** @var \Bardoqi\Sight\Map\MultiMapItem $map_item */
+	    // get the item from data
+        /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $map_item */
         $map_item = $this->getMapItem($alias);
-
+        if(null === $map_item){
+            throw InvalidArgumentException::JsonFieldsNotFound($alias);
+        }
+	    // call the findByPath of MultiMapItem
         return $map_item->findByPath($path_arr);
     }
 
@@ -197,9 +209,12 @@ final class CombineItem
      */
     public function getData($alias = null)
     {
+        // if alias is null, we get the local_item;
         if (null === $alias) {
             return $this->local_item;
         }
+        // if there is no alias key in the join_items
+        // we also get the local item.
         if (! array_key_exists($alias, $this->join_items)) {
             return $this->local_item;
         }

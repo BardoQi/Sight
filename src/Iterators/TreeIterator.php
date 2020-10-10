@@ -100,7 +100,7 @@ final class TreeIterator
      * @return \Generator
      */
     public function listItems(CombineItem $combine_item)
-    {  // TODO FIX YIELD
+    {
         foreach ($this->items($combine_item) as  $item) {
             foreach ($this->childItems($item) as  $node_item) {
                 yield $node_item;

@@ -15,59 +15,15 @@ namespace Bardoqi\Sight\Map;
 use Bardoqi\Sight\Abstracts\AbstractList;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Map\Interfaces\IMapItem;
-
+use Bardoqi\Sight\Abstracts\AbstractMapItem;
 /**
  * Class MultiMapItem.
  */
-class MultiMapItem extends AbstractList implements IMapItem
+class MultiMapItem extends AbstractMapItem implements IMapItem
 {
     /**
-     * @var string
-     */
-    public $keyed_by = '';
-
-    /**
-     * @var int
-     */
-    public $relation_type = 0;
-
-    /**
-     * Create a instance.
-     *
-     * @param null|array  $data
-     * @param null|string $keyed_by
-     * @param int         $relation_type
-     *
-     * @return static
-     * @static
-     */
-    public static function of($data, $keyed_by = '', $relation_type = 0)
-    {
-        $instance = new static();
-        $instance->data = $data;
-        $instance->keyed_by = $keyed_by;
-        $instance->relation_type = $relation_type;
-
-        return $instance;
-    }
-
-    /**
-     * @param $list
-     * @param $key
-     *
-     * @return array
-     */
-    protected function getItemBykey($list, $key)
-    {
-        if (array_key_exists($key, $list)) {
-            return $list[$key];
-        }
-
-        throw InvalidArgumentException::UndefinedOffset($key);
-    }
-
-    /**
      * Find the row with specified path which is dot-separated string.
+     * The function is be called from CombineItem::findByPath
      *
      * @param array $path
      *
@@ -75,6 +31,7 @@ class MultiMapItem extends AbstractList implements IMapItem
      */
     public function findByPath($path, $offset = 0)
     {
+
         $key = array_shift($path);
         $item = $this->data[$offset][$key];
 

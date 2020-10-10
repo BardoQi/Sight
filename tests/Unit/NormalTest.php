@@ -136,6 +136,8 @@ final class NormalTest extends TestCase
             '');
         $data = $NormalPresenter->toPaginateArray(PaginateTypeEnum::PAGINATE_API);
         $this->assertTrue($data['current_page'] === 1);
+        $data = $NormalPresenter->toPaginateArray(PaginateTypeEnum::PAGINATE_WEB);
+        $this->assertTrue($data['current_page'] === 1);
     }
 
     /** @test */

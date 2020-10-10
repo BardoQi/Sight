@@ -115,7 +115,7 @@ class MultiMap extends AbstractList implements IMap
     /**
      * @param $offset
      *
-     * @return \Bardoqi\Sight\Map\MultiMapItem|null
+     * @return \Bardoqi\Sight\Map\SingleMap|null
      */
     public function getHasMany($offset)
     {

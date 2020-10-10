@@ -104,6 +104,7 @@ final class ListIterator
                 $local_key = $item->getItemValue($relation->local_field);
                 /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
                 $join_list = $this->join_lists[$alias];
+                /** @var \Bardoqi\Sight\Map\MultiMapItem $list */
                 $list = $join_list->getHasManyMerge($local_key);
                 $item->addJoinItem($alias, $list);
             }
@@ -111,6 +112,7 @@ final class ListIterator
                 $local_key = $item->getItemValue($relation->local_field);
                 /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
                 $join_list = $this->join_lists[$alias];
+                /** @var \Bardoqi\Sight\Map\MultiMapItem $list */
                 $list = $join_list->getHasManySplit($local_key);
                 $item->addJoinItem($alias, $list);
             }

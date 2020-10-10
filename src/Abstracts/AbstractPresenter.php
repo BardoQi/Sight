@@ -245,7 +245,7 @@ abstract class AbstractPresenter
         /** Husk the data of paginator */
         $data_list = $this->huskPaginator($data_list, false);
         if (0 < count($data_list)) {
-            if (! isset($data_list[0][$keyed_by])) {
+            if (! array_key_exists($keyed_by, $data_list[0])) {
                 throw InvalidArgumentException::KeyedByIsNotCorrect($keyed_by);
             }
         } else {
@@ -410,12 +410,9 @@ abstract class AbstractPresenter
     public function getItemValueWithMapping($mapping, $item)
     {
         switch ($mapping->type) {
-            case MappingTypeEnum::FIELD_NAME:
-                return $item->getItemValue($mapping->src(), 0, $mapping->alias());
             case MappingTypeEnum::DATA_FORMATER:
                 $Formatter = $this->data_formatter;
                 $value = $item->getItemValue($mapping->key(), 0, $mapping->alias());
-
                 return call_user_func_array([$Formatter, 'format'], [$mapping->src(), $value]);
             case MappingTypeEnum::METHOD_NAME:
                 return $this->forwardCall($mapping, $item);
@@ -423,6 +420,7 @@ abstract class AbstractPresenter
                 return $item->findByPath($mapping->src(), $mapping->alias());
             case MappingTypeEnum::JOIN_FIELD:
                 return $item->getItemValue($mapping->src(), 0, $mapping->alias());
+            case MappingTypeEnum::FIELD_NAME:
             default:
                 return $item->getItemValue($mapping->src(), 0, $mapping->alias());
         }

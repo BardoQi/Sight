@@ -45,7 +45,7 @@ final class RelationList extends AbstractList
     public function addRelationByObject(Relation $relation)
     {
         if ($relation->isValid()) {
-            $this->data[$relation->foreignAlias()] = $relation;
+            $this->data[$relation->foreign_alias] = $relation;
         }
 
         return $this;

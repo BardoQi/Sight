@@ -116,13 +116,9 @@ final class Relation
      *
      * @return mixed
      */
-    public function localAlias($local_alias = null)
+    public function localAlias($local_alias)
     {
-        if (null == $local_alias) {
-            return $this->local_alias;
-        }
         $this->local_alias = $local_alias;
-
         return $this;
     }
 
@@ -131,13 +127,9 @@ final class Relation
      *
      * @return mixed
      */
-    public function localField($local_field = null)
+    public function localField($local_field)
     {
-        if (null == $local_field) {
-            return $this->local_field;
-        }
         $this->local_field = $local_field;
-
         return $this;
     }
 
@@ -146,13 +138,9 @@ final class Relation
      *
      * @return mixed
      */
-    public function foreignAlias($foreign_alias = null)
+    public function foreignAlias($foreign_alias)
     {
-        if (null == $foreign_alias) {
-            return $this->foreign_alias;
-        }
         $this->foreign_alias = $foreign_alias;
-
         return $this;
     }
 
@@ -161,13 +149,9 @@ final class Relation
      *
      * @return mixed
      */
-    public function foreignField($foreign_field = null)
+    public function foreignField($foreign_field)
     {
-        if (null == $foreign_field) {
-            return $this->foreign_field;
-        }
         $this->foreign_field = $foreign_field;
-
         return $this;
     }
 
@@ -176,13 +160,9 @@ final class Relation
      *
      * @return mixed
      */
-    public function relationType($relation_type = null)
+    public function relationType($relation_type)
     {
-        if (null == $relation_type) {
-            return $this->relation_type;
-        }
         $this->relation_type = $relation_type;
-
         return $this;
     }
 
