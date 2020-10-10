@@ -106,7 +106,7 @@ final class FieldMappingValidator
     public function validate($mapping_list)
     {
         foreach ($mapping_list as $item) {
-            if (fasle === $this->validateItem($item)) {
+            if (false === $this->validateItem($item)) {
                 return false;
             }
         }
