@@ -181,10 +181,6 @@ final class FieldMappingValidator
      */
     protected function validateFieldName($mapping)
     {
-        if (! $this->hasField($mapping->src(), $mapping->alias())) {
-            throw InvalidArgumentException::FieldMappingIsInvalid($mapping->key());
-        }
-
         return true;
     }
 
