@@ -68,17 +68,4 @@ class FieldMappingList extends AbstractList
         return $this;
     }
 
-    /**
-     * @param mixed ...$param
-     *
-     * @return $this
-     */
-    public function addItem(...$param)
-    {
-        if ($param[0] instanceof FieldMapping) {
-            return $this->addMappingByObject($param[0]);
-        }
-
-        return $this->addMapping(...$param);
-    }
 }
