@@ -119,6 +119,7 @@ final class Relation
     public function localAlias($local_alias)
     {
         $this->local_alias = $local_alias;
+
         return $this;
     }
 
@@ -130,6 +131,7 @@ final class Relation
     public function localField($local_field)
     {
         $this->local_field = $local_field;
+
         return $this;
     }
 
@@ -141,6 +143,7 @@ final class Relation
     public function foreignAlias($foreign_alias)
     {
         $this->foreign_alias = $foreign_alias;
+
         return $this;
     }
 
@@ -152,6 +155,7 @@ final class Relation
     public function foreignField($foreign_field)
     {
         $this->foreign_field = $foreign_field;
+
         return $this;
     }
 
@@ -163,6 +167,7 @@ final class Relation
     public function relationType($relation_type)
     {
         $this->relation_type = $relation_type;
+
         return $this;
     }
 

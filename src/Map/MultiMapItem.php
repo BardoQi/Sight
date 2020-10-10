@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Bardoqi\Sight\Map;
 
-use Bardoqi\Sight\Abstracts\AbstractList;
+use Bardoqi\Sight\Abstracts\AbstractMapItem;
 use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Map\Interfaces\IMapItem;
-use Bardoqi\Sight\Abstracts\AbstractMapItem;
+
 /**
  * Class MultiMapItem.
  */
@@ -23,7 +23,7 @@ class MultiMapItem extends AbstractMapItem implements IMapItem
 {
     /**
      * Find the row with specified path which is dot-separated string.
-     * The function is be called from CombineItem::findByPath
+     * The function is be called from CombineItem::findByPath.
      *
      * @param array $path
      *
@@ -31,7 +31,6 @@ class MultiMapItem extends AbstractMapItem implements IMapItem
      */
     public function findByPath($path, $offset = 0)
     {
-
         $key = array_shift($path);
         $item = $this->data[$offset][$key];
 
