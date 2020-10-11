@@ -180,9 +180,9 @@ final class NormalTest extends TestCase
         $test_bool = call_user_func_array([$formatter, 'format'], [FormatterEnum::TO_BOOL, 1]);
         $this->assertTrue('true' == $test_bool);
 
-        try{
+        try {
             $NormalPresenter->addFormatter('toArea', 'bad_formatter');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
     }
