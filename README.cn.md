@@ -136,18 +136,20 @@ class ArticlePresenter extents Presenter
 接下来，你可以添加函数获取数据了。以下例子，我们从Repositories中获取数据：
 
 ```php
+
 namespace App\Presenter
 
 use Bardoqi\Sight\Presenter;
+use Bardoqi\Sight\Traits\PresenterTrait;
+use Bardoqi\Sight\Enums\MappingTypeEnum 
+use Bardoqi\Sight\Enums\PaginateTypeEnum 
 use App\Repositories\ArticleRepository;
 use App\Repositories\UserRepository; 
 
 class ArticlePresenter extents Presenter
 {
-   public function __construct(){
-       parent::__construct();
-   }  
-   
+   use PresenterTrait;
+
    public function getArticleList($where)
    {
        $articleArray = ArticleRepository::getList($where);
@@ -161,17 +163,16 @@ class ArticlePresenter extents Presenter
                 ->localField('created_by')
                 ->foreignAlias('users')
                 ->foreighField('id')) 
-            ->addFieldMappingWithObject(FieldMapping::of()
+            ->addFieldMappingByObject(FieldMapping::of()
                 ->key('created_at')
                 ->src('created_at')
                 ->type(MappingTypeEnum::METHOD_NAME))
-            ->addFieldMappingWithObject(FieldMapping::of()
+            ->addFieldMappingByObject(FieldMapping::of()
                 ->key('created_by')
-                ->src('created_by')
-                ->type(MappingTypeEnum::METHOD_NAME));         
+                ->src('user_name')
+                ->type(MappingTypeEnum::JOIN_FIELD));         
        return $this->toPaginateArray(PaginateTypeEnum::PAGINATE_API);
    }
-   
 }
 
 ``` 

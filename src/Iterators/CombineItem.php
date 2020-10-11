@@ -194,7 +194,7 @@ final class CombineItem
         if (null === $map_item) {
             throw InvalidArgumentException::JsonFieldsNotFound($alias);
         }
-        // call the findByPath of MultiMapItem
+        // call the findByPath of IMapItem
         return $map_item->findByPath($path_arr);
     }
 

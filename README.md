@@ -138,18 +138,20 @@ class ArticlePresenter extents Presenter
 Then you could add a function to get the data.
 
 ```php
+
 namespace App\Presenter
 
 use Bardoqi\Sight\Presenter;
+use Bardoqi\Sight\Traits\PresenterTrait;
+use Bardoqi\Sight\Enums\MappingTypeEnum 
+use Bardoqi\Sight\Enums\PaginateTypeEnum 
 use App\Repositories\ArticleRepository;
 use App\Repositories\UserRepository; 
 
 class ArticlePresenter extents Presenter
 {
-   public function __construct(){
-       parent::__construct();
-   }  
-   
+   use PresenterTrait;
+
    public function getArticleList($where)
    {
        $articleArray = ArticleRepository::getList($where);
@@ -163,17 +165,16 @@ class ArticlePresenter extents Presenter
                 ->localField('created_by')
                 ->foreignAlias('users')
                 ->foreighField('id')) 
-            ->addFieldMappingWithObject(FieldMapping::of()
+            ->addFieldMappingByObject(FieldMapping::of()
                 ->key('created_at')
                 ->src('created_at')
                 ->type(MappingTypeEnum::METHOD_NAME))
-            ->addFieldMappingWithObject(FieldMapping::of()
+            ->addFieldMappingByObject(FieldMapping::of()
                 ->key('created_by')
-                ->src('created_by')
-                ->type(MappingTypeEnum::METHOD_NAME));         
+                ->src('user_name')
+                ->type(MappingTypeEnum::JOIN_FIELD));         
        return $this->toPaginateArray(PaginateTypeEnum::PAGINATE_API);
    }
-   
 }
 
 ``` 
@@ -189,7 +190,7 @@ And you also could define the mapping in the property:
 ```php
     protected $list_mapping = [
          ['created_at' => ['src'=>'created_at', 'type'=>MappingTypeEnum::METHOD_NAME  ]], 
-         ['created_by' => ['src'=>'user_name', 'type'=>MappingTypeEnum::METHOD_NAME  ]],
+         ['created_by' => ['src'=>'user_name', 'type'=>MappingTypeEnum::JOIN_FIELD  ]],
     ];
     
     // You need to call:
