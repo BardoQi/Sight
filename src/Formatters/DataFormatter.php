@@ -95,7 +95,6 @@ class DataFormatter
             return call_user_func($this->macros[$formatter], $value);
         }
         $class = get_called_class();
-
         return call_user_func([$class, $formatter], $value);
     }
 

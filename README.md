@@ -16,9 +16,9 @@ There is no MVP (Model View Presenter) pattern in Laravel framework before.
    
 Maybe you know that there is no presenter layer in server side. But I should tell you, the Sight just is one. 
    
-Sight not only for changing the MVC web application to MVP, but also Is a good library for chnnging the API application.
+Sight not only for changing the MVC web application to MVP, but also Is a good library for changing the API application.
     
-Now you could using sight, which is in a elegant archiitecture and give you elegant MVP pattern.
+Now you could use Sight, which is in an elegant architecture and give you elegant MVP pattern.
         
 The difference between MVC and MVP is that, a view is totally passive and unaware of the model layer. While in MVC it isn't passive and aware of the Model Layer. In proper MVP, View class (if it is) also SHOULD NOT implement a constructor.
    
@@ -28,63 +28,62 @@ A typical example of MVP will consist of these parts:
 * Passive view class (it could be a template, but it would be better to stick with a class)
 * The presenter that bridges both Model and View
    
-And Sight is using to bridge both Business Logic Layer and View or Controller(for API applitation) layer.
+And Sight is using to bridge both Business Logic Layer and View or Controller (for API application) layer.
      
 And Sight is a mapping class to help you transform the original data from database query to the former that the view or client could use.     
      
 So Sight is a presenter layer for Laravel framework.     
      
-We believe that you will be more happy during your coding with Sight.
+We believe that you will be more happier during your coding with Sight.
 
 With Sight you need not coding repeat unhappy any more.
 
 With Sight you need not coding to search array any more, because we transform the join array with mapping.
 
-With Sight you need not join many table for on field.
+With Sight you need not join many tables for on field.
 
-With sight you could stop mew programer to query table in code seagment "for" or "foreach".
+With sight you could stop mew programmer to query table in code segment "for" or "foreach".
 
-With Sight Many unnessary join query weill be avoid.
+With Sight Many unnecessary join query will be avoided.
 
 Enjoy Sight now, please!
 
-### What Sight do?
+### What do Sight do?
   
-From data layer to view or api layer you need to write many foreach code for the data transform.
+From data layer to view or API layer you need to write many foreach code for the data transform.
    
 Now you need not write foreach code any more. Just use "ToArray()"!
    
-Maybe the troubleshorting is that you will unable to using "foreach" in future! :)
+Maybe the troubleshooting is that you will unable to using "foreach" in future! :)
    
 
 ### Why Sight?
 
-Maybe your team member often using database query in the "foreach" block. When you start using Sight, the bad code wiil disapeared.
+Maybe your team member often using database query in the "foreach" block. When you start using Sight, the bad code will be disappeared.
      
-We should better avoid too many join query. If the join only for one fields, We should better doing that with maany time query. But then we must coding more! Now it is simple.
+We should better avoid too many join queries. If the join only for one field, we should better to do that with many time queries. But then we must do coding more! Now it is simple.
  
 Maybe you often using database view to query for trans form many id fields to name. That is just a bad query for database performance and the legibility of the code. With Sight you can prohibit them from using these queries.
 
-With database you could doing hasOne and hasMany join query. But you could not get one record with hasMany join query. You shold mesrge the record manually with coding with quuery many times. With Sight it will be simple!
+With database you could doing hasOne and hasMany join query. But you could not get one record with hasMany join query. You should merge the record manually with coding with query many times. With Sight it will be simple!
 
-Maybe you had used the library like League\Fractal, we recomend you have a try with Sight!
+Maybe you had used the library like League\Fractal, we recommend you have a try with Sight!
 
 Maybe you use the mutators. But you had need to transform the field after some doing. With Sight you could doing it just before return to controller.
 
 ### Features
 * Field transform. For instance: int to date, time, datetime ...
 * Foreign Key Id transform. For instance: id to name or other fields with array join.
-* Single array transform and multiple arrays transform with array join.
+* Single array transforming and multiple arrays transforming with array join.
 * One has One join: For instance, image_id in table article, and id, image_url in table images. You could get image_url simply.
 * Many has one Join: For instance, image_ids in table article like '3,5,7,9', and id, image_url in table images. You could get image_url simply.
 * Simple pluck function could get the array of foreign key used.   
 * Simply hidden the fields that you don't want to show with the method selectFields.
-* Field transform could using the data convert, array path and method name.
-* Support data quried from both the database such as mysql and elasticsearch with array path converting.
-* Support call with static manaer. 
-* Support flatten json type data from mysql and elasticsearch.  
+* Field transform could use the data convert, array path and method name.
+* Support data queried from both the database such as MySQL and ElasticSearch with array path converting.
+* Support flatten json type data from MySQL and ElasticSearch.  
 * About the array join it support inner join and outer join.
-* High performace, because every array only need be traversed twice.  
+* High performance, because every array only need be traversed twice.  
 
 ### Getting Start
 
@@ -241,13 +240,13 @@ The function is same as the fucntion fromLocal. But it only for single item. So 
 
 ##### Presenter::pluck(...$fields)
 
-Get the foreigns keys as array. After you could query the join array with the foreigns keys.
+Get the foreign keys as array. After you could query the join array with the foreign keys.
 
 * param $fields
 
-After you got the freign data, you could using "innerJoinForeign" and "outerJoinForeign" to make the join with foreign array.
+After you got the foreign data, you could using "innerJoinForeign" and "outerJoinForeign" to make the join with foreign array.
 
-If foreigns keys are join same foreign array, you could pass the all local keys and pluck once. For instance:
+If foreign keys are join same foreign array, you could pass the all local keys and pluck once. For instance:
 
 Both the fields created_by and updated_by are in the table User. So you could:
 
@@ -269,13 +268,13 @@ The function with join type "inner", that like database, if foreign array not ex
     
 ##### Presenter::outerJoinForeign($data_list,$alias,$keyed_by)       
 
-The Outer join is mean that when the foreign record not exists, we will keep  the record in the output table.
+The Outer join is mean that when the foreign record not exists, we will keep the record in the output table.
 
 About paramerters, see innerJoinForeign
 
 ##### Presenter::onRelation($local_field, $foreign_alias, $foreign_field, $relation_type)
 
-The function is like the on phrease "on" in the sql.
+The function is like the on phrase "on" in the SQL.
 
 All of the properties are: $local_alias, $local_field, $foreign_alias, $foreign_field, $relation_type
  $foreign_fieds
@@ -283,30 +282,30 @@ You need not pass $local_alias, because the program could get the $local_alias f
 
 * param $local_field
 
-In sql clause: on local_table.field_local_name = foreign_table.field_foreign_name. And the $local_field just is 'field_local_name'.
+In SQL clause: on local_table.field_local_name = foreign_table.field_foreign_name. And the $local_field just is 'field_local_name'.
 
 * param $foreign_alias
  
-In sql clause: on local_table.field_local_name = foreign_table.field_foreign_name. And the $foreign_alias is the 'foreign_table'.
+In SQL clause: on local_table.field_local_name = foreign_table.field_foreign_name. And the $foreign_alias is the 'foreign_table'.
   
 * param $foreign_field
  
-In sql clause: on local_table.field_local_name = foreign_table.field_foreign_name. And the $foreign_field is the 'field_foreign_name'.
+In SQL clause: on local_table.field_local_name = foreign_table.field_foreign_name. And the $foreign_field is the 'field_foreign_name'.
  
 * param $relation_type 
 
 The $relation_type is number of RelationEnum which contains values:
   
-    -- HAS_ONE:   There is 1 items in join array.
+    -- HAS_ONE:   There is 1 item in join array.
     -- HAS_MANY:   There are many items in join array.
-    -- HAS_MANY_MERGE: There are many items in join array and must to merge to a fields
-    -- HAS_MANY_SPLIT: There are many items in join array and must to merge to a fields
+    -- HAS_MANY_MERGE: There are many items in join array and must to merge to a field.
+    -- HAS_MANY_SPLIT: There are many items in join array and must to merge to a field.
     
-For HAS_MANY_MERGE AND HAS_MANY_SPLIT you should give a function to merge the recordes.
+For HAS_MANY_MERGE AND HAS_MANY_SPLIT you should give a function to merge the records.
 
 ##### Presenter::onRelationbyObject(Relation $relation)
   
-The function is same as onRelation. But you should pass a object of Relation.
+The function is same as onRelation. But you should pass an object of Relation.
 
 see Class Relation.
 
@@ -328,13 +327,13 @@ The $type is given that how we could get the value. It is a number of MappingTyp
  
     -- FIELD_NAME ： Access the value via field name
     -- DATA_FORMATER：Transform the value via method of class DataFormatter.
-    -- METHOD_NAME: Access the value via method name. You should add member method to the class. The diffrence of the DataFormatter, DataFormatter could using for many fields. The mapping key of the DataFormatter is both source fieldname and output fiield name, and the member method is only for one field, and  the key of member method is only output field name.   
-    -- ARRAY_PATH: Access the value via path of array. for instance： "a.b.c". If the data is from ElasticSearch, Or the data contains the Json fields. And you need to flaten it. You could use ARRAY_PATH.
+    -- METHOD_NAME: Access the value via method name. You should add member method to the class. The difference of the DataFormatter, DataFormatter could using for many fields. The mapping key of the DataFormatter is both source fieldname and output field name, and the member method is only for one field, and  the key of member method is only output field name.   
+    -- ARRAY_PATH: Access the value via path of array. for instance： "a.b.c". If the data is from ElasticSearch, Or the data contains the Json fields. And you need to flatten it. You could use ARRAY_PATH.
     -- JOIN_FIELD: Access the value from the join array
     
 * param $alias 
     
-    If the field is in the join array, you shold to passing the $alias for the porformance.
+    If the field is in the join array, you should to passing the $alias for the performance.
     
 The rules of mapping are:
    
@@ -354,7 +353,7 @@ The rules of mapping are:
   
 * METHOD_NAME
     
-    -- $key: could be any string; if is the name of source field, you will get the $value argument, otherwise, you shoud call $this->getValue() 
+    -- $key: could be any string; if is the name of source field, you will get the $value argument, otherwise, you should call $this->getValue() 
     -- $src: must be the name of member method;
     -- $type: METHOD_NAME;
     -- $alias: Must be given if field in join array.
@@ -375,15 +374,15 @@ The rules of mapping are:
     
 ##### Presenter::addFieldMappingByObject(FieldMapping $mapping)
    
-The function is same as addFieldMapping. But you should pass a object of FieldMapping.
+The function is same as addFieldMapping. But you should pass an object of FieldMapping.
 
 see Class FieldMapping.
     
 ##### Presenter::addFieldMappingList($mapping_list)   
 
-The function is same as addFieldMapping. But addFieldMapping only support to add 1 mapping.  addFieldMappingList support to add a array of mappings.
+The function is same as addFieldMapping. But addFieldMapping only support to add 1 mapping.  addFieldMappingList support to add an array of mappings.
 
-The array formatter is :
+The array formatter is: 
 
 ```php
 
@@ -398,7 +397,7 @@ The array formatter is :
 
 Add a function to the DataFormatter. 
 
-Please see the source of \Bardoqi\Sight\Formatters\DataFormatter. There are some functions for converting  in the class.
+Please see the source of \Bardoqi\Sight\Formatters\DataFormatter. There are some functions for converting in the class.
 
 And if you want to add new function, you could use addFormatter;
 
@@ -423,7 +422,7 @@ Return on record. It is using with SelectLocalItem.
 Return the record list array.
 
 * param $paginate_type
-if the value is PaginateTypeEnum::PAGINATE_API, is will return the data with out link.
+if the value is PaginateTypeEnum::PAGINATE_API, is will return the data without link.
 else return the data with link.
 
 ##### Presenter::toTreeArray($parent_id_key)
@@ -438,11 +437,11 @@ Give the field name of the parent_id. The default value is 'parent_d'.
 
 Get the value of the current item via name of field ($field_name) through the mapping.
   
-##### Functions For Api Response
+##### Functions for API Response
 
-There are the functions for the api response:
+There are the functions for the API response:
 
-setError(),getError(),setMessage(),getMessage(),setStatusCode(),getStatusCode()
+setError(), getError(), setMessage(), getMessage(), setStatusCode(), getStatusCode()
 
 
 #### Class FieldMapping
@@ -453,7 +452,7 @@ It is a short-name function for create a FieldMapping instance.
 
 And other functions is for the peroperty's value. 
 
-You could using a chain orpeator for the instance initial.
+You could use the operator chain for the instance initial.
   
 For instance:
 ```php
@@ -469,9 +468,9 @@ For instance:
 
 It is a short-name function for create a Relation instance.
 
-And other functions is for the peroperty's value. 
+And other functions are for the property's value. 
 
-You could using a chain orpeator for the instance initial.
+You could use the operator chain for the instance initial.
   
 For instance:
 
@@ -489,11 +488,11 @@ if you using the function $this->getCurrentItem(), it will be return a instance 
      
 ##### CombineItem::getItemValue($field_name,$offset = 0, $alias = null)
 
-Get the value of a item. 
+Get the value of an item. 
 
 * param $field_name
 
-The name of the field you wnat to read
+The name of the field you want to read
 
 * $offset
 
@@ -501,11 +500,11 @@ If the relation type is HAS_MANY, HAS_MANY_MERGE and HAS_MANY_SPLIT, you should 
 
 * $alias
   
-If the field you wnat to read is in join array, you should pass the $alias.
+If the field you want to read is in join array, you should pass the $alias.
 
 ##### CombineItem::getData($alias)
 
-Get the join data with a alias of join array. It will return a instance of IMapItem.
+Get the join data with an alias of join array. It will return an instance of IMapItem.
 
 #### Interface IMapItem
 
@@ -515,7 +514,7 @@ There are 2 class implements the interface IMapItem: MultiMapItem, SingleMapitem
 
 Find the value form the json field. 
 
-If the class is MultiMapItem, you shold pass $offset.
+If the class is MultiMapItem, you should pass $offset.
 
 ##### IMapItem::hasColunm($name)
 
@@ -525,17 +524,17 @@ Check if the field name $name exists.
 
 Get the value form the field. 
 
-If the class is MultiMapItem, you shold pass $offset.
+If the class is MultiMapItem, you should pass $offset.
  
 #### Exceptions
   
-There are many exceptions for helping your coding and to flaten your developing.
+There are many exceptions for helping your coding and to flatten your developing.
 
-We are enjoy to tell you the detail about: 
+We are enjoying to tell you the detail about: 
 
 * Message: 'KeyedBy can not be empty!'
 
-  -- For reduce the performance, we should make the join array keyed. So you must give the KeydBy argument.
+  -- For reduce the performance, we should make the join array keyed. So you must give the KeyedBy argument.
 
 * Message: 'The KeyedBy '.$name.' is not correct!'
 
@@ -543,7 +542,7 @@ We are enjoy to tell you the detail about:
 
 * Message: 'Alias Can Not Be Empty!'
 
-  -- We access the values by alias, so it can not be enpty.
+  -- We access the values by alias, so it can not be empty.
 
 * Message: 'Mapping Key Can Not Be Empty!'
 
@@ -551,7 +550,7 @@ We are enjoy to tell you the detail about:
   
 * Message: 'Mapping Source Can Not Be Empty!'
    
-  --The src property is usign for tell us where we could get the value. 
+  --The src property is used for tell us where we could get the value. 
    
 * Message: 'Mapping Type Is Not Valid!'
 
@@ -559,7 +558,7 @@ We are enjoy to tell you the detail about:
 
 * Message: 'Field Mapping List Not Found!'
 
-  --Maybe you had given a empty mapping array.
+  --Maybe you had given an empty mapping array.
 
 * Message: 'Mapping Array Is Not Valid!'
 
@@ -574,21 +573,21 @@ We are enjoy to tell you the detail about:
 
 * Message: "Field Or Mapping " .$name. " Not Found!"
 
-  --We transform the data with field name, mapping key name. That is one of the name given by SelectFields  is not found in the fields of arrays and the keys of mapping.
+  --We transform the data with field name, mapping key name. That is one of the name given by SelectFields is not found in the fields of arrays and the keys of mapping.
 
-* Message: "Function ". $name ." Exists Already!"
+* Message: "Function ". $name" Exists Already!"
 
   --When you call the function AddFormatter, the same name function(formatter) exists already.
 
 * Message: "Item Is Not Json String!"
 
-  --When the findByPath would be called, the destinative value should be a json string, but not.
+  --When the findByPath would be called, the designated value should be a json string, but not.
      
 ### FAQ
    
-Q; Could you tell me the diffrence about league/fractal And Sight?
+Q; Could you tell me the difference about league/fractal And Sight?
    
-A: The league/fractal is a best library for transforming the data. And With Sight you could using array join, 
+A: The league/fractal is a best library for transforming the data. And with Sight you could using array join, 
    
 Q: Why we need define the mapping? Why not using data structure like league/fractal?
   
@@ -596,13 +595,13 @@ A: With mapping we could to get manyfold using of functions and formatters for t
 
    
 
-### Troubleshortings
+### Troubleshootings
 
 * You can not use "where" to filter the array.
 * You need to learn the format of the array paramaters.
-* There is no any features for transform from view or api layer to data layer.
+* There is no any features for transform from view or API layer to data layer.
 * Not support nested join.
-* Only suppore equal relation.
+* Only support equal relation.
 * Others will be found by you. 
 
 ### Road Mapping
@@ -611,12 +610,12 @@ In the plan:
   
 * 0.1.7 Release: Add json enumeration.
 * 0.1.6 Release: Finish the artisan generator. 
-* 0.1.5 Release: Publich the detail document.
+* 0.1.5 Release: Publish the detail document.
 * 0.1.4 Release: Finish the testing of HAS_MANY and HAS_MANY_MERGE
 
 Has released:
   
-* 0.1.3 Release: Finish the testing of HAS_ONE and HAS_MANY_SPILT. It is a 1st publish steble.
+* 0.1.3 Release: Finish the testing of HAS_ONE and HAS_MANY_SPILT. It is a 1st publish stable.
 * 0.1.2 RC: Add HAS_MANY_SPILT relation. 
 * 0.1.1 RC: Finished the HAS_ONE relation. 
 * 0.1.0 RC: 1st draft.  
