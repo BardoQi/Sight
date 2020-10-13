@@ -152,7 +152,7 @@ final class CombineItem
      *
      * @return array|mixed
      */
-    private function getMapItem($alias, $offfset = 0)
+    public function getMapItem($alias, $offfset = 0)
     {
         if (('local' == $alias) || (empty($alias))) {
             return $this->local_item;
