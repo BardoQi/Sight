@@ -110,7 +110,4 @@ final class HasManyTest extends TestCase
         $this->assertTrue(isset($users[0]['albums']));
         $this->assertTrue(isset($users[0]['albums'][0]['id']));
     }
-
-
-
 }
