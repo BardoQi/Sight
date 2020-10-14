@@ -83,4 +83,14 @@ class MultiMapItem extends AbstractMapItem implements IMapItem
 
         return false;
     }
+
+    /**
+     * @return \Generator
+     */
+    public function hasManyOffsets()
+    {
+        foreach ($this->data as $offset => $item){
+            yield $offset;
+        }
+    }
 }

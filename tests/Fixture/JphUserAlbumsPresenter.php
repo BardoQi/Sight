@@ -40,6 +40,15 @@ final class JphUserAlbumsPresenter extends Presenter
         'albums' => ['src' => 'albums', 'type' => MappingTypeEnum::METHOD_NAME],
     ];
 
+    public $list_offset_fields = [
+        'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
+        'albums_test',
+    ];
+
+    public $list_offset_mapping = [
+        'albums_test' => ['src' => 'albums', 'type' => MappingTypeEnum::METHOD_NAME],
+    ];
+
     public function __construct()
     {
         parent::__construct();
@@ -57,6 +66,29 @@ final class JphUserAlbumsPresenter extends Presenter
         foreach ($albums as $key => $item) {
             if (is_array($item)) {
                 $out_array[] = Arr::only($item, ['id', 'title']);
+            }
+        }
+
+        return $out_array;
+    }
+
+    /**
+     * @param $value
+     *
+     * @return array
+     */
+    public function albums_test($value)
+    {
+        $cur_item = $this->getCurrentItem();
+        foreach($cur_item->hasManyOffsets('albums') as $offset){
+            $new_item = & $out_array[];
+
+            $new_item['id'] = $cur_item->getItemValue('id',$offset,'albums');
+            $new_item['title']  = $cur_item->getItemValue('title',$offset);
+            try {
+                $path_item = $cur_item->findByPath('title.sub.name','albums');
+            } catch (\Exception $e){
+                //
             }
         }
 

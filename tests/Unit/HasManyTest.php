@@ -110,4 +110,29 @@ final class HasManyTest extends TestCase
         $this->assertTrue(isset($users[0]['albums']));
         $this->assertTrue(isset($users[0]['albums'][0]['id']));
     }
+
+    /* @test */
+    public function testHasManyMergeWithOffset()
+    {
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
+
+        $users = $user->selectFields($user->list_offset_fields)
+            ->fromLocal($user_array, 'user')
+            ->outerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelationbyObject(
+                Relation::of()
+                    ->localAlias('user')
+                    ->localField('id')
+                    ->foreignAlias('albums')
+                    ->foreignField('userId')
+                    ->relationType(RelationEnum::HAS_MANY_MERGE)
+            )
+            ->addFieldMappingList($user->list_offset_mapping)
+            ->toArray();
+        $this->assertTrue(isset($users[0]['albums_test']));
+        $this->assertTrue(isset($users[0]['albums_test'][0]['id']));
+    }
 }

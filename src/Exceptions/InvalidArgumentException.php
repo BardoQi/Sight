@@ -195,4 +195,14 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     {
         return new self('Json Fields in '.$name.' Not Found!');
     }
+
+    /**
+     * @param $name
+     *
+     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
+     */
+    public static function JoinItemNotFound($name)
+    {
+        return new self('Join Item '.$name.' Not Found!');
+    }
 }

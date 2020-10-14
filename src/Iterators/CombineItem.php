@@ -150,7 +150,7 @@ final class CombineItem
      * @param     $alias
      * @param int $offfset
      *
-     * @return array|mixed
+     * @return \Bardoqi\Sight\Map\Interfaces\IMap
      */
     public function getMapItem($alias, $offfset = 0)
     {
@@ -164,8 +164,10 @@ final class CombineItem
             if ($join_item instanceof SingleMapItem) {
                 return $join_item;
             }
-
-            return $join_item[$offfset];
+            if(null === $offset){
+                return $join_item;
+            }
+            return SingleMapItem::of($join_item[$offfset],$join_item->keyed_by,$join_item->join_type) ;
         }
 
         return null;
@@ -216,5 +218,25 @@ final class CombineItem
         }
 
         return $this->join_items[$alias];
+    }
+
+    /**
+     * @param $alias
+     *
+     * @return \Generator
+     */
+    public function hasManyOffsets($alias)
+    {
+        if (array_key_exists($alias, $this->join_items)) {
+            $items = $this->join_items[$alias];
+        }else{
+            throw InvalidArgumentException::JoinItemNotFound($alias);
+        }
+        /** @var \Bardoqi\Sight\Map\MultiMapItem $items */
+        if(isset($items)){
+            foreach($items->hasManyOffsets() as $offset){
+                yield $offset;
+            }
+        }
     }
 }
