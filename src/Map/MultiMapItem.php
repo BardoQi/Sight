@@ -89,7 +89,7 @@ class MultiMapItem extends AbstractMapItem implements IMapItem
      */
     public function hasManyOffsets()
     {
-        foreach ($this->data as $offset => $item){
+        foreach ($this->data as $offset => $item) {
             yield $offset;
         }
     }
