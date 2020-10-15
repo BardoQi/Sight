@@ -632,7 +632,9 @@ A: 使用mapping我们可以重用很多转换函数和格式化函数。
 如果你觉得此项目对你有用，那请你帮助买杯果汁。🍹
    
 ![donate](https://raw.githubusercontent.com/BardoQi/bmc/master/myqr_ch_sm.png)    
-
+   
+开源目前挣不到饭钱，开发者想谋取一个全栈的职位。有兴趣联系：wechat: bardeen
+   
 ### 授权
   
 MIT
