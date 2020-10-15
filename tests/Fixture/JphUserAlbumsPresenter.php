@@ -82,7 +82,7 @@ final class JphUserAlbumsPresenter extends Presenter
         $cur_item = $this->getCurrentItem();
         $out_array = [];
         foreach ($cur_item->hasManyOffsets('albums') as $offset) {
-            $new_item = & $out_array[];
+            $new_item = &$out_array[];
 
             $new_item['id'] = $cur_item->getItemValue('id', $offset, 'albums');
             $new_item['title'] = $cur_item->getItemValue('title', $offset);

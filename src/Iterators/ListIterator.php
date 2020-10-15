@@ -151,7 +151,6 @@ final class ListIterator
          */
         $relation_list = $this->relation_list;
         foreach ($relation_list->hasManyRelations() as $alias => $relation) {
-
             $local_key = $item->getItemValue($relation->local_field);
 
             /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
@@ -179,7 +178,7 @@ final class ListIterator
             $tree_iterator = $this->buildTreeIterator($item);
             if (null === $tree_iterator) {
                 yield $item;
-                //continue;
+            //continue;
             } else {
                 foreach ($tree_iterator->listItems($item) as $key => $new_item) {
                     yield $new_item;
