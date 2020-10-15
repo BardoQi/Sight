@@ -67,7 +67,7 @@ final class TreeIterator
      */
     private function items(CombineItem $combine_item)
     {
-        if (0 === count($this->list)) {
+        if (empty($this->list)) {
             yield $combine_item;
         } else {
             foreach ($this->list->listItems() as $key => $item) {

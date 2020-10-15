@@ -162,7 +162,7 @@ final class HasManyTest extends TestCase
     }
 
     /* @test */
-    public function testHasManyInnerJoinEmptyRecord()
+    public function testHasManyMergeInnerJoinEmptyRecord()
     {
         $user_array = Mock::getLocalData(Mock::USER_DATA);
         $user = new JphUserAlbumsPresenter();
@@ -184,4 +184,40 @@ final class HasManyTest extends TestCase
             ->toArray();
         $this->assertTrue(empty($users));
     }
+
+    /* @test */
+    public function testHasManyOuterJoinEmptyRecord()
+    {
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = json_decode('[{"userId":0,"id":0,"title":""}]', true);
+
+        $users = $user->selectFields($user->list_fields)
+            ->fromLocal($user_array)
+            ->outerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
+            ->addFieldMappingList($user->list_mapping)
+            ->toArray();
+        $this->assertTrue(isset($users[0]['albums_id']));
+        $this->assertTrue(isset($users[0]['albums_title']));
+    }
+
+//    /* @test */
+//    public function testHasManyInnerJoinEmptyRecord()
+//    {
+//        $user_array = Mock::getLocalData(Mock::USER_DATA);
+//        $user = new JphUserAlbumsPresenter();
+//
+//        $albums_array = json_decode('[{"userId":0,"id":0,"title":""}]', true);
+//
+//        $users = $user->selectFields($user->list_fields)
+//            ->fromLocal($user_array)
+//            ->innerJoinForeign($albums_array, 'albums', 'userId')
+//            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
+//            ->addFieldMappingList($user->list_mapping)
+//            ->toArray();
+//        $this->assertTrue(isset($users[0]['albums_id']));
+//        $this->assertTrue(isset($users[0]['albums_title']));
+//    }
 }

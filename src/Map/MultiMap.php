@@ -103,16 +103,6 @@ class MultiMap extends AbstractList implements IMap
     }
 
     /**
-     * @return \Generator
-     */
-    public function getLocalOne()
-    {
-        foreach ($this->data as $key => $item) {
-            yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
-        }
-    }
-
-    /**
      * @param $offset
      *
      * @return \Bardoqi\Sight\Map\SingleMap|null

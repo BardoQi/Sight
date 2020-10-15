@@ -164,7 +164,7 @@ final class CombineItem
             if ($join_item instanceof SingleMapItem) {
                 return $join_item;
             }
-            if (null === $offset) {
+            if(null === $offset){
                 return $join_item;
             }
             return SingleMapItem::of($join_item[$offfset],$join_item->keyed_by,$join_item->join_type) ;
@@ -229,9 +229,10 @@ final class CombineItem
     {
         if (array_key_exists($alias, $this->join_items)) {
             $items = $this->join_items[$alias];
-        }else{
-            throw InvalidArgumentException::JoinItemNotFound($alias);
         }
+//        else{
+//            throw InvalidArgumentException::JoinItemNotFound($alias);
+//        }
         /** @var \Bardoqi\Sight\Map\MultiMapItem $items */
         if(isset($items)){
             foreach($items->hasManyOffsets() as $offset){

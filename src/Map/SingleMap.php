@@ -66,15 +66,6 @@ final class SingleMap extends AbstractList implements IMap
         return $instance;
     }
 
-    /**
-     * @return \Generator
-     */
-    public function getLocalOne()
-    {
-        foreach ($this->data as $key => $item) {
-            yield $key => SingleMapItem::of($item, $this->keyed_by, 0);
-        }
-    }
 
     /**
      * @return \Generator
