@@ -80,14 +80,14 @@ final class JphUserAlbumsPresenter extends Presenter
     public function albums_test($value)
     {
         $cur_item = $this->getCurrentItem();
-        foreach($cur_item->hasManyOffsets('albums') as $offset){
-            $new_item = & $out_array[];
+        foreach ($cur_item->hasManyOffsets('albums') as $offset) {
+            $new_item = &$out_array[];
 
-            $new_item['id'] = $cur_item->getItemValue('id',$offset,'albums');
-            $new_item['title']  = $cur_item->getItemValue('title',$offset);
+            $new_item['id'] = $cur_item->getItemValue('id', $offset, 'albums');
+            $new_item['title'] = $cur_item->getItemValue('title', $offset);
             try {
-                $path_item = $cur_item->findByPath('title.sub.name','albums');
-            } catch (\Exception $e){
+                $path_item = $cur_item->findByPath('title.sub.name', 'albums');
+            } catch (\Exception $e) {
                 //
             }
         }
