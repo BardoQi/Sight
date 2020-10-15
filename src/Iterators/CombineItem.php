@@ -164,7 +164,7 @@ final class CombineItem
             if ($join_item instanceof SingleMapItem) {
                 return $join_item;
             }
-            if(null === $offset){
+            if (null === $offset) {
                 return $join_item;
             }
 
