@@ -66,7 +66,6 @@ final class SingleMap extends AbstractList implements IMap
         return $instance;
     }
 
-
     /**
      * @return \Generator
      */
