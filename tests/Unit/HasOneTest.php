@@ -146,4 +146,28 @@ final class HasOneTest extends TestCase
         $this->assertTrue(isset($users[0]['albums_id']));
         $this->assertTrue(isset($users[0]['albums_title']));
     }
+
+    /* @test */
+    public function testHasOneInnerJoinEmptyRecord()
+    {
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = json_decode('[{"userId":0,"id":0,"title":""}]', true);
+
+        $users = $user->selectFields($user->list_fields)
+            ->fromLocal($user_array, 'user')
+            ->innerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelationbyObject(
+                Relation::of()
+                    ->localAlias('user')
+                    ->localField('id')
+                    ->foreignAlias('albums')
+                    ->foreignField('userId')
+                    ->relationType(RelationEnum::HAS_ONE)
+            )
+            ->addFieldMappingList($user->list_mapping)
+            ->toArray();
+        $this->assertTrue(empty($users));
+    }
 }

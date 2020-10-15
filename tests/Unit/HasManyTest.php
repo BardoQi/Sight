@@ -160,4 +160,28 @@ final class HasManyTest extends TestCase
         $this->assertTrue(isset($users[0]['albums_test']));
         $this->assertTrue(isset($users[0]['albums_test'][0]['id']));
     }
+
+    /* @test */
+    public function testHasManyInnerJoinEmptyRecord()
+    {
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = json_decode('[{"userId":0,"id":0,"title":""}]', true);
+
+        $users = $user->selectFields($user->list_offset_fields)
+            ->fromLocal($user_array, 'user')
+            ->innerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelationbyObject(
+                Relation::of()
+                    ->localAlias('user')
+                    ->localField('id')
+                    ->foreignAlias('albums')
+                    ->foreignField('userId')
+                    ->relationType(RelationEnum::HAS_MANY_MERGE)
+            )
+            ->addFieldMappingList($user->list_offset_mapping)
+            ->toArray();
+        $this->assertTrue(empty($users));
+    }
 }

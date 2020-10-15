@@ -93,12 +93,16 @@ final class ListIterator
         foreach ($this->LocalItems() as $key => $item) {
             /** @var \Bardoqi\Sight\Relations\RelationList $relation_list */
             $relation_list = $this->relation_list;
+            $hasJoin = false;
             foreach ($relation_list->hasOneRelations() as $alias => $relation) {
                 $local_key = $item->getItemValue($relation->local_field);
                 /** @var \Bardoqi\Sight\Map\MultiMap $join_list */
                 $join_list = $this->join_lists[$alias];
                 $list = $join_list->getHasOne($local_key);
                 $item->addJoinItem($alias, $list);
+                if (null === $list) {
+                    $hasJoin = true;
+                }
             }
             foreach ($relation_list->hasManyMergeRelations() as $alias => $relation) {
                 $local_key = $item->getItemValue($relation->local_field);
@@ -107,6 +111,9 @@ final class ListIterator
                 /** @var \Bardoqi\Sight\Map\MultiMapItem $list */
                 $list = $join_list->getHasManyMerge($local_key);
                 $item->addJoinItem($alias, $list);
+                if (null === $list) {
+                    $hasJoin = true;
+                }
             }
             foreach ($relation_list->hasManySplitRelations()as $alias => $relation) {
                 $local_key = $item->getItemValue($relation->local_field);
@@ -115,6 +122,12 @@ final class ListIterator
                 /** @var \Bardoqi\Sight\Map\MultiMapItem $list */
                 $list = $join_list->getHasManySplit($local_key);
                 $item->addJoinItem($alias, $list);
+                if (null === $list) {
+                    $hasJoin = true;
+                }
+            }
+            if (true == $hasJoin) {
+                continue;
             }
             yield $key => $item;
         }
