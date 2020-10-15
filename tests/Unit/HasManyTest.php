@@ -142,7 +142,7 @@ final class HasManyTest extends TestCase
         $user_array = Mock::getLocalData(Mock::USER_DATA);
         $user = new JphUserAlbumsPresenter();
 
-        $albums_array = json_decode('[{"userId":0,"id":0,"title":""}]',true);
+        $albums_array = json_decode('[{"userId":0,"id":0,"title":""}]', true);
 
         $users = $user->selectFields($user->list_offset_fields)
             ->fromLocal($user_array, 'user')
