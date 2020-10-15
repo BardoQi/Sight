@@ -230,6 +230,7 @@ final class CombineItem
     {
         if (array_key_exists($alias, $this->join_items)) {
             $items = $this->join_items[$alias];
+        }
 //        else{
 //            throw InvalidArgumentException::JoinItemNotFound($alias);
 //        }
