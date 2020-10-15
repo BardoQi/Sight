@@ -14,6 +14,8 @@ namespace Bardoqi\Sight\Tests\Unit;
 
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Relations\Relation;
+use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
+use Bardoqi\Sight\Tests\Fixture\Mock;
 use Bardoqi\Sight\Tests\Fixture\UserPresenter;
 use Bardoqi\Sight\Tests\TestCase;
 
@@ -118,5 +120,30 @@ final class HasOneTest extends TestCase
             ->toArray();
         $this->assertTrue(is_array($users));
         $this->assertTrue(isset($users[0]['avatar']));
+    }
+
+    /* @test */
+    public function testHasOneEmptyRecord()
+    {
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = json_decode('[{"userId":0,"id":0,"title":""}]', true);
+
+        $users = $user->selectFields($user->list_fields)
+            ->fromLocal($user_array, 'user')
+            ->outerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelationbyObject(
+                Relation::of()
+                    ->localAlias('user')
+                    ->localField('id')
+                    ->foreignAlias('albums')
+                    ->foreignField('userId')
+                    ->relationType(RelationEnum::HAS_ONE)
+            )
+            ->addFieldMappingList($user->list_mapping)
+            ->toArray();
+        $this->assertTrue(isset($users[0]['albums_id']));
+        $this->assertTrue(isset($users[0]['albums_title']));
     }
 }
