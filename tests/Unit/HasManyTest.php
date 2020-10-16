@@ -26,7 +26,7 @@ use Bardoqi\Sight\Tests\TestCase;
 final class HasManyTest extends TestCase
 {
     /** @test */
-    public function testPresenterJoin()
+    public function testPresenterJoinHasManySplit()
     {
         $blog_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Blogs.php';
         $blog_array = json_decode($blog_array_string, true);
@@ -67,6 +67,50 @@ final class HasManyTest extends TestCase
         // print_r($blogs);
         $this->assertTrue(is_array($blogs[0]['images']));
     }
+
+    /** @test */
+    public function testPresenterInnerJoinHasManySplit()
+    {
+        $blog_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Blogs.php';
+        $blog_array = json_decode($blog_array_string, true);
+
+        $Blog = new BlogPresenter();
+        $blog = $Blog->selectFields(['id', 'title', 'text', 'images', 'created_at', 'created_by'])
+            ->fromLocal($blog_array, 'blog');
+
+        $user_array_string = include dirname(dirname(__DIR__)).'/tests/Fixture/Users.php';
+        $user_array = json_decode($user_array_string, true);
+
+        $user_ids = $blog->pluck('created_by');
+        //You can check the $user_ids result with:
+        // print_r($user_ids);
+        $blog = $blog->innerJoinForeign($user_array, 'user', 'id')
+            ->onRelation('created_by', 'user', 'id');
+
+
+        $image_ids = $blog->pluck('images');
+        //You can check the $image_ids result with:
+        // print_r($image_ids);
+        $image_array = json_decode('[{"id":0,"file_type":0,"img_url":"","create_at":0}]', true);
+
+        $blog = $blog->innerJoinForeign($image_array, 'image', 'id')
+            ->onRelationbyObject(
+                Relation::of($blog->local_alias, 'images', 'image', 'id', RelationEnum::HAS_MANY_SPLIT)
+            );
+        $blog->addFieldMappingList(
+            [
+                'created_by' => ['src' => 'name', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'user'],
+                'images' => ['src' => 'images', 'type' => MappingTypeEnum::METHOD_NAME],
+            ]
+        );
+
+        $blogs = $blog->toArray();
+        $this->assertTrue(is_array($blogs));
+        //You can check the $blogs result with:
+        // print_r($blogs);
+        $this->assertTrue(empty($blogs[0]['images']));
+    }
+
 
     /** @test */
     public function testHasManyJoin()
@@ -220,4 +264,5 @@ final class HasManyTest extends TestCase
 //        $this->assertTrue(isset($users[0]['albums_id']));
 //        $this->assertTrue(isset($users[0]['albums_title']));
 //    }
+
 }
