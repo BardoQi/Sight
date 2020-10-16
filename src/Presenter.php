@@ -80,9 +80,10 @@ class Presenter extends AbstractPresenter
      */
     public function fromLocal($data_list, $alias = 'local', $data_path = null, $keyed_by = null)
     {
-        if (null !== $data_path) { // maybe id is elasticsearch result
+        if (! empty($data_path)) { // maybe id is elasticsearch result
             $data_list = Arr::get($data_list, $data_path);
         }
+
         if (! is_array($data_list)) {
             throw InvalidArgumentException::ParamaterIsNotArray();
         }
