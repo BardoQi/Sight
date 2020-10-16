@@ -87,7 +87,6 @@ final class HasManyTest extends TestCase
         $blog = $blog->innerJoinForeign($user_array, 'user', 'id')
             ->onRelation('created_by', 'user', 'id');
 
-
         $image_ids = $blog->pluck('images');
         //You can check the $image_ids result with:
         // print_r($image_ids);
@@ -110,7 +109,6 @@ final class HasManyTest extends TestCase
         // print_r($blogs);
         $this->assertTrue(empty($blogs[0]['images']));
     }
-
 
     /** @test */
     public function testHasManyJoin()
@@ -264,5 +262,4 @@ final class HasManyTest extends TestCase
 //        $this->assertTrue(isset($users[0]['albums_id']));
 //        $this->assertTrue(isset($users[0]['albums_title']));
 //    }
-
 }
