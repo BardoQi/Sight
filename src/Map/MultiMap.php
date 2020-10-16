@@ -55,15 +55,9 @@ class MultiMap extends AbstractList implements IMap
         $instance = new static();
         $instance->join_type = $join_type;
         $instance->keyed_by = $keyed_by;
-        if (null !== $keyed_by) {
-            foreach ($data as $item) {
-                $instance->data[$item[$keyed_by]][] = $item;
-            }
-
-            return $instance;
+        foreach ($data as $item) {
+            $instance->data[$item[$keyed_by]][] = $item;
         }
-        $instance->data = $data;
-
         return $instance;
     }
 
@@ -73,11 +67,8 @@ class MultiMap extends AbstractList implements IMap
     public function getAnyOne()
     {
         $item = reset($this->data);
-        if (array_key_exists(0, $item)) {
-            return $item[0];
-        }
 
-        return $item;
+        return reset($item);
     }
 
     /**
@@ -191,14 +182,14 @@ class MultiMap extends AbstractList implements IMap
     {
         // get the first item.
         $item = reset($this->data);
+        // if there is no data, the $item would be false
+        if (false === $item) {
+            $this->data[0][$name] = '';
+
+            return true;
+        }
         // if keyed_by, it is a  multimap, so we must get first item.
         if (! empty($this->keyed_by)) {
-            // if there is no data, the $item would be false
-            if (false === $item) {
-                $this->data[0][$name] = '';
-
-                return true;
-            }
             $item = reset($item);
         }
 
