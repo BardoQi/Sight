@@ -51,7 +51,7 @@ final class JphUserAlbumsPresenter extends Presenter
 
     public $list_todos_fields = [
         'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
-        'albums_id', 'albums_title','todos_id', 'todos_title',
+        'albums_id', 'albums_title', 'todos_id', 'todos_title',
     ];
 
     public $list_todos_mapping = [
