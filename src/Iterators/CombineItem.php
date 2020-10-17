@@ -199,9 +199,7 @@ final class CombineItem
         // get the item from data
         /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $map_item */
         $map_item = $this->getMapItem($alias);
-        if (null === $map_item) {
-            throw InvalidArgumentException::JsonFieldsNotFound($alias);
-        }
+
         // call the findByPath of IMapItem
         return $map_item->findByPath($path_arr);
     }

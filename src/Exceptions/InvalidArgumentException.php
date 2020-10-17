@@ -185,24 +185,4 @@ class InvalidArgumentException extends InvalidArgumentExceptionAbstract implemen
     {
         return new self('There Must Be At Least 1 Empty Item In The Join Array!');
     }
-
-    /**
-     * @param $name
-     *
-     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
-     */
-    public static function JsonFieldsNotFound($name)
-    {
-        return new self('Json Fields in '.$name.' Not Found!');
-    }
-
-    /**
-     * @param $name
-     *
-     * @return \Bardoqi\Sight\Exceptions\InvalidArgumentException
-     */
-    public static function JoinItemNotFound($name)
-    {
-        return new self('Join Item '.$name.' Not Found!');
-    }
 }

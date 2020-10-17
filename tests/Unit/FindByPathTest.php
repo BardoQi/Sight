@@ -429,4 +429,38 @@ final class FindByPathTest extends TestCase
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
     }
+
+    /* @test */
+    public function testHasOneInnerJoinFindByPathWithMethodBadRecordAndJsonError()
+    {
+        $data = '[{"id":1,"name":"LeanneGraham","username":"Bret","email":"Sincere@april.biz","address":{"street":"KulasLight","suite":"Apt.556","city":"Gwenborough","zipcode":"92998-3874","geo":{"lat":"-37.3159","lng":"81.1496"}},"phone":"1-770-736-8031x56442","website":"hildegard.org","company":{"name":"Romaguera-Crona","catchPhrase":"Multi-layeredclient-serverneural-net","bs":"harnessreal-timee-markets"}}]';
+
+        $user_array = json_decode($data, true);
+        $user = new JphUserAlbumsPresenter();
+
+        $house_array = json_decode('[{"userId":0,"id":1,"location":"123.456789,23.123456"}]', true);
+
+        $list_fields = [
+            'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
+            'house_id', 'house_lng', 'house_lat',
+        ];
+
+        $list_mapping = [
+            'house_id' => ['src' => 'id', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'house'],
+            'house_lng' => ['src' => 'location', 'type' => MappingTypeEnum::METHOD_NAME, 'alias' => 'house'],
+            'house_lat' => ['src' => 'location', 'type' => MappingTypeEnum::METHOD_NAME, 'alias' => 'house'],
+        ];
+
+        $users = $user->selectFields($list_fields)
+            ->fromLocal($user_array)
+            ->outerJoinForeign($house_array, 'house', 'userId')
+            ->onRelation('id', 'house', 'userId', RelationEnum::HAS_ONE)
+            ->addFieldMappingList($list_mapping);
+        try {
+            $users = $users->toArray();
+        } catch (\Exception $e) {
+            $this->assertTrue($e instanceof InvalidArgumentException);
+        }
+    }
+
 }

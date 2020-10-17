@@ -608,13 +608,13 @@ A: 使用mapping我们可以重用很多转换函数和格式化函数。
 
 计划中:
 
-* 0.1.7 Release: 添加JSON枚举。
 * 0.1.6 Release: 完成artisan生成器。 
 * 0.1.5 Release: 发布详细文档
-* 0.1.4 Release: 完成HAS_MANY 和 HAS_MANY_MERGE部分的单元测试
+
 
 已发布：
    
+* 0.1.4 Release: 完成HAS_MANY 和 HAS_MANY_MERGE部分的单元测试   
 * 0.1.3 Release: 完成了HAS_ONE和HAS_MANY_SPILT的单元测试。此为第一个公开稳定版。
 * 0.1.2 RC: 添加了HAS_MANY_SPILT关系 
 * 0.1.1 RC: 完成了HAS_ONE关系。 

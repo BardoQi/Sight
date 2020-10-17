@@ -608,13 +608,12 @@ A: With mapping we could to get manyfold using of functions and formatters for t
   
 In the plan:
   
-* 0.1.7 Release: Add json enumeration.
 * 0.1.6 Release: Finish the artisan generator. 
 * 0.1.5 Release: Publish the detail document.
-* 0.1.4 Release: Finish the testing of HAS_MANY and HAS_MANY_MERGE
 
 Has released:
   
+* 0.1.4 Release: Finish the testing of HAS_MANY and HAS_MANY_MERGE
 * 0.1.3 Release: Finish the testing of HAS_ONE and HAS_MANY_SPILT. It is a 1st publish stable.
 * 0.1.2 RC: Add HAS_MANY_SPILT relation. 
 * 0.1.1 RC: Finished the HAS_ONE relation. 
