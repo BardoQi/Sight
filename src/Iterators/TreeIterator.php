@@ -113,6 +113,6 @@ final class TreeIterator
      */
     public function isEmpty()
     {
-        return ((null === $this->list) && (null === $this->children));
+        return (null === $this->list) && (null === $this->children);
     }
 }
