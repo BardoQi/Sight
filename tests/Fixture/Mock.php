@@ -51,6 +51,8 @@ final class Mock
 
     public const ALNUMS_DATA = DIRECTORY_SEPARATOR.'Albums.php';
 
+    public const TODOS_DATA = DIRECTORY_SEPARATOR.'Todos.php';
+
     /**
      * @param $url
      *

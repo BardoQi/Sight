@@ -49,6 +49,18 @@ final class JphUserAlbumsPresenter extends Presenter
         'albums_test' => ['src' => 'albums', 'type' => MappingTypeEnum::METHOD_NAME],
     ];
 
+    public $list_todos_fields = [
+        'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
+        'albums_id', 'albums_title','todos_id', 'todos_title',
+    ];
+
+    public $list_todos_mapping = [
+        'albums_id' => ['src' => 'id', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'albums'],
+        'albums_title' => ['src' => 'title', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'albums'],
+        'todos_id' => ['src' => 'id', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'todos'],
+        'todos_title' => ['src' => 'title', 'type' => MappingTypeEnum::JOIN_FIELD, 'alias' => 'todos'],
+    ];
+
     public function __construct()
     {
         parent::__construct();

@@ -321,4 +321,28 @@ final class HasManyTest extends TestCase
             ->toArray();
         $this->assertTrue(empty($users));
     }
+
+    /** @test */
+    public function testMultiHasManyJoin()
+    {
+        $user_array = Mock::getLocalData(Mock::USER_DATA);
+        $user = new JphUserAlbumsPresenter();
+
+        $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
+
+        $todos_array = Mock::getLocalData(Mock::TODOS_DATA);
+
+        $users = $user->selectFields($user->list_todos_fields)
+            ->fromLocal($user_array)
+            ->outerJoinForeign($albums_array, 'albums', 'userId')
+            ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
+            ->outerJoinForeign($todos_array, 'todos', 'userId')
+            ->onRelation('id', 'todos', 'userId', RelationEnum::HAS_MANY)
+            ->addFieldMappingList($user->list_todos_mapping)
+            ->toArray();
+        $this->assertTrue(isset($users[0]['albums_id']));
+        $this->assertTrue(isset($users[0]['albums_title']));
+        $this->assertTrue(isset($users[0]['todos_id']));
+        $this->assertTrue(isset($users[0]['todos_title']));
+    }
 }
