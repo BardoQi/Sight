@@ -106,8 +106,13 @@ final class CombineItem
 
             return '';
         }
-        /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $item */
-        $item = $this->join_items[$alias];
+        if (array_key_exists($alias,$this->join_items)){
+            /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $item */
+            $item = $this->join_items[$alias];
+        } else {
+            throw InvalidArgumentException::UndefinedOffset($alias);
+        }
+
         if (null != $item) {
             if ($item->hasColumn($column_name)) {
                 return $item->getItemValue($column_name, $offset);
