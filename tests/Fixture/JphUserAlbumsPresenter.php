@@ -130,9 +130,10 @@ final class JphUserAlbumsPresenter extends Presenter
         $out_array = [];
         foreach ($house_data as $key => $item) {
             $new_item = &$out_array[];
-            $new_item['lng'] = Arr::get($item,'location.lon');
-            $new_item['lat'] = Arr::get($item,'location.lat');
+            $new_item['lng'] = Arr::get($item, 'location.lon');
+            $new_item['lat'] = Arr::get($item, 'location.lat');
         }
-	    return  $out_array ;
+
+        return  $out_array;
     }
 }

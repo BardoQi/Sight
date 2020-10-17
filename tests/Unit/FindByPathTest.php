@@ -363,7 +363,6 @@ final class FindByPathTest extends TestCase
             ->toArray();
         $this->assertTrue(empty($users));
     }
-
     /* @test */
     public function testHasOneInnerJoinFindByPathWithMethodBadRecord()
     {
