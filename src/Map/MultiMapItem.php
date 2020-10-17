@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Bardoqi\Sight\Map;
 
 use Bardoqi\Sight\Abstracts\AbstractMapItem;
-use Bardoqi\Sight\Exceptions\InvalidArgumentException;
 use Bardoqi\Sight\Map\Interfaces\IMapItem;
 
 /**
