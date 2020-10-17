@@ -95,4 +95,31 @@ final class JphUserAlbumsPresenter extends Presenter
 
         return $out_array;
     }
+
+
+    /**
+     * @param $value
+     *
+     * @return array
+     */
+    public function house_lng($value)
+    {
+        $item = $this->getCurrentItem();
+        $out_array = [];
+
+        return $item->findByPath('location.lon');
+    }
+
+    /**
+     * @param $value
+     *
+     * @return array
+     */
+    public function house_lat($value)
+    {
+        $item = $this->getCurrentItem();
+        $out_array = [];
+
+        return $item->findByPath('location.lat');
+    }
 }

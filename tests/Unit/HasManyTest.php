@@ -179,7 +179,7 @@ final class HasManyTest extends TestCase
 
         $albums_array = Mock::getLocalData(Mock::ALNUMS_DATA);
         $users = $user->selectFields($user->list_fields)
-            ->fromLocal($user_array, 'user', '', 'id')
+            ->fromLocal($user_array,'user','','id')
             ->outerJoinForeign($albums_array, 'albums', 'userId')
             ->onRelation('id', 'albums', 'userId', RelationEnum::HAS_MANY)
             ->addFieldMappingList($user->list_mapping)
