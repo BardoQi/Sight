@@ -106,7 +106,7 @@ final class CombineItem
 
             return '';
         }
-        if (array_key_exists($alias,$this->join_items)){
+        if (array_key_exists($alias, $this->join_items)) {
             /** @var \Bardoqi\Sight\Map\Interfaces\IMapItem $item */
             $item = $this->join_items[$alias];
         } else {

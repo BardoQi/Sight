@@ -363,6 +363,7 @@ final class FindByPathTest extends TestCase
             ->toArray();
         $this->assertTrue(empty($users));
     }
+
     /* @test */
     public function testHasOneInnerJoinFindByPathWithMethodBadRecord()
     {
@@ -391,7 +392,7 @@ final class FindByPathTest extends TestCase
             ->addFieldMappingList($list_mapping);
         try {
             $users = $users->toArray();
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
     }
@@ -424,9 +425,8 @@ final class FindByPathTest extends TestCase
             ->addFieldMappingList($list_mapping);
         try {
             $users = $users->toArray();
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
     }
-
 }
