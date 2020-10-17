@@ -462,5 +462,4 @@ final class FindByPathTest extends TestCase
             $this->assertTrue($e instanceof InvalidArgumentException);
         }
     }
-
 }
