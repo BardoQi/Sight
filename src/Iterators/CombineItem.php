@@ -246,9 +246,10 @@ final class CombineItem
      */
     public function getJoinItems($alias)
     {
-        if (array_key_exists($alias,$this->join_items)) {
+        if (array_key_exists($alias, $this->join_items)) {
             return $this->join_items[$alias];
         }
+
         return null;
     }
 }
