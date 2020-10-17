@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the bardoqi/sight package.
@@ -17,7 +18,7 @@ use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
 use Bardoqi\Sight\Tests\TestCase;
 
 /**
- * Class FindByPathTest
+ * Class FindByPathTest.
  */
 final class FindByPathTest extends TestCase
 {
