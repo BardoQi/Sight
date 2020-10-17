@@ -173,7 +173,7 @@ final class CombineItem
                 return $join_item;
             }
 
-            return SingleMapItem::of($join_item[$offfset], $join_item->keyed_by, $join_item->join_type);
+            return SingleMapItem::of($join_item[$offset], $join_item->keyed_by);
         }
 
         return null;

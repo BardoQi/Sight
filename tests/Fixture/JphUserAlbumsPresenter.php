@@ -93,9 +93,20 @@ final class JphUserAlbumsPresenter extends Presenter
     {
         $cur_item = $this->getCurrentItem();
         $out_array = [];
+        // for test
+        /** @var \Bardoqi\Sight\Map\MultiMapItem $albums_item */
+        $albums_items = $cur_item->getMapItem('albums');
+
+        $albums_items->hasColumn('title');
+
         foreach ($cur_item->hasManyOffsets('albums') as $offset) {
             $new_item = &$out_array[];
-
+            // begin test
+            // $albums_items->getItemValue('title');
+            /** @var \Bardoqi\Sight\Map\SingleMapItem $albums_item */
+            $albums_item = $cur_item->getMapItem('albums',$offset);
+            // $albums_item->getItemValue('title');
+            // end test
             $new_item['id'] = $cur_item->getItemValue('id', $offset, 'albums');
             $new_item['title'] = $cur_item->getItemValue('title', $offset);
         }
@@ -148,6 +159,7 @@ final class JphUserAlbumsPresenter extends Presenter
 
         return  $out_array;
     }
+
 
     /**
      * @param $value
