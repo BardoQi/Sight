@@ -104,7 +104,7 @@ final class JphUserAlbumsPresenter extends Presenter
             // begin test
             // $albums_items->getItemValue('title');
             /** @var \Bardoqi\Sight\Map\SingleMapItem $albums_item */
-            $albums_item = $cur_item->getMapItem('albums',$offset);
+            $albums_item = $cur_item->getMapItem('albums', $offset);
             // $albums_item->getItemValue('title');
             // end test
             $new_item['id'] = $cur_item->getItemValue('id', $offset, 'albums');
@@ -159,7 +159,6 @@ final class JphUserAlbumsPresenter extends Presenter
 
         return  $out_array;
     }
-
 
     /**
      * @param $value
