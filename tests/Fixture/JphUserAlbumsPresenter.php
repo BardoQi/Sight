@@ -149,7 +149,6 @@ final class JphUserAlbumsPresenter extends Presenter
         return  $out_array;
     }
 
-
     /**
      * @param $value
      *
