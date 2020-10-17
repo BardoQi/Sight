@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the bardoqi/sight package.
@@ -14,11 +15,10 @@ namespace Bardoqi\Sight\Tests\Unit;
 use Bardoqi\Sight\Enums\MappingTypeEnum;
 use Bardoqi\Sight\Enums\RelationEnum;
 use Bardoqi\Sight\Tests\Fixture\JphUserAlbumsPresenter;
-use Bardoqi\Sight\Tests\Fixture\Mock;
 use Bardoqi\Sight\Tests\TestCase;
 
 /**
- * Class FindByPathTest
+ * Class FindByPathTest.
  */
 final class FindByPathTest extends TestCase
 {
@@ -31,7 +31,7 @@ final class FindByPathTest extends TestCase
         $user = new JphUserAlbumsPresenter();
 
         $house_array = json_decode('[{"userId":1,"id":1,"location":""}]', true);
-        $house_array[0]['location']='{"lon":123.123456,"lat":32.456789}';
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
 
         $list_fields = [
             'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
@@ -63,7 +63,7 @@ final class FindByPathTest extends TestCase
         $user = new JphUserAlbumsPresenter();
 
         $house_array = json_decode('[{"userId":1,"id":1,"location":""}]', true);
-        $house_array[0]['location']='{"lon":123.123456,"lat":32.456789}';
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
 
         $list_fields = [
             'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
@@ -95,7 +95,7 @@ final class FindByPathTest extends TestCase
         $user = new JphUserAlbumsPresenter();
 
         $house_array = json_decode('[{"userId":1,"id":1,"location":""}]', true);
-        $house_array[0]['location']='{"lon":123.123456,"lat":32.456789}';
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
 
         $list_fields = [
             'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
@@ -127,7 +127,7 @@ final class FindByPathTest extends TestCase
         $user = new JphUserAlbumsPresenter();
 
         $house_array = json_decode('[{"userId":1,"id":1,"location":""}]', true);
-        $house_array[0]['location']='{"lon":123.123456,"lat":32.456789}';
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
 
         $list_fields = [
             'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
@@ -150,7 +150,6 @@ final class FindByPathTest extends TestCase
         $this->assertTrue(isset($users[0]['house_lng']));
     }
 
-
     /* @test */
     public function testHasManyInnerJoinFindByPathWithEmptyRecord()
     {
@@ -160,7 +159,7 @@ final class FindByPathTest extends TestCase
         $user = new JphUserAlbumsPresenter();
 
         $house_array = json_decode('[{"userId":0,"id":1,"location":""}]', true);
-        $house_array[0]['location']='{"lon":123.123456,"lat":32.456789}';
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
 
         $list_fields = [
             'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
@@ -191,7 +190,7 @@ final class FindByPathTest extends TestCase
         $user = new JphUserAlbumsPresenter();
 
         $house_array = json_decode('[{"userId":0,"id":1,"location":""}]', true);
-        $house_array[0]['location']='{"lon":123.123456,"lat":32.456789}';
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
 
         $list_fields = [
             'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
