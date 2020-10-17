@@ -178,8 +178,11 @@ final class ListIterator
             $tree_iterator = $this->buildTreeIterator($item);
             if (null === $tree_iterator) {
                 yield $item;
-            //continue;
             } else {
+                // if inner join
+                if($tree_iterator->isEmpty()){
+                    continue;
+                }
                 foreach ($tree_iterator->listItems($item) as $key => $new_item) {
                     yield $new_item;
                 }

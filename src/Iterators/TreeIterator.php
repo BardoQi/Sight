@@ -107,4 +107,12 @@ final class TreeIterator
             }
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return ((null === $this->list) && (null === $this->children));
+    }
 }
