@@ -58,6 +58,7 @@ class MultiMap extends AbstractList implements IMap
         foreach ($data as $item) {
             $instance->data[$item[$keyed_by]][] = $item;
         }
+
         return $instance;
     }
 
@@ -67,6 +68,7 @@ class MultiMap extends AbstractList implements IMap
     public function getAnyOne()
     {
         $item = reset($this->data);
+
         return reset($item);
     }
 
