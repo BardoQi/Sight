@@ -86,11 +86,6 @@ final class JphUserAlbumsPresenter extends Presenter
 
             $new_item['id'] = $cur_item->getItemValue('id', $offset, 'albums');
             $new_item['title'] = $cur_item->getItemValue('title', $offset);
-            try {
-                $path_item = $cur_item->findByPath('title.sub.name', 'albums');
-            } catch (\Exception $e) {
-                //
-            }
         }
 
         return $out_array;
@@ -120,5 +115,24 @@ final class JphUserAlbumsPresenter extends Presenter
         $out_array = [];
 
         return $item->findByPath('location.lat');
+    }
+
+    /**
+     * @param $value
+     *
+     * @return array
+     */
+    public function house($value)
+    {
+        $cur_item = $this->getCurrentItem();
+        /** @var \Bardoqi\Sight\Map\MultiMapItem $house_data */
+        $house_data = $cur_item->getJoinItems('house');
+        $out_array = [];
+        foreach ($house_data as $key => $item) {
+            $new_item = &$out_array[];
+            $new_item['lng'] = Arr::get($item,'location.lon');
+            $new_item['lat'] = Arr::get($item,'location.lat');
+        }
+	    return  $out_array ;
     }
 }

@@ -305,4 +305,62 @@ final class FindByPathTest extends TestCase
             ->toArray();
         $this->assertTrue(empty($users));
     }
+
+    /* @test */
+    public function testHasManyMergeInnerJoinFindByPathWithMethod()
+    {
+        $data = '[{"id":1,"name":"LeanneGraham","username":"Bret","email":"Sincere@april.biz","address":{"street":"KulasLight","suite":"Apt.556","city":"Gwenborough","zipcode":"92998-3874","geo":{"lat":"-37.3159","lng":"81.1496"}},"phone":"1-770-736-8031x56442","website":"hildegard.org","company":{"name":"Romaguera-Crona","catchPhrase":"Multi-layeredclient-serverneural-net","bs":"harnessreal-timee-markets"}}]';
+
+        $user_array = json_decode($data, true);
+        $user = new JphUserAlbumsPresenter();
+
+        $house_array = json_decode('[{"userId":1,"id":1,"location":""}]', true);
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
+
+        $list_fields = [
+            'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
+            'house',
+        ];
+
+        $list_mapping = [
+            'house' => ['src' => 'location', 'type' => MappingTypeEnum::METHOD_NAME, 'alias' => 'house'],
+        ];
+
+        $users = $user->selectFields($list_fields)
+            ->fromLocal($user_array)
+            ->innerJoinForeign($house_array, 'house', 'userId')
+            ->onRelation('id', 'house', 'userId', RelationEnum::HAS_MANY_MERGE)
+            ->addFieldMappingList($list_mapping)
+            ->toArray();
+        $this->assertTrue(isset($users[0]['house']));
+    }
+
+    /* @test */
+    public function testHasManyMergeInnerJoinFindByPathWithMethodEmptyRecord()
+    {
+        $data = '[{"id":1,"name":"LeanneGraham","username":"Bret","email":"Sincere@april.biz","address":{"street":"KulasLight","suite":"Apt.556","city":"Gwenborough","zipcode":"92998-3874","geo":{"lat":"-37.3159","lng":"81.1496"}},"phone":"1-770-736-8031x56442","website":"hildegard.org","company":{"name":"Romaguera-Crona","catchPhrase":"Multi-layeredclient-serverneural-net","bs":"harnessreal-timee-markets"}}]';
+
+        $user_array = json_decode($data, true);
+        $user = new JphUserAlbumsPresenter();
+
+        $house_array = json_decode('[{"userId":0,"id":1,"location":""}]', true);
+        $house_array[0]['location'] = '{"lon":123.123456,"lat":32.456789}';
+
+        $list_fields = [
+            'id', 'name', 'username', 'email', 'address', 'phone', 'website', 'company',
+            'house',
+        ];
+
+        $list_mapping = [
+            'house' => ['src' => 'location', 'type' => MappingTypeEnum::METHOD_NAME, 'alias' => 'house'],
+        ];
+        $users = $user->selectFields($list_fields)
+            ->fromLocal($user_array)
+            ->innerJoinForeign($house_array, 'house', 'userId')
+            ->onRelation('id', 'house', 'userId', RelationEnum::HAS_MANY)
+            ->addFieldMappingList($list_mapping)
+            ->toArray();
+        $this->assertTrue(empty($users));
+    }
+
 }

@@ -22,36 +22,6 @@ use Bardoqi\Sight\Map\Interfaces\IMapItem;
 class MultiMapItem extends AbstractMapItem implements IMapItem
 {
     /**
-     * Find the row with specified path which is dot-separated string.
-     * The function is be called from CombineItem::findByPath.
-     *
-     * @param array $path
-     *
-     * @return mixed
-     */
-    public function findByPath($path, $offset = 0)
-    {
-        $key = array_shift($path);
-        $item = $this->data[$offset][$key];
-
-        $decode_item = null;
-        if (! is_array($item)) {
-            $decode_item = json_decode($item, true);
-            if (null === $decode_item) {
-                throw InvalidArgumentException::ItemIsNotJsonString();
-            }
-            $this->data[$offset][$key] = $decode_item;
-            $item = $decode_item;
-        }
-
-        foreach ($path as $key) {
-            $item = $this->getItemBykey($item, $key);
-        }
-
-        return $item;
-    }
-
-    /**
      * @param $name
      *
      * @return bool
